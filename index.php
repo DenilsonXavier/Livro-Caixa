@@ -33,7 +33,7 @@
 										<label for="valor_l" class="form-label">Valor do Lançamento</label>
 										<div class="input-group input-group-sm">
 											<span class="input-group-text">R$</span>
-											<input type="text" name="valor_l" id="valor_l" class="form-control" required>
+											<input type="number" name="valor_l" id="valor_l" class="form-control" required>
 										</div>
 									</div>
 									<div class="mb-3">
