@@ -11,18 +11,24 @@
 	<div class="container-fluid ">
 		<div  class="row h-100">
 
-			<!-- Area das entradas e calculadora -->
+			<!-- Area das entradas e saidas-->
 			<div class="col-5 ">
 				<div class="row bg-info p-2">
 						<div class="col-12 h4">
 								<div class="display-4 text-center fw-bold">
 									<span>Entrada</span>
 								</div>
+								<!-- Formulario de entrada-->
 								<form>
 									<div class="mb-3">
 										<div class="input-group ">
 											<span class="input-group-text">Descrição</span>
-											<input type="text" class="form-control" name="descricao" id="descricao_l" required>
+											<select name="forma_p" id="forma_p" class="form-select " required>
+												  <option selected>Escolha serviço</option>
+												  <option value="1">reparo</option>
+												  <option value="2">Manutenção</option>
+												  <option value="3">Formatação</option>
+											</select>
 										</div>
 									</div>
 									<div class="mb-3">
@@ -66,18 +72,26 @@
 							<span >Saida</span>
 							</div>
 
+							<!-- Formulario de saida -->
 							<form>
 									
 									<div class="mb-3">
 										<div class="input-group input-group-sm">
 											<span class="input-group-text">Descrição</span>
-											<input type="text" class="form-control form-control-sm" name="descricao" id="descricao_l" required>
+
+											<select name="forma_p" id="forma_p" class="form-select " required>
+												  <option selected>Escolha serviço</option>
+												  <option value="1">reparo</option>
+												  <option value="2">Manutenção</option>
+												  <option value="3">Formatação</option>
+											</select>
 										</div>
 									</div>
 
 									
 									<div class="mb-3 ">
 										<div class="input-group input-group-sm">
+
 											<span class="input-group-text">Valor do Lançamento</span>
 											<span class="input-group-text">R$</span>
 											<input type="number" name="valor_l" id="valor_l" class="form-control" required>
