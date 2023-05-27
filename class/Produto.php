@@ -21,7 +21,7 @@ class Produto extends Conexao {
     public function alterarProduto($id_produto,$descricao, $tipo,$valor) {
         $this->conectar();
 
-        $consulta = $this->conexao->prepare("UPDATE produtos SET nome = ?, preco = ? WHERE id_produto = ?");
+        $consulta = $this->conexao->prepare("UPDATE produtos SET nome = ?, descricao = ?,tipo = ?,valor = ? WHERE id_produto = ?");
         $consulta->bind_param("sdi", $descricao, $tipo,$valor, $id_produto);
         $consulta->execute();
 
