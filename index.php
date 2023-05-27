@@ -8,37 +8,46 @@
 </head>
 <body>
 
-	<div class="container-fluid text-center">
+	<div class="container-fluid ">
 		<div class="row">
 
 			<!-- Area das entradas e calculadora -->
 			<div class="col-5 ">
 				<div class="row bg-info p-2">
-						<div class="col-12 h4">
+						<div class="col-12 h6">
+								<div class="display-4 text-center fw-bold">
+									<span>Entrada</span>
+								</div>
 								<form>
 									<div class="mb-3">
-										<label for="descricao_l" class="form-label">Descrição</label>
-										<input type="text" class="form-control form-control-sm" name="descricao" id="descricao_l" required>
+										<div class="input-group input-group-sm">
+											<span class="input-group-text">Descrição</span>
+											<input type="text" class="form-control form-control-sm" name="descricao" id="descricao_l" required>
+										</div>
 									</div>
 									<div class="mb-3">
-										<label for="forma_p" class="form-label">Forma de Pagamento</label>
-										<select name="forma_p" id="forma_p" class="form-select form-select-sm" required>
-											  <option selected>Escolha a forma de Pagamento</option>
-											  <option value="1">Dinheiro</option>
-											  <option value="2">Cartão</option>
-											  <option value="3">Pix</option>
-										</select>
+
+										<div class="input-group input-group-sm">
+											<span class="input-group-text">Forma de pagamento</span>
+											<select name="forma_p" id="forma_p" class="form-select form-select-sm" required>
+												  <option selected>Escolha a forma de Pagamento</option>
+												  <option value="1">Dinheiro</option>
+												  <option value="2">Cartão</option>
+												  <option value="3">Pix</option>
+											</select>
+										</div>
 									</div>
 									<div class="mb-3 ">
-										<label for="valor_l" class="form-label">Valor do Lançamento</label>
 										<div class="input-group input-group-sm">
+											<span class="input-group-text">Valor do Lançamento</span>
 											<span class="input-group-text">R$</span>
 											<input type="number" name="valor_l" id="valor_l" class="form-control" required>
 										</div>
 									</div>
 									<div class="mb-3">
-										<label for="qtn_l" class="form-label">Quantidade</label>
-										<input type="number" name="qtn_l" id="qtn_l" class="form-control form-control-sm"  required>
+										<div class="input-group input-group-sm">										<span class="input-group-text">Quantidade</span>
+											<input type="number" name="qtn_l" id="qtn_l" class="form-control form-control-sm"  required>
+										</div>
 									</div>
 									<div class="mb-3">
 										 <button type="submit" class="btn btn-primary btn-sm justify-content-start">Lançar</button>
@@ -52,15 +61,39 @@
 								</form>
 						</div>
 				</div>
-				<div class="row bg-secondary">
-						<div class="col-12">
-							hfadg
+				<div class="row bg-secondary ">
+						<div class="col-12 h6">
+							<div class="display-4 fw-bold text-center">
+							<span >Saida</span>
+							</div>
+
+							<form>
+								
+									<div class="mb-3">
+										<label for="descricao_l" class="form-label">Descrição</label>
+										<input type="text" class="form-control form-control-sm" name="descricao" id="descricao_l" required>
+									</div>
+
+									<div class="mb-3 ">
+										<label for="valor_l" class="form-label">Valor do Lançamento</label>
+										<div class="input-group input-group-sm">
+											<span class="input-group-text">R$</span>
+											<input type="number" name="valor_l" id="valor_l" class="form-control form-control-sm" required>
+										</div>
+									</div>
+
+									<div class="mb-3">
+										 <button type="submit" class="btn btn-primary btn-sm justify-content-start">Lançar</button>
+									</div>
+
+							</form>
+
 						</div>
 				</div>
 			</div>
 
 			<!-- Area da Tabela -->
-			<div class="col-7 bg-danger">
+			<div class="col-7 bg-danger text-center">
 				<table class="table table-sm align-middle">
 					<thead>
 						<tr>
@@ -87,9 +120,10 @@
 		</div>
 
 		<!-- Area da seção Admin e logout -->
-		<div class="row bg-primary align-items-end">
-			<div class="col-12 ">
-				asfas
+		<div class="row bg-primary p-1" >
+			<div class="col-12 text-end" > 
+				<a href="#" class="btn btn-light">Sair</a>
+				<a href="#" class="btn btn-light">Administrar</a>
 			</div>
 		</div>
 		
