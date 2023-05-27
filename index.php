@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid text-center">
 		<div class="row">
 
 			<!-- Area das entradas e calculadora -->
@@ -41,8 +41,8 @@
 										<input type="number" name="qtn_l" id="qtn_l" class="form-control form-control-sm"  required>
 									</div>
 									<div class="mb-3">
-										 <button type="submit" class="btn btn-primary btn-sm">Lançar</button>
-										 <a href="#" class="btn btn-danger btn-sm">Ver todos os valores</a>
+										 <button type="submit" class="btn btn-primary btn-sm justify-content-start">Lançar</button>
+										 <a href="#" class="btn btn-danger btn-sm justify-content-end">Ver todos os valores</a>
 									</div>
 									<div class="mb-3 input-group input-group-sm">
 										<span class="input-group-text ">Valor total Do dia</span>
@@ -64,9 +64,9 @@
 				<table class="table table-sm align-middle">
 					<thead>
 						<tr>
-							<th colspan="4"></th>
+							<th colspan="3"></th>
 							<th colspan="3">Entradas</th>
-							<th colspan="2">Saidas</th>
+							<th colspan="3">Saidas</th>
 						</tr>
 					</thead>
 					<tr>
@@ -87,7 +87,7 @@
 		</div>
 
 		<!-- Area da seção Admin e logout -->
-		<div class="row bg-primary align-items-end mb-0">
+		<div class="row bg-primary align-items-end">
 			<div class="col-12 ">
 				asfas
 			</div>
