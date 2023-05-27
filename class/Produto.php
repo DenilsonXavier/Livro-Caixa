@@ -5,7 +5,7 @@ class Produto extends Conexao {
         $this->conectar();
 
         
-        $consulta = $this->conexao->prepare("INSERT INTO produtos (nome, preco) VALUES (?, ?)");
+        $consulta = $this->conexao->prepare("INSERT INTO produtos (nome, descricao,tipo,valor) VALUES (?, ?)");
         $consulta->bind_param("sd",$descricao, $tipo,$valor);
         $consulta->execute();
 
