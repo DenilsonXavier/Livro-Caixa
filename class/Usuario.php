@@ -1,12 +1,12 @@
 <?php
 class Usuario extends Conexao {
 
-    public function adicionarUsuario($nome, $email) {
+    public function adicionarUsuario($nome,$nick,$senha,$Nivel) {
         $this->conectar();
 
        
-        $consulta = $this->conexao->prepare("INSERT INTO usuarios (nome, email) VALUES (?, ?)");
-        $consulta->bind_param("ss", $nome, $email);
+        $consulta = $this->conexao->prepare("INSERT INTO usuarios (nome,nick,senha,Nivel) VALUES (?, ?)");
+        $consulta->bind_param("ss", $nome, $nick,$senha,$Nivel);
         $consulta->execute();
 
         
@@ -19,12 +19,12 @@ class Usuario extends Conexao {
     }
 
 
-    public function alterarUsuario($id, $nome, $email) {
+    public function alterarUsuario($id_usuario ,$nome,$nick,$senha,$Nivel) {
         $this->conectar();
 
        
-        $consulta = $this->conexao->prepare("UPDATE usuarios SET nome = ?, email = ? WHERE id = ?");
-        $consulta->bind_param("ssi", $nome, $email, $id);
+        $consulta = $this->conexao->prepare("UPDATE usuarios SET nome = ?,nick = ?, senha = ?, Nivel = ? WHERE id_usuario  = ?");
+        $consulta->bind_param("ssi",$nome,$nick,$senha,$Nivel, $id_usuario );
         $consulta->execute();
 
         if ($consulta->errno) {
