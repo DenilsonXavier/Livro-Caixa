@@ -9,7 +9,7 @@
 <body>
 
 	<div class="container-fluid ">
-		<div  class="row h-100 pb-5">
+		<div  class="row h-100">
 
 			<!-- Area das entradas e calculadora -->
 			<div class="col-5 ">
@@ -51,7 +51,6 @@
 									</div>
 									<div class="mb-3">
 										 <button type="submit" class="btn btn-primary justify-content-start">Lançar</button>
-										 <a href="#" class="btn btn-danger justify-content-end">Ver todos os valores</a>
 									</div>
 									<div class="mb-3 input-group ">
 										<span class="input-group-text ">Valor total Do dia</span>
@@ -62,7 +61,7 @@
 						</div>
 				</div>
 				<div class="row bg-secondary ">
-						<div class="col-12 h6">
+						<div class="col-12 h6 " style="height: 19rem;">
 							<div class="display-4 fw-bold text-center">
 							<span >Saida</span>
 							</div>
@@ -91,12 +90,16 @@
 
 							</form>
 
+							<div>
+										 <a href="#" class="btn btn-danger justify-content-end">Ver todos os valores</a>
+							</div>
+
 						</div>
 				</div>
 			</div>
 
 			<!-- Area da Tabela -->
-			<div class="col-7 bg-danger text-center">
+			<div class="col-7 bg-danger text-center " style="height: 46rem;">
 				<table class="table table-sm align-middle">
 					<thead>
 						<tr>
