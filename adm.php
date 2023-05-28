@@ -80,7 +80,28 @@
 				</div>
 			</div>
 			<div class="col-3 bg-success">
-				Alterar funcionario
+
+				<div class="row">
+					<div class="col-12">
+						<div class="my-3"><span class="tw-bold h4 ">Alterar funcionario</span> </div>
+						<form action="">
+							<div class="input-group mb-3">
+								<span class="input-group-text">Novo Nome</span>
+								<input type="text" name="a_nome" id="" class="form-control">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text">usuario</span>
+								<select name="a_usuario" id="" class="form-select">
+									<option selected>Selecione</option>
+									<option value="1">Admin</option>
+									<option value="2">root</option>
+								</select>
+							</div>
+							<div class="text-center"><button type="submit" class="btn btn-light">Alterar Nome</button></div>
+						</form>
+					</div>
+				</div>
+
 			</div>
 			<div class="col-3 bg-warning">
 				Produdo				

@@ -47,7 +47,7 @@
 										<div class="input-group">
 											<span class="input-group-text">Valor do Lançamento</span>
 											<span class="input-group-text">R$</span>
-											<input type="number" name="valor_l" id="valor_l" class="form-control" required>
+											<input type="text" name="valor_l" id="valor_l" class="form-control" required>
 										</div>
 									</div>
 									<div class="mb-3">
@@ -113,8 +113,9 @@
 			</div>
 
 			<!-- Area da Tabela -->
-			<div class="col-7 bg-danger text-center " style="height: 46rem;">
-				<table class="table table-sm align-middle">
+			<div class="col-7 bg-danger text-center " style="height: 45rem;">
+			<div class="table-responsive">
+				<table class="table table-dark table-sm table-striped  table-hover align-middle">
 					<thead>
 						<tr>
 							<th colspan="3"></th>
@@ -136,7 +137,7 @@
 					
 				</table>
 			</div>
-
+			</div>
 		</div>
 
 		<!-- Area da seção Admin e logout -->
