@@ -1,13 +1,9 @@
 <?php
 require_once 'Conect.php'; 
-require_once 'produto.php'; 
-class TesteAdicionarProduto {
-    public function adicionarProduto() {
-        $produto = new Produto();
-        $produto->adicionarProduto("Produto de Teste", 5 ,23 ); 
-        echo "Produto adicionado com sucesso!";
-    }
-}
-$teste = new TesteAdicionarProduto(); 
-$teste->adicionarProduto(); 
+require_once 'Usuario.php'; 
+
+
+        $usuario = new usuario();
+        $usuario->adicionarUsuario( "gus",1548,'Funcionario' ); 
+        echo "Usuario adicionado com sucesso!";
 ?>
