@@ -7,13 +7,13 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
 </head>
-<body>
+<body class="bg-secondary">
 
-	<div class="container-fluid">
+	<div class="container-fluid ">
 
 
-		<div class="row bg-secondary ">
-			<nav class="navbar navbar-expand-lg">
+		<div class="row bg-light-subtle rounded-bottom-5">
+			<nav class="navbar navbar-expand-lg ">
 				<div class="container">
 				  <a class="navbar-brand" href="#">Navbar</a>
 				  
@@ -27,8 +27,8 @@
 				</div>
 			   </nav>
 		</div>
-		<div class="row text-center">
-			<div class="col-3 bg-info">
+		<div class="row text-center ">
+			<div class="col-3 bg-info rounded-5">
 				<div class="row">
 					<div class="col-12">
 						<div class="my-3"><span class="tw-bold h4 ">Adicionar funcionario</span> </div>
@@ -86,7 +86,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-3 bg-success">
+			<div class="col-3 bg-success rounded-5">
 
 				<div class="row">
 					<div class="col-12">
@@ -153,7 +153,7 @@
 				</div>
 
 			</div>
-			<div class="col-3 bg-warning">
+			<div class="col-3 bg-warning rounded-5">
 				<div class="row">
 					<div class="col-12">
 						<div class="my-3"><span class="tw-bold h4 ">Adicionar Produto</span> </div>
@@ -209,7 +209,7 @@
 				</div>
 
 			</div>
-			<div class="col-3 bg-primary">
+			<div class="col-3 bg-primary rounded-5">
 				<div class="row">
 					<div class="col-12">
 						<div class="my-3"><span class="tw-bold h4 ">Alterar Produto</span> </div>
@@ -274,11 +274,10 @@
 					</div>
 				</div>
 
-			</div>
+			 </div>
 			</div>
 		</div>
 		
-	</div>
 
 </body>
 	<script type="text/javascript" src="Js/bootstrap.bundle.min.js"></script>

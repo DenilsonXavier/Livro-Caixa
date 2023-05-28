@@ -6,16 +6,16 @@
 	<title>Home</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
-<body>
+<body class="bg-primary-subtle bg-gradient bg-opacity-50">
 
 	<div class="container-fluid ">
 		<div  class="row h-100">
 
 			<!-- Area das entradas e saidas-->
-			<div class="col-5 ">
-				<div class="row bg-info p-2">
-						<div class="col-12 h4">
-								<div class="display-4 text-center fw-bold">
+			<div class="col-5">
+				<div class="row bg-success rounded-4">
+						<div class="col-12 h4 ">
+								<div class="display-4 my-2 text-center fw-bold">
 									<span>Entrada</span>
 								</div>
 								<!-- Formulario de entrada-->
@@ -66,9 +66,9 @@
 								</form>
 						</div>
 				</div>
-				<div class="row bg-secondary ">
-						<div class="col-12 h6 " style="height: 19rem;">
-							<div class="display-4 fw-bold text-center">
+				<div class="row bg-secondary rounded-4">
+						<div class="col-12 h6 ">
+							<div class="display-4 my-3 fw-bold text-center">
 							<span >Saida</span>
 							</div>
 
@@ -104,47 +104,66 @@
 
 							</form>
 
-							<div>
-										 <a href="#" class="btn btn-danger justify-content-end">Ver todos os valores</a>
-							</div>
 
 						</div>
 				</div>
 			</div>
 
 			<!-- Area da Tabela -->
-			<div class="col-7 bg-danger text-center " style="height: 45rem;">
+			<div class="col-7 text-center" >
 			<div class="table-responsive">
-				<table class="table table-dark table-sm table-striped  table-hover align-middle">
+				<table class="table w-100 p-3 my-4 table-sm table-striped table-hover align-middle">
 					<thead>
-						<tr>
-							<th colspan="3"></th>
-							<th colspan="3">Entradas</th>
-							<th colspan="3">Saidas</th>
-						</tr>
-					</thead>
 					<tr>
 						<th>Data</th>
 						<th>Descrição</th>
 						<th>Codigo</th>
 						<th>Valor Unitário</th>
+						<th>Tipo</th>
 						<th>Quantidade</th>
 						<th>Valor Total</th>
-						<th>Valor Unitário</th>
-						<th>Quantidade</th>
-						<th>Valor Total</th>
+
 					</tr>
-					
+					</thead>
+					<tbody>
+						<tr>
+							<th>11/09/2002</th>
+							<th>Dinheiro facil</th>
+							<th>69</th>
+							<th>8000.00</th>
+							<th>Entrada</th>
+							<th>10</th>
+							<th>8000.00</th>
+						</tr>
+						<tr>
+							<th>11/09/2002</th>
+							<th>Dinheiro facil</th>
+							<th>69</th>
+							<th>8000.00</th>
+							<th>Entrada</th>
+							<th>10</th>
+							<th>8000.00</th>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr class="text-start table-active">
+							<th colspan="6">
+								Total do dia
+							</th>
+							<th>16000000</th>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 			</div>
 		</div>
 
 		<!-- Area da seção Admin e logout -->
-		<div class="row bg-primary position-fixed fixed-bottom p-1" >
+		<div class="row position-fixed fixed-bottom p-1" >
 			<div class="col-12 text-end" > 
-				<a href="#" class="btn btn-light">Sair</a>
-				<a href="#" class="btn btn-light">Administrar</a>
+				<a href="#" class="btn btn-success justify-content-end">Ver todos os valores</a>
+				<a href="#" class="btn btn-warning">Administrar</a>
+				<a href="#" class="btn btn-danger">Sair</a>
 			</div>
 		</div>
 		
