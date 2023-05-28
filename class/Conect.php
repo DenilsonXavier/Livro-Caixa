@@ -1,9 +1,9 @@
 <?php
 class Conexao {
     private $host = "localhost"; 
-    private $usuario = "admin"; 
-    private $senha = "1234"; 
-    private $banco = "Livro-Caixa"; 
+    private $usuario = "root"; 
+    private $senha = ""; 
+    private $banco = "livro-Caixa"; 
 
     protected $conexao;
 
