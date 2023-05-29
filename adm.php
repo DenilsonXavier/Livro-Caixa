@@ -7,28 +7,13 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
 </head>
-<body class="bg-secondary">
+<body class="bg-primary-subtle bg-gradient bg-opacity-50">
 
 	<div class="container-fluid ">
 
-
-		<div class="row bg-light-subtle rounded-bottom-5">
-			<nav class="navbar navbar-expand-lg ">
-				<div class="container">
-				  <a class="navbar-brand" href="#">Navbar</a>
-				  
-				  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-				    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					 <li class="nav-item">
-					   <a class="nav-link active" aria-current="page" href="#">Home</a>
-					 </li>
-				    </ul>
-				  </div>
-				</div>
-			   </nav>
-		</div>
 		<div class="row text-center ">
-			<div class="col-3 bg-info rounded-5">
+			<!-- Area adicionar funcionario -->
+			<div class="col-3 bg-info rounded-5 my-5">
 				<div class="row">
 					<div class="col-12">
 						<div class="my-3"><span class="tw-bold h4 ">Adicionar funcionario</span> </div>
@@ -85,10 +70,13 @@
 						</form>
 					</div>
 				</div>
+				<!-- /Adicionar funcionario -->
 			</div>
-			<div class="col-3 bg-success rounded-5">
+			<!-- Alterar funcionario -->
+			<div class="col-3 bg-success rounded-5 my-4">
 
 				<div class="row">
+
 					<div class="col-12">
 						<div class="my-3"><span class="tw-bold h4 ">Alterar funcionario</span> </div>
 						<form action="">
@@ -151,9 +139,10 @@
 						</form>
 					</div>
 				</div>
-
+				<!-- /Alterar funcionario -->
 			</div>
-			<div class="col-3 bg-warning rounded-5">
+			<!-- Adicionar produto -->
+			<div class="col-3 bg-warning rounded-5 my-5">
 				<div class="row">
 					<div class="col-12">
 						<div class="my-3"><span class="tw-bold h4 ">Adicionar Produto</span> </div>
@@ -207,9 +196,10 @@
 						</form>
 					</div>
 				</div>
-
+				<!-- /Adicionar produto -->
 			</div>
-			<div class="col-3 bg-primary rounded-5">
+			<!-- Alterar produto -->
+			<div class="col-3 bg-primary rounded-5 my-4">
 				<div class="row">
 					<div class="col-12">
 						<div class="my-3"><span class="tw-bold h4 ">Alterar Produto</span> </div>
@@ -273,9 +263,23 @@
 						</form>
 					</div>
 				</div>
-
+				<!-- /Alterar produto -->
 			 </div>
 			</div>
+
+			
+		<!-- Area da seção Admin e logout -->
+		<div class="row position-fixed fixed-bottom p-1" >
+			<div class="col-12 text-end" > 
+				<a href="#" class="btn btn-primary">Home</a>
+				<a href="#" class="btn btn-success justify-content-end">Ver todos os valores</a>
+				<a href="#" class="btn btn-danger">Sair</a>
+			</div>
+		</div>
+
+
+
+
 		</div>
 		
 
