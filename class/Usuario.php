@@ -1,12 +1,12 @@
 <?php
 class Usuario extends Conexao {
 
-    public function adicionarUsuario($nome,$nick,$senha,$Nivel) {
+    public function adicionarUsuario($nick,$senha,$Nivel) {
         $this->conectar();
 
        
-        $consulta = $this->conexao->prepare("INSERT INTO usuarios (nome,nick,senha,Nivel) VALUES (?, ?)");
-        $consulta->bind_param("ss", $nome, $nick,$senha,$Nivel);
+        $consulta = $this->conexao->prepare("INSERT INTO usuario (nick,senha,Nivel) VALUES (?, ?, ?)");
+        $consulta->bind_param("ssi",$nick,$senha,$Nivel);
         $consulta->execute();
 
         
@@ -19,12 +19,12 @@ class Usuario extends Conexao {
     }
 
 
-    public function alterarUsuario($id_usuario ,$nome,$nick,$senha,$Nivel) {
+    public function alterarUsuario($id_usuario,$nick,$senha,$Nivel) {
         $this->conectar();
 
        
-        $consulta = $this->conexao->prepare("UPDATE usuarios SET nome = ?,nick = ?, senha = ?, Nivel = ? WHERE id_usuario  = ?");
-        $consulta->bind_param("ssi",$nome,$nick,$senha,$Nivel, $id_usuario );
+        $consulta = $this->conexao->prepare("UPDATE usuario SET nick = ?, senha = ?, Nivel = ? WHERE id_usuario  = ?");
+        $consulta->bind_param("ssi",$nick,$senha,$Nivel, $id_usuario );
         $consulta->execute();
 
         if ($consulta->errno) {
@@ -36,12 +36,12 @@ class Usuario extends Conexao {
     }
 
     
-    public function deletarUsuario($id) {
+    public function deletarUsuario($id_usuario) {
         $this->conectar();
 
         
-        $consulta = $this->conexao->prepare("DELETE FROM usuarios WHERE id = ?");
-        $consulta->bind_param("i", $id);
+        $consulta = $this->conexao->prepare("DELETE FROM usuarios WHERE id_usuario = ?");
+        $consulta->bind_param("i", $id_usuario);
         $consulta->execute();
 
        
