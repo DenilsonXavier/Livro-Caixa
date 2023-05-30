@@ -23,11 +23,11 @@ class Produto extends Conexao {
         $this->conectar();
 
         $consulta = $this->conexao->prepare("UPDATE produto SET descricao = ?,tipo = ?,valor = ? WHERE id_produto = ?");
-<<<<<<< HEAD
+
         $consulta->bind_param("ssdi", $descricao, $tipo,$valor, $id_produto);
-=======
+
         $consulta->bind_param("sdi", $descricao, $tipo,$valor, $id_produto);
->>>>>>> 0ea8757d8afd11e3bfc8696beefb868425de7a33
+
         $consulta->execute();
 
         if ($consulta->errno) {

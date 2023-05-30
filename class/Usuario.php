@@ -1,12 +1,13 @@
 <?php
+require_once 'Conect.php';
 class Usuario extends Conexao {
 
     public function adicionarUsuario($nick,$senha,$Nivel) {
         $this->conectar();
 
        
-        $consulta = $this->conexao->prepare("INSERT INTO usuario (nick,senha,Nivel) VALUES (?, ?, ?)");
-        $consulta->bind_param("ssi",$nick,$senha,$Nivel);
+        $consulta = $this->conexao->prepare("INSERT INTO Usuario (nick,senha,Nivel) VALUES (?, ?, ?)");
+        $consulta->bind_param("sss",$nick,$senha,$Nivel);
         $consulta->execute();
 
         
@@ -23,7 +24,7 @@ class Usuario extends Conexao {
         $this->conectar();
 
        
-        $consulta = $this->conexao->prepare("UPDATE usuario SET nick = ?, senha = ?, Nivel = ? WHERE id_usuario  = ?");
+        $consulta = $this->conexao->prepare("UPDATE Usuario SET nick = ?, senha = ?, Nivel = ? WHERE id_usuario  = ?");
         $consulta->bind_param("ssi",$nick,$senha,$Nivel, $id_usuario );
         $consulta->execute();
 
@@ -40,7 +41,7 @@ class Usuario extends Conexao {
         $this->conectar();
 
         
-        $consulta = $this->conexao->prepare("DELETE FROM usuarios WHERE id_usuario = ?");
+        $consulta = $this->conexao->prepare("DELETE FROM Usuario WHERE id_usuario = ?");
         $consulta->bind_param("i", $id_usuario);
         $consulta->execute();
 
