@@ -161,8 +161,8 @@
 		<!-- Area da seção Admin e logout -->
 		<div class="row position-fixed fixed-bottom p-1" >
 			<div class="col-12 text-end" > 
-				<a href="#" class="btn btn-warning">Administrar</a>
-				<a href="#" class="btn btn-success justify-content-end">Ver todos os valores</a>
+				<a href="adm.php" class="btn btn-warning">Administrar</a>
+				<a href="contabilidade.php" class="btn btn-success justify-content-end">Ver todos os valores</a>
 				<a href="#" class="btn btn-danger">Sair</a>
 			</div>
 		</div>

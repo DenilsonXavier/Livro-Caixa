@@ -14,7 +14,7 @@
                <div class="col-4 p-3">
            
                          <ul class="list-group list-group-flush mt-3">
-                              <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#Funcionario_control" role="button" aria-expanded="false" aria-controls="Funcionario_control" ><p class="h4">Funcionario</p></a></div></li>
+                              <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#Funcionario_control" role="button" aria-expanded="false" aria-controls="Funcionario_control" ><p class="h2">Funcionario</p></a></div></li>
                                   
                                    <div class="collapse multi-collapse" id="Funcionario_control">
                                         <li class="list-group-item ">
@@ -29,7 +29,7 @@
                                    </div>
                          </ul>
                          <ul class="list-group list-group-flush mt-1">     
-                              <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#produto_control" role="button" aria-expanded="false" aria-controls="produto_control" ><p class="h4">Produto</p></a></div></li>
+                              <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#produto_control" role="button" aria-expanded="false" aria-controls="produto_control" ><p class="h2">Produto</p></a></div></li>
                                    <div class="collapse multi-collapse" id="produto_control">
                                         <li class="list-group-item ">
                                              <ul class="list-group list-group-flush ">
@@ -38,15 +38,6 @@
                                                   <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#produto_ad" role="button" aria-expanded="false" aria-controls="produto_ad">Alterar Descrição</a></div></li>
                                                   <li class="list-group-item"><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#produto_at" role="button" aria-expanded="false" aria-controls="produto_at">Alterar Tipo</a></div></li>
                                                   <li class="list-group-item"><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#produto_av" role="button" aria-expanded="false" aria-controls="produto_av">Alterar Valor</a></div></li>
-                                             </ul>
-                                        </li>
-                                   </div>
-                         </ul>
-                         <ul class="list-group list-group-flush mt-1">     
-                              <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#lancamento_control" role="button" aria-expanded="false" aria-controls="lancamento_control" ><p class="h4">Lançamento</p></a></div></li>
-                                   <div class="collapse multi-collapse" id="lancamento_control">
-                                        <li class="list-group-item ">
-                                             <ul class="list-group list-group-flush "><li class="list-group-item"><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#lancamento_av" role="button" aria-expanded="false" aria-controls="lancamento_av">Alterar Valor</a></div></li>
                                              </ul>
                                         </li>
                                    </div>
@@ -80,6 +71,7 @@
                                    </div>
                               </div>
                               <div class="mb-3 d-grid">
+							<input type="hidden" name="tipo_acao" value="f_adicionar">
                                    <button type="submit" class="btn btn-outline-success">Registrar</button>
                               </div>
                          </form>
@@ -103,12 +95,13 @@
                                              </label>
                                         </div>
                               </div>
-                              <div class="mb-3 d-grid"><button type="submit" class="btn btn-outline-danger">Excluir</button></div>
+							<input type="hidden" name="tipo_acao" value="f_excluir">
+							<div class="mb-3 d-grid"><button type="submit" class="btn btn-outline-danger">Excluir</button></div>
                          </form>
                     </div>
                     
                     <div class="collapse multi-collapse" id="Funcionario_an">
-                         <div class="my-3"><span class="tw-bold h4 ">Alterar funcionario</span> </div>
+                         <div class="my-3"><span class="tw-bold h4 ">Alterar Nome</span> </div>
                          <form action="">
                               <div class="input-group mb-3">
                                    <span class="input-group-text">Novo Nome</span>
@@ -122,7 +115,8 @@
                                         <option value="2">root</option>
                                    </select>
                               </div>
-                              <div class="text-center d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Nome</button></div>
+							<input type="hidden" name="tipo_acao" value="f_alterarnome">
+							<div class="text-center d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Nome</button></div>
                          </form>
                     </div>
 
@@ -141,7 +135,8 @@
                                         <option value="2">root</option>
                                    </select>
                               </div>
-                              <div class="text-cente d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Senha</button></div>
+							<input type="hidden" name="tipo_acao" value="f_alterarsenha">
+							<div class="text-cente d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Senha</button></div>
                          </form>
                     </div>
 
@@ -163,7 +158,8 @@
                                         <option value="2">root</option>
                                    </select>
                               </div>
-                              <div class="text-center d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Nivel</button></div>
+							<input type="hidden" name="tipo_acao" value="f_alterarnivel">
+							<div class="text-center d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Nivel</button></div>
                          </form>
                     </div>
 
@@ -189,6 +185,7 @@
                                    </div>
                               </div>
                               <div class="mb-3 d-grid">
+							<input type="hidden" name="tipo_acao" value="p_adicionar">
                                    <button type="submit" class="btn btn-outline-success">Registrar</button>
                               </div>
                          </form>
@@ -212,12 +209,13 @@
 										</label>
 									</div>
 							</div>
+							<input type="hidden" name="tipo_acao" value="p_excluir">
 							<div class="mb-3 d-grid"><button type="submit" class="btn btn-outline-danger">Excluir</button></div>
 						</form>
                     </div>
 
                     <div class="collapse multi-collapse" id="produto_ad">
-						<div class="my-3"><span class="tw-bold h4 ">Alterar Produto</span> </div>
+						<div class="my-3"><span class="tw-bold h4 ">Alterar Descrição</span> </div>
 						<form action="">
 							<div class="input-group mb-3">
 								<span class="input-group-text">Nova Descrição</span>
@@ -231,6 +229,7 @@
 									<option value="2">banana</option>
 								</select>
 							</div>
+							<input type="hidden" name="tipo_acao" value="p_alterardescricaor">
 							<div class="text-center mb-3 d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Descrição</button></div>
 						</form>
                     </div>
@@ -246,13 +245,14 @@
 								</Select>
 							</div>
 							<div class="input-group mb-3">
-								<span class="input-group-text">usuario</span>
+								<span class="input-group-text">Produto</span>
 								<select name="a_produto" id="" class="form-select">
 									<option selected>Selecione</option>
 									<option value="1">Abacaxi</option>
 									<option value="2">banana</option>
 								</select>
 							</div>
+							<input type="hidden" name="tipo_acao" value="p_alterarTipo">
 							<div class="text-center mb-3 d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Tipo</button></div>
 						</form>
                     </div>
@@ -272,6 +272,7 @@
 									<option value="2">abacaxi</option>
 								</select>
 							</div>
+							<input type="hidden" name="tipo_acao" value="p_alterarvalor">
 							<div class="text-center mb-3 d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Valor</button></div>
 						</form>
                     </div>
@@ -283,8 +284,8 @@
 		<!-- Area da seção Admin e logout -->
 		<div class="row position-fixed fixed-bottom p-1" >
 			<div class="col-12 text-end" > 
-				<a href="#" class="btn btn-primary">Home</a>
-				<a href="#" class="btn btn-success justify-content-end">Ver todos os valores</a>
+				<a href="index.php" class="btn btn-primary">Home</a>
+				<a href="contabilidade.php" class="btn btn-success justify-content-end">Ver todos os valores</a>
 				<a href="#" class="btn btn-danger">Sair</a>
 			</div>
 		</div>
