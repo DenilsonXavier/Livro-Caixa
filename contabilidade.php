@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
 </head>
-<body class="bg-dark-subtle text-light">
+<body >
 
      <div class="container-fluid ">
           
@@ -17,7 +17,7 @@
           <!-- Area Tabela -->
           <div class="col-8">
                <div class="table-responsive">
-				<table class="table  bg-dark-subtle table-borderless w-100 p-3 my-4 table-sm table-hover">
+				<table class="table w-100 p-3 my-4 table-sm table-hover">
 					<thead>
 					<tr>
 						<th>Data</th>
@@ -74,7 +74,7 @@
           </div>
 
           <!-- Area Pesquisa -->
-          <div class="col-4 bg-dark bg-opacity-75 my-4 mx-5 w-25 rounded-4">
+          <div class="col-4 shadow border-1 my-4 mx-5 w-25 rounded-4">
                
                <div class="my-3">
                     <form action="">
@@ -113,8 +113,8 @@
 						</select>
 					</div>
 					<div class="row mx-2">
-						<a href="#" class="btn btn-warning mb-1">Limpar</a>
-						<button type="submit" class="btn btn-primary">Pesquisar</button>
+						<a href="#" class="btn btn-outline-primary mb-1">Limpar</a>
+						<button type="submit" class="btn btn-outline-success ">Pesquisar</button>
 					</div>
                     </form>
 

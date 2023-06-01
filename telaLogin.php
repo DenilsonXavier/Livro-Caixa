@@ -9,19 +9,21 @@
 <body>
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
         <form class="login-form p-5 border rounded shadow" method="post" action="../Livro-Caixa/Controller/Login.php">
-            <h2 class="text-center mb-4">BEM VINDO</h2>
+            <h2 class="text-center mb-4">BEM-VINDO</h2>
             <?php
             if (isset($_GET['error']) && $_GET['error'] === 'invalid') {
                 echo '<p class="text-danger">Nick ou senha incorretos. Por favor, verifique suas credenciais.</p>';
             }
             ?>
-            <div class="form-group">
-                <input type="text" name="nick" class="form-control" placeholder="Nick" required>
+            <div class="input-group mb-1">
+                <span class="input-group-text">Usuario</span>
+                <input type="text" name="nick" class="form-control"  required>
             </div>
-            <div class="form-group">
-                <input type="password" name="senha" class="form-control" placeholder="Senha" required>
+            <div class="input-group mb-2">
+                <span class="input-group-text">Senha</span>
+                <input type="password" name="senha" class="form-control"  required>
             </div>
-            <div class="form-group">
+            <div class="input-group my-3">
                 <input type="submit" value="Entrar" class="btn btn-success btn-block">
             </div>
         </form>

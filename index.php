@@ -6,14 +6,14 @@
 	<title>Home</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
-<body class="bg-primary-subtle bg-gradient bg-opacity-50">
+<body >
 
 	<div class="container-fluid ">
 		<div  class="row h-100">
 
 			<!-- Area das entradas e saidas-->
 			<div class="col-5">
-				<div class="row bg-success rounded-4">
+				<div class="row shadow border-2 rounded-4">
 						<div class="col-12 h4 ">
 								<div class="display-4 my-2 text-center fw-bold">
 									<span>Entrada</span>
@@ -55,8 +55,8 @@
 											<input type="number" name="qtn_l" id="qtn_l" class="form-control"  required>
 										</div>
 									</div>
-									<div class="mb-3">
-										 <button type="submit" class="btn btn-primary justify-content-start">Lançar</button>
+									<div class="d-grid gap-2 mb-3">
+										 <button type="submit" class="btn btn-outline-success  justify-content-start">Lançar</button>
 									</div>
 									<div class="mb-3 input-group ">
 										<span class="input-group-text ">Valor total Do dia</span>
@@ -66,7 +66,7 @@
 								</form>
 						</div>
 				</div>
-				<div class="row bg-secondary rounded-4">
+				<div class="row bg-secondary-subtle shadow rounded-4">
 						<div class="col-12 h6 ">
 							<div class="display-4 my-3 fw-bold text-center">
 							<span >Saida</span>
@@ -98,8 +98,8 @@
 										</div>
 									</div>
 
-									<div class="mb-3">
-										 <button type="submit" class="btn btn-primary justify-content-start">Lançar</button>
+									<div class="d-grid gap-2 mb-3">
+										 <button type="submit" class="btn btn-outline-danger justify-content-start">Lançar</button>
 									</div>
 
 							</form>
