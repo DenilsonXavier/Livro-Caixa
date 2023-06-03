@@ -65,8 +65,8 @@
                                    <div class="input-group">
                                         <span class="input-group-text">Nivel</span>
                                         <select name="nivel_f" id="nivel_f" class="form-select " required>
-                                             <option selected value="1">Funcionario</option>
-                                             <option value="2">Administrador</option>
+                                             <option selected value="funcionario">Funcionario</option>
+                                             <option value="administrador">Administrador</option>
                                       </select>
                                    </div>
                               </div>

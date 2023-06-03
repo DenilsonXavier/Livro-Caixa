@@ -15,13 +15,15 @@
                 echo '<p class="text-danger">Nick ou senha incorretos. Por favor, verifique suas credenciais.</p>';
             }
             ?>
-            <div class="form-group">
-                <input type="text" name="nick" class="form-control" placeholder="Nick" required>
+            <div class="input-group">
+                <span class="input-group-text">Usuario</span>
+                <input type="text" name="nick" class="form-control"  required>
             </div>
-            <div class="form-group">
-                <input type="password" name="senha" class="form-control" placeholder="Senha" required>
+            <div class="input-group">
+                <span class="input-group-text">Senha</span>
+                <input type="password" name="senha" class="form-control"  required>
             </div>
-            <div class="form-group">
+            <div class="input-group">
                 <input type="submit" value="Entrar" class="btn btn-success btn-block">
             </div>
         </form>
