@@ -52,13 +52,13 @@
                               <div class="mb-3">
                                    <div class="input-group">
                                         <span class="input-group-text">Nome</span>
-                                        <input type="text" name="Nick_f" id="" class="form-control">
+                                        <input type="text" name="nick_f" id="" class="form-control">
                                    </div>
                               </div>
                               <div class="mb-3">
                                    <div class="input-group">
                                         <span class="input-group-text">Senha</span>
-                                        <input type="password" name="Senha_f" id="" class="form-control">
+                                        <input type="password" name="senha_f" id="" class="form-control">
                                    </div>
                               </div>
                               <div class="mb-3">
