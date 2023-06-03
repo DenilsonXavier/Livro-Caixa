@@ -79,5 +79,19 @@ class Produto extends Conexao {
         $consulta->close();
         $this->fecharConexao();
     }
+    
+    public function BuscarTodosProdutos(){
+        $this->conectar();
+        $consulta = $this->conexao->prepare("SELECT * FROM produto");  
+        $consulta->execute();
+
+        $resultado = $consulta->get_result();
+        for ($i=0; $row = $resultado->fetch_assoc() ; $i++) { 
+            $rows[$i] = $row;
+        }
+        return $rows;
+}
+
+
 }
 ?>

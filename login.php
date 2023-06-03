@@ -8,22 +8,19 @@
 </head>
 <body>
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <form class="login-form p-5 border rounded shadow" method="post" action="../Livro-Caixa/Controller/Login.php">
-            <h2 class="text-center mb-4">BEM VINDO</h2>
+        <form class="login-form p-5 border rounded shadow" method="post" action="./Controller/LoginCrontroller.php">
+            <h2 class="text-center mb-4 h1">BEM-    VINDO</h2>
             <?php
-            if (isset($_GET['error']) && $_GET['error'] === 'invalid') {
-                echo '<p class="text-danger">Nick ou senha incorretos. Por favor, verifique suas credenciais.</p>';
-            }
             ?>
-            <div class="input-group">
+            <div class="input-group my-1">
                 <span class="input-group-text">Usuario</span>
                 <input type="text" name="nick" class="form-control"  required>
             </div>
-            <div class="input-group">
+            <div class="input-group my-1">
                 <span class="input-group-text">Senha</span>
                 <input type="password" name="senha" class="form-control"  required>
             </div>
-            <div class="input-group">
+            <div class="input-group my-1">
                 <input type="submit" value="Entrar" class="btn btn-success btn-block">
             </div>
         </form>

@@ -1,3 +1,14 @@
+
+<?php 
+	include_once './class/Produto.php';
+	session_start();
+	if ($_SESSION['nick'] == null || $_SESSION['nivel'] == null || $_SESSION['id_usuario'] == null) {
+		session_abort();
+		header('Location: ./login.php');
+	}
+	$p = new Produto;
+	$todosp = $p->BuscarTodosProdutos();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,9 +36,14 @@
 											<span class="input-group-text">Descrição</span>
 											<select name="forma_p" id="forma_p" class="form-select " required>
 												  <option selected>Escolha serviço</option>
-												  <option value="1">reparo</option>
-												  <option value="2">Manutenção</option>
-												  <option value="3">Formatação</option>
+												  <?php 
+												  	$i =0;
+												 	for ($i = 0; isset($todosp[$i]); $i++) { 
+														if ($todosp[$i]['tipo'] == 'entrada') {
+														echo '<option value="'.$todosp[$i]['id_produto'].'">'.$todosp[$i]['descricao'].'</option>';
+													}
+													}
+												  ?>
 											</select>
 										</div>
 									</div>
@@ -80,10 +96,15 @@
 											<span class="input-group-text">Descrição</span>
 
 											<select name="forma_p" id="forma_p" class="form-select " required>
-												  <option selected>Escolha serviço</option>
-												  <option value="1">reparo</option>
-												  <option value="2">Manutenção</option>
-												  <option value="3">Formatação</option>
+												  <option selected>Escolha Serviço</option>
+												  <?php 
+												  	$i =0;
+												 	for ($i = 0; isset($todosp[$i]); $i++) { 
+														if ($todosp[$i]['tipo'] == 'saida') {
+														echo '<option value="'.$todosp[$i]['id_produto'].'">'.$todosp[$i]['descricao'].'</option>';
+													}
+													}
+												  ?>
 											</select>
 										</div>
 									</div>
