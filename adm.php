@@ -48,11 +48,11 @@
 
                     <div class="collapse multi-collapse" id="Funcionario_a">
                          <div class="my-3"><span class="tw-bold h4 ">Adicionar funcionario</span> </div>
-                         <form action="">
+                         <form action="./Controller/AdmCrontroller.php" method="post">
                               <div class="mb-3">
                                    <div class="input-group">
                                         <span class="input-group-text">Nome</span>
-                                        <input type="text" name="Nome_f" id="" class="form-control">
+                                        <input type="text" name="Nick_f" id="" class="form-control">
                                    </div>
                               </div>
                               <div class="mb-3">
@@ -79,7 +79,7 @@
 
                     <div class="collapse multi-collapse" id="Funcionario_e">
                          <div class="my-3 tw-bold h4"><span>Excluir funcionario</span></div>
-                         <form action="">
+                         <form action="./Controller/AdmCrontroller.php" method="post">
                               <div class="mb-3">
                                         <select name="deletar_f" id="" class="form-select" >
                                              <option selected>Escolha um usuario</option>
@@ -102,10 +102,10 @@
                     
                     <div class="collapse multi-collapse" id="Funcionario_an">
                          <div class="my-3"><span class="tw-bold h4 ">Alterar Nome</span> </div>
-                         <form action="">
+                         <form action="./Controller/AdmCrontroller.php" method="post">
                               <div class="input-group mb-3">
                                    <span class="input-group-text">Novo Nome</span>
-                                   <input type="text" name="a_nome" id="" class="form-control">
+                                   <input type="text" name="a_nick" id="" class="form-control">
                               </div>
                               <div class="input-group mb-3">
                                    <span class="input-group-text">usuario</span>
@@ -122,7 +122,7 @@
 
                     <div class="collapse multi-collapse" id="Funcionario_as">
                          <div class="my-3"><span class="tw-bold h4 ">Alterar Senha</span> </div>
-                         <form action="">
+                         <form action="./Controller/AdmCrontroller.php" method="post">
                               <div class="input-group mb-3">
                                    <span class="input-group-text">Nova Senha</span>
                                    <input type="password" name="a_senha" id="" class="form-control">
@@ -142,7 +142,7 @@
 
                     <div class="collapse multi-collapse" id="Funcionario_ani">
                          <div class="my-3"><span class="tw-bold h4 ">Alterar Nivel</span> </div>
-                         <form action="">
+                         <form action="./Controller/AdmCrontroller.php" method="post">
                               <div class="input-group mb-3">
                                    <span class="input-group-text">Novo Nivel</span>
                                    <select name="a_nivel" id="" class="form-select">
@@ -165,7 +165,7 @@
 
                     <div class="collapse multi-collapse" id="produto_a">
                          <div class="my-3"><span class="tw-bold h4 ">Adicionar Produto</span> </div>
-                         <form action="">
+                         <form action="./Controller/AdmCrontroller.php" method="post">
                               <div class="mb-3">
                                    <div class="input-group">
                                         <span class="input-group-text">Descrição</span>
@@ -193,7 +193,7 @@
 
                     <div class="collapse multi-collapse" id="produto_e">
 						<div class="my-3 tw-bold h4"><span>Excluir produto</span></div>
-						<form action="">
+						<form action="./Controller/AdmCrontroller.php" method="post">
 							<div class="mb-3">
 									<select name="deletar_p" id="" class="form-select" >
 										<option selected>Escolha um produto</option>
@@ -216,7 +216,7 @@
 
                     <div class="collapse multi-collapse" id="produto_ad">
 						<div class="my-3"><span class="tw-bold h4 ">Alterar Descrição</span> </div>
-						<form action="">
+						<form action="./Controller/AdmCrontroller.php" method="post">
 							<div class="input-group mb-3">
 								<span class="input-group-text">Nova Descrição</span>
 								<input type="text" name="a_descricao" id="" class="form-control">
@@ -236,7 +236,7 @@
 
                     <div class="collapse multi-collapse" id="produto_at">
 						<div class="my-3"><span class="tw-bold h4 ">Alterar Tipo</span> </div>
-						<form action="">
+						<form action="./Controller/AdmCrontroller.php" method="post">
 							<div class="input-group mb-3">
 								<span class="input-group-text">Nova Tipo</span>
 								<Select class="form-select">
@@ -259,7 +259,7 @@
 
                     <div class="collapse multi-collapse" id="produto_av">
 						<div class="my-3"><span class="tw-bold h4 ">Alterar Valor</span> </div>
-						<form action="">
+						<form action="./Controller/AdmCrontroller.php" method="post">
 							<div class="input-group mb-3">
 								<span class="input-group-text">Novo Valor</span>
 								<input type="text" name="a_valor" id="" class="form-control">
