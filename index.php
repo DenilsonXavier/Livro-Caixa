@@ -1,6 +1,7 @@
 
 <?php 
 	include_once './class/Produto.php';
+	include_once './class/Lancamento.php';
 	session_start();
 	if ($_SESSION['nick'] == null || $_SESSION['nivel'] == null || $_SESSION['id_usuario'] == null) {
 		session_abort();
@@ -8,6 +9,8 @@
 	}
 	$p = new Produto;
 	$todosp = $p->BuscarTodosProdutos();
+	$l = new Lancamento;
+	$todosl = $l->BuscarTodosLancamentos();
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,6 +19,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Home</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css\bootstrap-icons-1.10.5\font\bootstrap-icons.min.css">
 </head>
 <body >
 
@@ -30,11 +34,11 @@
 									<span>Entrada</span>
 								</div>
 								<!-- Formulario de entrada-->
-								<form>
+								<form action="./Controller/IndexController.php" method="post">
 									<div class="mb-3">
 										<div class="input-group ">
 											<span class="input-group-text">Descrição</span>
-											<select name="forma_p" id="forma_p" class="form-select " required>
+											<select name="descricao_p" id="descricao_p" class="form-select " required>
 												  <option selected>Escolha serviço</option>
 												  <?php 
 												  	$i =0;
@@ -60,7 +64,13 @@
 										</div>
 									</div>
 									<div class="mb-3 ">
-										<div class="input-group">
+										<div class="input-group ">
+											<?php 
+												if (isset($_SESSION['Erronume'])) {
+													echo '<label for="" class="h6 form-label text-danger">Coloque numeros interios com ponto final.</label>';
+												}
+												$_SESSION['Erronume'] = null;
+											?>
 											<span class="input-group-text">Valor do Lançamento</span>
 											<span class="input-group-text">R$</span>
 											<input type="text" name="valor_l" id="valor_l" class="form-control" required>
@@ -72,6 +82,7 @@
 										</div>
 									</div>
 									<div class="d-grid gap-2 mb-3">
+										<input type="hidden" name="tipo_acao" value="entrada">
 										 <button type="submit" class="btn btn-outline-success  justify-content-start">Lançar</button>
 									</div>
 									<div class="mb-3 input-group ">
@@ -89,13 +100,13 @@
 							</div>
 
 							<!-- Formulario de saida -->
-							<form>
+							<form action="./Controller/IndexController.php" method="post">
 									
 									<div class="mb-3">
 										<div class="input-group input-group-sm">
 											<span class="input-group-text">Descrição</span>
 
-											<select name="forma_p" id="forma_p" class="form-select " required>
+											<select name="descricao_p" id="descricao_p" class="form-select " required>
 												  <option selected>Escolha Serviço</option>
 												  <?php 
 												  	$i =0;
@@ -112,14 +123,20 @@
 									
 									<div class="mb-3 ">
 										<div class="input-group input-group-sm">
-
+										<?php 
+												if (isset($_SESSION['Erronums'])) {
+													echo '<label for="" class="h6 form-label text-danger">Coloque numeros interios com ponto final.</label>';
+												}
+												$_SESSION['Erronums'] = null;
+												?>
 											<span class="input-group-text">Valor do Lançamento</span>
 											<span class="input-group-text">R$</span>
-											<input type="number" name="valor_l" id="valor_l" class="form-control" required>
+											<input type="text" name="valor_l" id="valor_l" class="form-control" required>
 										</div>
 									</div>
 
 									<div class="d-grid gap-2 mb-3">
+										<input type="hidden" name="tipo_acao" value="saida">
 										 <button type="submit" class="btn btn-outline-danger justify-content-start">Lançar</button>
 									</div>
 
@@ -133,7 +150,7 @@
 			<!-- Area da Tabela -->
 			<div class="col-7 text-center" >
 			<div class="table-responsive">
-				<table class="table w-100 p-3 my-4 table-sm table-striped table-hover align-middle">
+				<table class="table w-100 p-3 my-4 table-sm table-hover align-middle">
 					<thead>
 					<tr>
 						<th>Data</th>
@@ -147,31 +164,62 @@
 					</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th>11/09/2002</th>
-							<th>Dinheiro facil</th>
-							<th>69</th>
-							<th>8000.00</th>
-							<th>Entrada</th>
-							<th>10</th>
-							<th>8000.00</th>
-						</tr>
-						<tr>
-							<th>11/09/2002</th>
-							<th>Dinheiro facil</th>
-							<th>69</th>
-							<th>8000.00</th>
-							<th>Entrada</th>
-							<th>10</th>
-							<th>8000.00</th>
-						</tr>
+						<?php 
+						
+							for ($i=0; isset($todosl[$i]) ; $i++) { 
+								switch($todosl[$i]['tipo']){
+									case 'entrada':
+										$cor = ' class="text-success">';
+										break;
+									case 'saida':
+										$cor = ' class="text-danger">';
+										break;
+								} 
+							echo 
+							'<tr'.$cor.
+							'<th>'.substr($todosl[$i]['dia'], 0, -15).'</th>
+							<th>'.$todosl[$i]['descricao'].'</th>
+							<th>'.$todosl[$i]['id_produto'].'</th>
+							<th>'.number_format((float)($todosl[$i]['VT']/$todosl[$i]['quantidade']), 2, '.', '').'</th>
+							<th>'.$todosl[$i]['tipo'].'</th>
+							<th>'.$todosl[$i]['quantidade'].'</th>
+							<th>'.number_format((float)$todosl[$i]['VT'], 2, '.', '').'</th>
+							<th><form action="#"><input type="hidden" name="id_lancamento" value=""><button type="submit" class="btn"><i class="bi bi-trash-fill text-danger"></i></button></form></th>
+							</tr>'	
+								
+								;
+							}
+						?>
 					</tbody>
 					<tfoot>
-						<tr class="text-start table-active">
+						<?php 
+						
+						$tvalor = 0;
+
+						for ($i=0;isset($todosl[$i]); $i++) { 
+							switch ($todosl[$i]['tipo']) {
+								case 'entrada':
+									$tvalor += $todosl[$i]['VT'];
+									break;
+								case 'saida':
+									$tvalor -= $todosl[$i]['VT'];
+									break;
+							}
+							
+						}
+						if ($tvalor >= 1) {
+							$cor = ' text-success';
+						}else {
+							$cor = ' text-danger';
+						}
+						?>
+						<tr class="text-start table-active ">
 							<th colspan="6">
 								Total do dia
+								
+								
 							</th>
-							<th>16000000</th>
+							<th colspan="2" class="text-center<?php echo $cor.'">'.number_format((float)$tvalor, 2, '.', ''); ?></th>
 						</tr>
 					</tfoot>
 				</table>

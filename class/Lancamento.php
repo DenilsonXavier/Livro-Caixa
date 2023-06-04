@@ -1,39 +1,24 @@
 <?php
+include_once 'Conect.php';
+date_default_timezone_set('America/Sao_Paulo');
+
 class Lancamento extends Conexao {
     
-    public function adicionarLancamento($quantidade, $VT,$dia,$tipo) {
+    public function adicionarLancamento($id_produto,$id_usuario,$quantidade, $vt, $tipo) {
         $this->conectar();
+        $data = date('Y-m-d H:i:s', time());
 
-       
-        $consulta = $this->conexao->prepare("INSERT INTO lancamentos (quantidade, VT, dia,tipo ) VALUES (?, ?)");
-        $consulta->bind_param("sd", $quantidade, $VT,$dia,$tipo);
+  
+        $consulta = $this->conexao->prepare("INSERT INTO `lancamento` (`id_lancamento`, `id_produto`, `id_usuario`, `quantidade`, `VT`, `dia`, `tipo`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+        $consulta->bind_param('iiidss',$id_produto, $id_usuario, $quantidade, $vt, $data, $tipo);
         $consulta->execute();
-
-       
-        if ($consulta->errno) {
-            die("Erro ao adicionar lançamento: " . $consulta->error);
-        }
-
-        $consulta->close();
-        $this->fecharConexao();
-    }
-
-    
-    public function alterarLancamento($id_lancamento,$id_produto,$id_usuario,$quantidade, $VT,$dia,$tipo) {
-        $this->conectar();
-
-        
-        $consulta = $this->conexao->prepare("UPDATE lancamentos SET quantidade = ?, VT = ?,dia = ?,tipo = ? WHERE id_lancamento = ?,id_produto = ?,id_usuario = ?");
-        $consulta->bind_param("sdi", $quantidade, $VT,$dia,$tipo, $id_lancamento,$id_produto,$id_usuario );
-        $consulta->execute();
-
         
         if ($consulta->errno) {
-            die("Erro ao alterar lançamento: " . $consulta->error);
-        }
-
-        $consulta->close();
-        $this->fecharConexao();
+             die("Erro ao adicionar lançamento: " . $consulta->error);
+         }
+ 
+         $consulta->close();
+         $this->fecharConexao();
     }
 
     
@@ -53,5 +38,18 @@ class Lancamento extends Conexao {
         $consulta->close();
         $this->fecharConexao();
     }
+    public function BuscarTodosLancamentos(){
+        $this->conectar();
+        $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.tipo, lancamento.VT, produto.descricao, produto.tipo FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto
+        ");  
+        $consulta->execute();
+
+        $resultado = $consulta->get_result();
+        for ($i=0; $row = $resultado->fetch_assoc() ; $i++) { 
+            $rows[$i] = $row;
+        }
+        return $rows;
+}
+
 }
 ?>
