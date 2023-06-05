@@ -15,11 +15,11 @@ class Pesquisa extends Lancamento{
 
           switch($tipo){
                case 1:
-                    $Stringbusca .= "lancamento.tipo = 'entrada'";
+                    $Stringbusca .= "produto.tipo = 'entrada'";
                     $contartipos = 1;
                     break;
                case 2:
-                    $Stringbusca .= "lancamento.tipo = 'saida'";
+                    $Stringbusca .= "produto.tipo = 'saida'";
                     $contartipos = 1;
                     break;
                

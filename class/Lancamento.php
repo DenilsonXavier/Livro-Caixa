@@ -4,13 +4,13 @@ date_default_timezone_set('America/Sao_Paulo');
 
 class Lancamento extends Conexao {
     
-    public function adicionarLancamento($id_produto,$id_usuario,$quantidade, $vt, $tipo) {
+    public function adicionarLancamento($id_produto,$id_usuario,$quantidade, $vt) {
         $this->conectar();
         $data = date('Y-m-d H:i:s', time());
 
   
-        $consulta = $this->conexao->prepare("INSERT INTO `lancamento` (`id_lancamento`, `id_produto`, `id_usuario`, `quantidade`, `VT`, `dia`, `tipo`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
-        $consulta->bind_param('iiidss',$id_produto, $id_usuario, $quantidade, $vt, $data, $tipo);
+        $consulta = $this->conexao->prepare("INSERT INTO `lancamento` (`id_lancamento`, `id_produto`, `id_usuario`, `quantidade`, `VT`, `dia`) VALUES (NULL, ?, ?, ?, ?, ?)");
+        $consulta->bind_param('iiids',$id_produto, $id_usuario, $quantidade, $vt, $data);
         $consulta->execute();
         
         if ($consulta->errno) {
@@ -40,7 +40,7 @@ class Lancamento extends Conexao {
     }
     public function BuscarTodosLancamentos(){
         $this->conectar();
-        $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.tipo, lancamento.VT, produto.descricao, produto.tipo FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto
+        $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.VT, produto.descricao, produto.tipo FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto
          ORDER BY lancamento.dia ASC");  
         $consulta->execute();
 
