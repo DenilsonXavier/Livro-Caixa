@@ -37,7 +37,6 @@
                                                   <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#produto_e" role="button" aria-expanded="false" aria-controls="produto_e">Excluir</a></div></li>
                                                   <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#produto_ad" role="button" aria-expanded="false" aria-controls="produto_ad">Alterar Descrição</a></div></li>
                                                   <li class="list-group-item"><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#produto_at" role="button" aria-expanded="false" aria-controls="produto_at">Alterar Tipo</a></div></li>
-                                                  <li class="list-group-item"><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#produto_av" role="button" aria-expanded="false" aria-controls="produto_av">Alterar Valor</a></div></li>
                                              </ul>
                                         </li>
                                    </div>
@@ -256,28 +255,6 @@
 							<div class="text-center mb-3 d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Tipo</button></div>
 						</form>
                     </div>
-
-                    <div class="collapse multi-collapse" id="produto_av">
-						<div class="my-3"><span class="tw-bold h4 ">Alterar Valor</span> </div>
-						<form action="./Controller/AdmCrontroller.php" method="post">
-							<div class="input-group mb-3">
-								<span class="input-group-text">Novo Valor</span>
-								<input type="text" name="a_valor" id="" class="form-control">
-							</div>
-							<div class="input-group mb-3">
-								<span class="input-group-text">Produto</span>
-								<select name="a_produto" id="" class="form-select">
-									<option selected>Selecione</option>
-									<option value="1">Banana</option>
-									<option value="115">abacaxi</option>
-								</select>
-							</div>
-							<input type="hidden" name="tipo_acao" value="p_alterarvalor">
-							<div class="text-center mb-3 d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Valor</button></div>
-						</form>
-                    </div>
-
-
                </div>
           </div>
 			

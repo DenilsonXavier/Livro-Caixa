@@ -91,107 +91,78 @@ class prod  extends Produto  {
 	
 	
 }
-if($_POST ['tipo_acao']== 'f_adicionar'){
-		
-	$nick = $_POST['nick_f'];
-	$senha = $_POST['senha_f'];
-	$nivel = $_POST['nivel_f'];
+switch ($_POST['tipo_acao']) {
+    case 'f_adicionar':
+        $nick = $_POST['nick_f'];
+        $senha = $_POST['senha_f'];
+        $nivel = $_POST['nivel_f'];
 
-	$adm = new adm();
-	$adm->adicionarUsuario($nick,$senha,$nivel);
+        $adm = new adm();
+        $adm->adicionarUsuario($nick, $senha, $nivel);
+        break;
+
+    case 'f_excluir':
+        $id = $_POST['deletar_f'];
+
+        $adm = new adm();
+        $adm->deletarUsuario($id);
+        break;
+
+    case 'f_alterarnome':
+        $nick = $_POST['a_nick'];
+        $id = $_POST['a_usuario'];
+
+        $adm = new adm();
+        $adm->alteraUsuarioNick($nick, $id);
+        break;
+
+    case 'f_alterarsenha':
+        $senha = $_POST['a_senha'];
+        $id = $_POST['a_usuario'];
+
+        $adm = new adm();
+        $adm->alteraUsuarioSenha($senha, $id);
+        break;
+
+    case 'f_alterarnivel':
+        $nivel = $_POST['a_nivel'];
+        $id = $_POST['a_usuario'];
+
+        $adm = new adm();
+        $adm->alteraUsuarioNivel($nivel, $id);
+        break;
+
+    case 'p_adicionar':
+        $descricao = $_POST['descricao_p'];
+        $tipo = $_POST['tipo_p'];
+        $valor = $_POST['valor_p'];
+
+        $prod = new prod();
+        $prod->adicionarProduto($descricao, $tipo, $valor);
+        break;
+
+    case 'p_excluir':
+        $id = $_POST['deletar_p'];
+     
+        break;
+
+    case 'p_alterardescricaor':
+        $descricao = $_POST['a_descricao'];
+        $id = $_POST['a_produto'];
+
+        $prod = new prod();
+        $prod->alterarDescricaoProduto($descricao, $id);
+        break;
+
+    case 'p_alterarTipo':
+        $tipo = $_POST['a_tipo'];
+        $id = $_POST['a_produto'];
+
+        $prod = new prod();
+        $prod->alterarTipoProduto($tipo, $id);
+        break;
+
+    default:
+     
+        break;
 }
-
-	if($_POST ['tipo_acao']== 'f_excluir'){
-		
-		$id = $_POST['deletar_f'];
-	
-		$adm = new adm();
-		$adm->deletarUsuario($id);
-	}
-	if($_POST ['tipo_acao']== 'f_alterarnome'){
-		
-		$nick = $_POST['a_nick'];
-		$id = $_POST['a_usuario'];
-	
-		$adm = new adm();
-		$adm->alteraUsuarioNick($nick,$id);
-	}
-	if($_POST ['tipo_acao']== 'f_alterarsenha'){
-		
-		$senha = $_POST['a_senha'];
-		$id = $_POST['a_usuario'];
-	
-		$adm = new adm();
-		$adm->alteraUsuarioSenha($senha,$id);
-	}
-	if($_POST ['tipo_acao']== 'f_alterarnivel'){
-		
-		$nivel = $_POST['a_nivel'];
-		$id = $_POST['a_usuario'];
-	
-		$adm = new adm();
-		$adm->alteraUsuarioNivel($nivel,$id);
-	}
-
-	if($_POST ['tipo_acao']== 'p_adicionar'){
-		
-		$descricao = $_POST['descricao_p'];
-		$tipo = $_POST['tipo_p'];
-		$valor = $_POST['valor_p'];
-	
-		$prod = new prod();
-		$prod->adicionarProduto($descricao,$tipo,$valor);
-	}
-
-	if($_POST ['tipo_acao']== 'p_excluir'){
-		
-		$id = $_POST['deletar_p'];
-	
-	if ($_POST['tipo_acao'] == 'p_alterardescricaor') {
-    $descricao = $_POST['a_descricao'];
-    $id = $_POST['a_produto'];
-
-    $prod = new prod();
-    $prod->alterarDescricaoProduto($descricao, $id);
-}
-
-if ($_POST['tipo_acao'] == 'p_alterarTipo') {
-    $tipo = $_POST['a_tipo'];
-    $id = $_POST['a_produto'];
-
-    $prod = new prod();
-    $prod->alterarTipoProduto($tipo, $id);
-}
-
-if ($_POST['tipo_acao'] == 'p_alterarvalor') {
-    $valor = $_POST['a_valor'];
-    $id = $_POST['a_produto'];
-
-    $prod = new prod();
-    $prod->alterarValorProduto($valor, $id);
-}
-if ($_POST['tipo_acao'] == 'p_alterardescricaor') {
-    $descricao = $_POST['a_descricao'];
-    $id = $_POST['a_produto'];
-
-    $prod = new prod();
-    $prod->alterarDescricaoProduto($descricao, $id);
-}
-
-if ($_POST['tipo_acao'] == 'p_alterarTipo') {
-    $tipo = $_POST['a_tipo'];
-    $id = $_POST['a_produto'];
-
-    $prod = new prod();
-    $prod->alterarTipoProduto($tipo, $id);
-}
-
-if ($_POST['tipo_acao'] == 'p_alterarvalor') {
-    $valor = $_POST['a_valor'];
-    $id = $_POST['a_produto'];
-
-    $prod = new prod();
-    $prod->alterarValorProduto($valor, $id);
-}
-
-	}
