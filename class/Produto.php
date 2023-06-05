@@ -2,12 +2,12 @@
 require_once 'Conect.php';
 class Produto extends Conexao {
    
-    public function adicionarProduto($descricao, $tipo, $valor) {
+    public function adicionarProduto($descricao, $tipo) {
         $this->conectar();
     
        
-        $consulta = $this->conexao->prepare("INSERT INTO produto (descricao, tipo, valor) VALUES (?, ?, ?)");
-        $consulta->bind_param("ssi", $descricao, $tipo, $valor);
+        $consulta = $this->conexao->prepare("INSERT INTO produto (descricao, tipo) VALUES (?, ?)");
+        $consulta->bind_param("ss", $descricao, $tipo);
         $consulta->execute();
     
 
@@ -19,14 +19,14 @@ class Produto extends Conexao {
         $this->fecharConexao();
     }
 
-    public function alterarProduto($id_produto,$descricao, $tipo,$valor) {
+    public function alterarProduto($id_produto,$descricao, $tipo) {
         $this->conectar();
 
-        $consulta = $this->conexao->prepare("UPDATE produto SET descricao = ?,tipo = ?,valor = ? WHERE id_produto = ?");
+        $consulta = $this->conexao->prepare("UPDATE produto SET descricao = ?,tipo = ? WHERE id_produto = ?");
 
-        $consulta->bind_param("ssdi", $descricao, $tipo,$valor, $id_produto);
+        $consulta->bind_param("ssdi", $descricao, $tipo, $id_produto);
 
-        $consulta->bind_param("sdi", $descricao, $tipo,$valor, $id_produto);
+        $consulta->bind_param("sdi", $descricao, $tipo, $id_produto);
 
         $consulta->execute();
 
@@ -70,7 +70,6 @@ class Produto extends Conexao {
             echo "id_produto: " . $row['id_produto'] . "<br>";
             echo "Descrição: " . $row['descricao'] . "<br>";
             echo "Tipo: " . $row['tipo'] . "<br>";
-            echo "Valor: " . $row['valor'] . "<br>";
           
         }
     } else {
