@@ -84,7 +84,7 @@
                                         <select name="deletar_f" id="" class="form-select" >
                                              <option selected>Escolha um usuario</option>
                                              <option value="1" required>admin</option>
-                                             <option value="2">Root</option>
+                                             <option value="11">Root</option>
                                         </select>
                               </div>
                               <div class="mb-3 text-start ">
@@ -112,7 +112,7 @@
                                    <select name="a_usuario" id="" class="form-select">
                                         <option selected>Selecione</option>
                                         <option value="1">Admin</option>
-                                        <option value="2">root</option>
+                                        <option value="9">root</option>
                                    </select>
                               </div>
 							<input type="hidden" name="tipo_acao" value="f_alterarnome">
@@ -132,7 +132,7 @@
                                    <select name="a_usuario" id="" class="form-select">
                                         <option selected>Selecione</option>
                                         <option value="1">Admin</option>
-                                        <option value="2">root</option>
+                                        <option value="9">root</option>
                                    </select>
                               </div>
 							<input type="hidden" name="tipo_acao" value="f_alterarsenha">
@@ -146,8 +146,8 @@
                               <div class="input-group mb-3">
                                    <span class="input-group-text">Novo Nivel</span>
                                    <select name="a_nivel" id="" class="form-select">
-                                        <option value="1" selected>Funcionario</option>
-                                        <option value="2">Administrador</option>
+                                        <option value="funcionario" selected>Funcionario</option>
+                                        <option value="administrador">Administrador</option>
                                    </select>
                               </div>
                               <div class="input-group mb-3">
@@ -155,7 +155,7 @@
                                    <select name="a_usuario" id="" class="form-select">
                                         <option selected>Selecione</option>
                                         <option value="1">Admin</option>
-                                        <option value="2">root</option>
+                                        <option value="9">root</option>
                                    </select>
                               </div>
 							<input type="hidden" name="tipo_acao" value="f_alterarnivel">
@@ -198,7 +198,7 @@
 									<select name="deletar_p" id="" class="form-select" >
 										<option selected>Escolha um produto</option>
 										<option value="1" required>abacaxi</option>
-										<option value="2">banana</option>
+										<option value="115">banana</option>
 									</select>
 							</div>
 							<div class="mb-3 text-start ">
@@ -226,7 +226,7 @@
 								<select name="a_produto" id="" class="form-select">
 									<option selected>Selecione</option>
 									<option value="1">abacaxi</option>
-									<option value="2">banana</option>
+									<option value="115">banana</option>
 								</select>
 							</div>
 							<input type="hidden" name="tipo_acao" value="p_alterardescricaor">
@@ -239,9 +239,9 @@
 						<form action="./Controller/AdmCrontroller.php" method="post">
 							<div class="input-group mb-3">
 								<span class="input-group-text">Nova Tipo</span>
-								<Select class="form-select">
-									<option value="1">Entrada</option>
-									<option value="2">Saida</option>
+								 <Select name="a_tipo" id="" class="form-select" >
+									<option value="entrada">Entrada</option>
+									<option value="saida">Saida</option>
 								</Select>
 							</div>
 							<div class="input-group mb-3">
@@ -249,7 +249,7 @@
 								<select name="a_produto" id="" class="form-select">
 									<option selected>Selecione</option>
 									<option value="1">Abacaxi</option>
-									<option value="2">banana</option>
+									<option value="115">banana</option>
 								</select>
 							</div>
 							<input type="hidden" name="tipo_acao" value="p_alterarTipo">
@@ -269,7 +269,7 @@
 								<select name="a_produto" id="" class="form-select">
 									<option selected>Selecione</option>
 									<option value="1">Banana</option>
-									<option value="2">abacaxi</option>
+									<option value="115">abacaxi</option>
 								</select>
 							</div>
 							<input type="hidden" name="tipo_acao" value="p_alterarvalor">
