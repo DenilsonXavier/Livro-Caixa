@@ -6,14 +6,26 @@ if (!isset($_SESSION['nick']) || !isset($_SESSION['nivel']) || !isset($_SESSION[
 	session_abort();
 	header('Location: ./login.php');
 }
-if(!isset($_POST)){
-	$_SESSION['pes_tipo'] = null;
-	$_SESSION['pes_data'] = null;
-	$_SESSION['pes_descricao'] = null;
-	$_SESSION['pes_id_produto'] = null;
+
+if(isset($_POST['p_tipo'])){$_SESSION['pes_tipo'] = $_POST['p_tipo'];}
+if(isset($_POST['p_data'])){$_SESSION['pes_data'] = $_POST['p_data'];}
+if(isset($_POST['p_descricao'])){$_SESSION['pes_descricao'] = $_POST['p_descricao'];}
+if(isset($_POST['p_codigo'])){$_SESSION['pes_id_produto'] = $_POST['p_codigo'];}
+if(isset($_POST['p_ordem'])){$_SESSION['pes_ordem'] = $_POST['p_ordem'];}
+if(isset($_POST['p_pag'])){$_SESSION['pes_pag'] = $_POST['p_pag'];}
+
+if(!isset($_SESSION['pes_pag'])){
+	$_SESSION['pes_tipo'] = '';
+	$_SESSION['pes_data'] = '';
+	$_SESSION['pes_descricao'] = '';
+	$_SESSION['pes_id_produto'] = '';
 	$_SESSION['pes_ordem'] = 'ASC';
 	$_SESSION['pes_pag'] = 1;
+
 }
+$p = new Pesquisa;
+$pesquisa = $p->busca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['pes_descricao'], $_SESSION['pes_id_produto'], $_SESSION['pes_ordem'], $_SESSION['pes_pag']);;
+
 
 ?>
 
@@ -38,7 +50,7 @@ if(!isset($_POST)){
           <!-- Area Tabela -->
           <div class="col-8">
                <div class="table-responsive">
-				<table class="table w-100 p-3 my-4 table-sm table-hover">
+				<table class="table w-100 p-3 my-4 table-sm table-hover"">
 					<thead>
 					<tr>
 						<th>Data</th>
@@ -52,33 +64,32 @@ if(!isset($_POST)){
 					</tr>
 					</thead>
 					<tbody class="table-group-divider">
-						<tr>
-							<th>11/09/2002</th>
-							<th>Dinheiro facil</th>
-							<th>69</th>
-							<th>8000.00</th>
-							<th>Entrada</th>
-							<th>10</th>
-							<th>8000.00</th>
-						</tr>
-						<tr>
-							<th>11/09/2002</th>
-							<th>Dinheiro facil</th>
-							<th>69</th>
-							 <th>8000.00</th>
-							<th>Entrada</th>
-							<th>10</th>
-							<th>8000.00</th>
-						</tr>
-						<tr>
-							<th>11/09/2002</th>
-							<th>Dinheiro facil</th>
-							<th>69</th>
-							<th>8000.00</th>
-							<th>Entrada</th>
-							<th>10</th>
-							<th>8000.00</th>
-						</tr>
+						<?php 
+						
+							for ($i=0; isset($pesquisa[$i]) ; $i++) { 
+								switch($pesquisa[$i]['tipo']){
+									case 'entrada':
+										$cor = ' class="text-success">';
+										break;
+									case 'saida':
+										$cor = ' class="text-danger">';
+										break;
+								} 
+							echo 
+							'<tr'.$cor.
+							'<th>'.substr($pesquisa[$i]['dia'], 0, -15).'</th>
+							<th>'.$pesquisa[$i]['descricao'].'</th>
+							<th>'.$pesquisa[$i]['id_produto'].'</th>
+							<th>'.number_format((float)($pesquisa[$i]['VT']/$pesquisa[$i]['quantidade']), 2, '.', '').'</th>
+							<th>'.$pesquisa[$i]['tipo'].'</th>
+							<th>'.$pesquisa[$i]['quantidade'].'</th>
+							<th>'.number_format((float)$pesquisa[$i]['VT'], 2, '.', '').'</th>
+							<th><form action="#"><input type="hidden" name="id_lancamento" value=""><button type="submit" class="btn"><i class="bi bi-trash-fill text-danger"></i></button></form></th>
+							</tr>'	
+								
+								;
+							}
+						?>
 					</tbody>
 					<tfoot>
 						<tr class="text-start table-active">
@@ -95,15 +106,15 @@ if(!isset($_POST)){
           </div>
 
           <!-- Area Pesquisa -->
-          <div class="col-4 shadow border-1 my-4 mx-5 w-25 rounded-4">
+          <div class="col-4 shadow border-1 my-4  w-25 rounded-4">
                
                <div class="my-3">
-                    <form action="">
+                    <form action="./contabilidade.php" method="POST">
 				 <div class="text-center mb-3"> <span class="h2 tw-bold">Pesquisa</span></div>
 					<div class="input-group mb-1">
 						<span class="input-group-text">Tipo</span>
 						<select name="p_tipo" id="" class="form-select">
-							<option selected>Ambos</option>
+							<option value="" selected>Ambos</option>
 							<option value="1">Entrada</option>
 							<option value="2">Saida</option>
 						</select>
@@ -111,7 +122,7 @@ if(!isset($_POST)){
 					<div class="input-group mb-1">
                               <span class="input-group-text">Data</span>
 						<select name="p_data" id="" class="form-select">
-							<option selected>Todos os dias</option>
+							<option value="" selected>Todos os dias</option>
 							<option value="1">Hoje</option>
 							<option value="2">Essa Semana</option>
 							<option value="3">Esse Mês</option>
@@ -124,13 +135,13 @@ if(!isset($_POST)){
 					</div>
 					<div class="input-group mb-1">
 						<span class="input-group-text">Codigo produto</span>
-						<input type="text" name="p_codigop" id="" class="form-control">
+						<input type="text" name="p_codigo" id="" class="form-control">
 					</div>
 					<div class="input-group mb-1">
 						<span class="input-group-text">Ordem</span>
 						<select name="p_ordem" id="" class="form-select">
-							<option value="1" selected>Mais Recente</option>
-							<option value="2">Mais Antigo</option>
+							<option value="ASC" selected>Mais Recente</option>
+							<option value="DESC">Mais Antigo</option>
 						</select>
 					</div>
 					<div class="row mx-2">
