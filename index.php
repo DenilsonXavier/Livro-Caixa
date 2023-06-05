@@ -3,7 +3,7 @@
 	include_once './class/Produto.php';
 	include_once './class/Lancamento.php';
 	session_start();
-	if ($_SESSION['nick'] == null || $_SESSION['nivel'] == null || $_SESSION['id_usuario'] == null) {
+	if (!isset($_SESSION['nick']) || !isset($_SESSION['nivel']) || !isset($_SESSION['id_usuario']) ) {
 		session_abort();
 		header('Location: ./login.php');
 	}

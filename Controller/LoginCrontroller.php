@@ -37,4 +37,8 @@ $login = new Login;
         $_SESSION['nivel'] = $usuario['Nivel'];
         $_SESSION['id_usuario'] = $usuario['id_usuario'];
         header('Location: ../index.php');
+    }else{
+        session_start();
+        session_abort();
+        header('Location: ../login.php');
     }

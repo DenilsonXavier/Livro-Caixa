@@ -44,6 +44,7 @@ class Lancamento extends Conexao {
         ");  
         $consulta->execute();
 
+        $rows[0] = null;
         $resultado = $consulta->get_result();
         for ($i=0; $row = $resultado->fetch_assoc() ; $i++) { 
             $rows[$i] = $row;
