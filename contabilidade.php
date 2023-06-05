@@ -1,3 +1,24 @@
+
+<?php
+include_once 'Controller/ContabilidadeController.php';
+session_start();
+if (!isset($_SESSION['nick']) || !isset($_SESSION['nivel']) || !isset($_SESSION['id_usuario']) ) {
+	session_abort();
+	header('Location: ./login.php');
+}
+if(!isset($_POST)){
+	$_SESSION['pes_tipo'] = null;
+	$_SESSION['pes_data'] = null;
+	$_SESSION['pes_descricao'] = null;
+	$_SESSION['pes_id_produto'] = null;
+	$_SESSION['pes_ordem'] = 'ASC';
+	$_SESSION['pes_pag'] = 1;
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

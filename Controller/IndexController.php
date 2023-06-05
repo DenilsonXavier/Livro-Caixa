@@ -34,6 +34,8 @@ session_start();
                     
                     if (isset($_SESSION['nick']) && isset($_SESSION['nivel']) && isset($_SESSION['id_usuario'])) {
                          $l->adicionarLancamento($_POST['descricao_p'],$_SESSION['id_usuario'], 1, $_POST['valor_l'],'entrada');
+                         header('Location: ../index.php');
+                         exit();
                     }else{
                          session_abort();
                          header('Location: ../login.php');

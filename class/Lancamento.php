@@ -41,7 +41,7 @@ class Lancamento extends Conexao {
     public function BuscarTodosLancamentos(){
         $this->conectar();
         $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.tipo, lancamento.VT, produto.descricao, produto.tipo FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto
-        ");  
+         ORDER BY lancamento.dia ASC");  
         $consulta->execute();
 
         $rows[0] = null;

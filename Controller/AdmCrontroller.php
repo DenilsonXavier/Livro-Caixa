@@ -42,12 +42,12 @@ class adm  extends Usuario  {
 		$this->fecharConexao();
 	}
 }	
-class prod  extends Produto  {
+class prod  extends Produto {
 
 	public function alterarDescricaoProduto($id_produto, $descricao) {
 		$this->conectar();
 	
-		$consulta = $this->conexao->prepare("UPDATE produto SET descricao = ? WHERE id_produto = ?");
+		$consulta = $this->conexao->prepare("UPDATE produto SET descricao = ? WHERE produto.id_produto = ?");
 		$consulta->bind_param("si", $descricao, $id_produto);
 		$consulta->execute();
 	
@@ -61,28 +61,13 @@ class prod  extends Produto  {
 	
 	public function alterarTipoProduto($id_produto, $tipo) {
 		$this->conectar();
-	
-		$consulta = $this->conexao->prepare("UPDATE produto SET tipo = ? WHERE id_produto = ?");
+		$consulta = $this->conexao->prepare("UPDATE `produto` SET `tipo` = ? WHERE `produto`.`id_produto` = ?");
 		$consulta->bind_param("si", $tipo, $id_produto);
 		$consulta->execute();
 	
 		if ($consulta->errno) {
+			echo $consulta->error;
 			die("Erro ao alterar o tipo do produto: " . $consulta->error);
-		}
-	
-		$consulta->close();
-		$this->fecharConexao();
-	}
-	
-	public function alterarValorProduto($id_produto, $valor) {
-		$this->conectar();
-	
-		$consulta = $this->conexao->prepare("UPDATE produto SET valor = ? WHERE id_produto = ?");
-		$consulta->bind_param("di", $valor, $id_produto);
-		$consulta->execute();
-	
-		if ($consulta->errno) {
-			die("Erro ao alterar o valor do produto: " . $consulta->error);
 		}
 	
 		$consulta->close();
@@ -99,6 +84,7 @@ switch ($_POST['tipo_acao']) {
 
         $adm = new adm();
         $adm->adicionarUsuario($nick, $senha, $nivel);
+	   header('Location: ../adm.php');
         break;
 
     case 'f_excluir':
@@ -106,6 +92,7 @@ switch ($_POST['tipo_acao']) {
 
         $adm = new adm();
         $adm->deletarUsuario($id);
+	   header('Location: ../adm.php');
         break;
 
     case 'f_alterarnome':
@@ -114,6 +101,7 @@ switch ($_POST['tipo_acao']) {
 
         $adm = new adm();
         $adm->alteraUsuarioNick($nick, $id);
+	   header('Location: ../adm.php');
         break;
 
     case 'f_alterarsenha':
@@ -122,6 +110,7 @@ switch ($_POST['tipo_acao']) {
 
         $adm = new adm();
         $adm->alteraUsuarioSenha($senha, $id);
+	   header('Location: ../adm.php');
         break;
 
     case 'f_alterarnivel':
@@ -130,28 +119,32 @@ switch ($_POST['tipo_acao']) {
 
         $adm = new adm();
         $adm->alteraUsuarioNivel($nivel, $id);
+	   header('Location: ../adm.php');
         break;
 
     case 'p_adicionar':
         $descricao = $_POST['descricao_p'];
         $tipo = $_POST['tipo_p'];
-        $valor = $_POST['valor_p'];
 
         $prod = new prod();
-        $prod->adicionarProduto($descricao, $tipo, $valor);
+        $prod->adicionarProduto($descricao, $tipo);
+	   header('Location: ../adm.php');
         break;
 
     case 'p_excluir':
         $id = $_POST['deletar_p'];
+	   $prod = new Produto;
+	   $prod->deletarProduto($id);
+	   header('Location: ../adm.php');
      
         break;
 
     case 'p_alterardescricaor':
         $descricao = $_POST['a_descricao'];
         $id = $_POST['a_produto'];
-
         $prod = new prod();
-        $prod->alterarDescricaoProduto($descricao, $id);
+        $prod->alterarDescricaoProduto($id, $descricao);
+	   header('Location: ../adm.php');
         break;
 
     case 'p_alterarTipo':
@@ -159,10 +152,12 @@ switch ($_POST['tipo_acao']) {
         $id = $_POST['a_produto'];
 
         $prod = new prod();
-        $prod->alterarTipoProduto($tipo, $id);
+        $prod->alterarTipoProduto($id, $tipo);
+	   header('Location: ../adm.php');
         break;
 
     default:
      
+	   header('Location: ../adm.php');
         break;
 }

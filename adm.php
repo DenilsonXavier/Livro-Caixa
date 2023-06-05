@@ -1,3 +1,19 @@
+<?php 
+include_once 'class/Produto.php';
+include_once 'class/Usuario.php';
+
+session_start();
+if (!isset($_SESSION['nick']) || !isset($_SESSION['nivel']) || !isset($_SESSION['id_usuario']) ) {
+     session_abort();
+     header('Location: ./login.php');
+}
+$p = new Produto;
+$todosp = $p->BuscarTodosProdutos();
+$u = new Usuario;
+$todosu = $u->BuscarTodosProdutos();
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -82,8 +98,11 @@
                               <div class="mb-3">
                                         <select name="deletar_f" id="" class="form-select" >
                                              <option selected>Escolha um usuario</option>
-                                             <option value="1" required>admin</option>
-                                             <option value="11">Root</option>
+                                             <?php 
+                                                  for ($i=0; isset($todosu[$i]); $i++) { 
+                                                       echo '<option value="'.$todosu[$i]['id_usuario'].'">'.$todosu[$i]['nick'].'</option>';
+                                                  }
+                                             ?>
                                         </select>
                               </div>
                               <div class="mb-3 text-start ">
@@ -110,8 +129,11 @@
                                    <span class="input-group-text">usuario</span>
                                    <select name="a_usuario" id="" class="form-select">
                                         <option selected>Selecione</option>
-                                        <option value="1">Admin</option>
-                                        <option value="9">root</option>
+                                             <?php 
+                                                  for ($i=0; isset($todosu[$i]); $i++) { 
+                                                       echo '<option value="'.$todosu[$i]['id_usuario'].'">'.$todosu[$i]['nick'].'</option>';
+                                                  }
+                                             ?>
                                    </select>
                               </div>
 							<input type="hidden" name="tipo_acao" value="f_alterarnome">
@@ -130,8 +152,11 @@
                                    <span class="input-group-text">Usuario</span>
                                    <select name="a_usuario" id="" class="form-select">
                                         <option selected>Selecione</option>
-                                        <option value="1">Admin</option>
-                                        <option value="9">root</option>
+                                             <?php 
+                                                  for ($i=0; isset($todosu[$i]); $i++) { 
+                                                       echo '<option value="'.$todosu[$i]['id_usuario'].'">'.$todosu[$i]['nick'].'</option>';
+                                                  }
+                                             ?>
                                    </select>
                               </div>
 							<input type="hidden" name="tipo_acao" value="f_alterarsenha">
@@ -153,8 +178,11 @@
                                    <span class="input-group-text">Usuario</span>
                                    <select name="a_usuario" id="" class="form-select">
                                         <option selected>Selecione</option>
-                                        <option value="1">Admin</option>
-                                        <option value="9">root</option>
+                                             <?php 
+                                                  for ($i=0; isset($todosu[$i]); $i++) { 
+                                                       echo '<option value="'.$todosu[$i]['id_usuario'].'">'.$todosu[$i]['nick'].'</option>';
+                                                  }
+                                             ?>
                                    </select>
                               </div>
 							<input type="hidden" name="tipo_acao" value="f_alterarnivel">
@@ -174,13 +202,10 @@
                               <div class="mb-3">
                                    <div class="input-group">
                                         <span class="input-group-text">Tipo</span>
-                                        <input type="text" name="tipo_p" id="" class="form-control">
-                                   </div>
-                              </div>
-                              <div class="mb-3">
-                                   <div class="input-group">
-                                        <span class="input-group-text">Valor do produto</span>
-                                        <input type="text" name="valor_p" id="" class="form-control">
+                                        <Select name="tipo_p" id="" class="form-select" >
+                                            <option value="entrada">Entrada</option>
+                                            <option value="saida">Saida</option>
+                                       </Select>
                                    </div>
                               </div>
                               <div class="mb-3 d-grid">
@@ -196,8 +221,11 @@
 							<div class="mb-3">
 									<select name="deletar_p" id="" class="form-select" >
 										<option selected>Escolha um produto</option>
-										<option value="1" required>abacaxi</option>
-										<option value="115">banana</option>
+                                             <?php 
+                                                  for ($i=0; isset($todosp[$i]); $i++) { 
+                                                       echo '<option value="'.$todosp[$i]['id_produto'].'">'.$todosp[$i]['descricao'].'</option>';
+                                                  }
+                                             ?>
 									</select>
 							</div>
 							<div class="mb-3 text-start ">
@@ -224,8 +252,11 @@
 								<span class="input-group-text">Produto</span>
 								<select name="a_produto" id="" class="form-select">
 									<option selected>Selecione</option>
-									<option value="1">abacaxi</option>
-									<option value="115">banana</option>
+                                             <?php 
+                                                  for ($i=0; isset($todosp[$i]); $i++) { 
+                                                       echo '<option value="'.$todosp[$i]['id_produto'].'">'.$todosp[$i]['descricao'].'</option>';
+                                                  }
+                                             ?>
 								</select>
 							</div>
 							<input type="hidden" name="tipo_acao" value="p_alterardescricaor">
@@ -247,8 +278,11 @@
 								<span class="input-group-text">Produto</span>
 								<select name="a_produto" id="" class="form-select">
 									<option selected>Selecione</option>
-									<option value="1">Abacaxi</option>
-									<option value="115">banana</option>
+                                             <?php 
+                                                  for ($i=0; isset($todosp[$i]); $i++) { 
+                                                       echo '<option value="'.$todosp[$i]['id_produto'].'">'.$todosp[$i]['descricao'].'</option>';
+                                                  }
+                                             ?>
 								</select>
 							</div>
 							<input type="hidden" name="tipo_acao" value="p_alterarTipo">
