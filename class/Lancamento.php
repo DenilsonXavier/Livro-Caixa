@@ -64,6 +64,8 @@ public function BuscarLancamentosHoje(){
         $rows[$i] = $row;
     }
     return $rows;
+
+    
 }
 
 }
