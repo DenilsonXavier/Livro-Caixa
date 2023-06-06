@@ -14,7 +14,7 @@ if($_SESSION['validacao_hash'] <> $_POST['validacao_hash']){
                if (is_numeric($_POST['valor_l']) && is_numeric($_POST['qtn_l']) && is_numeric($_POST['descricao_p'])) {
                     
                     if (isset($_SESSION['nick']) && isset($_SESSION['nivel']) && isset($_SESSION['id_usuario'])) {
-                         $l->adicionarLancamento($_POST['descricao_p'],$_SESSION['id_usuario'], $_POST['qtn_l'], ($_POST['valor_l']*$_POST['qtn_l']));
+                         $l->adicionarLancamento($_POST['descricao_p'],$_SESSION['id_usuario'], $_POST['qtn_l'], ($_POST['valor_l']*$_POST['qtn_l']), $_POST['forma_p']);
                          header('Location: ../index.php');
                          exit();
                     }else{
@@ -37,7 +37,7 @@ if($_SESSION['validacao_hash'] <> $_POST['validacao_hash']){
                if (is_numeric($_POST['valor_l']) && is_numeric($_POST['descricao_p'])) {
                     
                     if (isset($_SESSION['nick']) && isset($_SESSION['nivel']) && isset($_SESSION['id_usuario'])) {
-                         $l->adicionarLancamento($_POST['descricao_p'],$_SESSION['id_usuario'], 1, $_POST['valor_l']);
+                         $l->adicionarLancamento($_POST['descricao_p'],$_SESSION['id_usuario'], 1, $_POST['valor_l'], $_POST['forma_p']);
                          header('Location: ../index.php');
                          exit();
                     }else{

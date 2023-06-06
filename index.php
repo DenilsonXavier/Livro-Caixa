@@ -58,9 +58,9 @@
 											<span class="input-group-text">Forma de pagamento</span>
 											<select name="forma_p" id="forma_p" class="form-select " required>
 												  <option selected>Escolha a forma de Pagamento</option>
-												  <option value="1">Dinheiro</option>
-												  <option value="2">Cartão</option>
-												  <option value="3">Pix</option>
+												  <option value="Dinheiro">Dinheiro</option>
+												  <option value="Cartão">Cartão</option>
+												  <option value="Pix">Pix</option>
 											</select>
 										</div>
 									</div>
@@ -159,6 +159,7 @@
 						<th>Data</th>
 						<th>Descrição</th>
 						<th>Codigo</th>
+						<th>Forma Pagamento</th>
 						<th>Valor Unitário</th>
 						<th>Tipo</th>
 						<th>Quantidade</th>
@@ -183,6 +184,7 @@
 							'<th>'.substr($todosl[$i]['dia'], 0, -15).'</th>
 							<th>'.$todosl[$i]['descricao'].'</th>
 							<th>'.$todosl[$i]['id_produto'].'</th>
+							<th>'.$todosl[$i]['forma_pagamento'].'</th>
 							<th>'.number_format((float)($todosl[$i]['VT']/$todosl[$i]['quantidade']), 2, '.', '').'</th>
 							<th>'.$todosl[$i]['tipo'].'</th>
 							<th>'.$todosl[$i]['quantidade'].'</th>

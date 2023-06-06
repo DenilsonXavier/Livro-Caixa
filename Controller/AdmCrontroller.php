@@ -148,6 +148,7 @@ switch ($_POST['tipo_acao']) {
         break;
 
     case 'p_excluir':
+
         $id = $_POST['deletar_p'];
         $prod = new Produto;
         $prod->deletarProduto($id);

@@ -5,7 +5,6 @@ class Produto extends Conexao {
     public function adicionarProduto($descricao, $tipo) {
         $this->conectar();
     
-       
         $consulta = $this->conexao->prepare("INSERT INTO produto (descricao, tipo) VALUES (?, ?)");
         $consulta->bind_param("ss", $descricao, $tipo);
         $consulta->execute();
@@ -19,36 +18,30 @@ class Produto extends Conexao {
         $this->fecharConexao();
     }
 
-    public function alterarProduto($id_produto,$descricao, $tipo) {
-        $this->conectar();
-
-        $consulta = $this->conexao->prepare("UPDATE produto SET descricao = ?,tipo = ? WHERE id_produto = ?");
-
-        $consulta->bind_param("ssdi", $descricao, $tipo, $id_produto);
-
-        $consulta->bind_param("sdi", $descricao, $tipo, $id_produto);
-
-        $consulta->execute();
-
-        if ($consulta->errno) {
-            die("Erro ao alterar produto: " . $consulta->error);
-        }
-
-        $consulta->close();
-        $this->fecharConexao();
-    }
-
-
     public function deletarProduto($id_produto) {
-        $this->conectar();
-    
-        $consultaLancamento = $this->conexao->prepare("DELETE FROM lancamento WHERE id_produto = ?");
-        $consultaLancamento->bind_param("i", $id_produto);
-        $consultaLancamento->execute();
-    
-        if ($consultaLancamento->errno) {
-            die("Erro ao excluir lancamentos relacionados ao produto: " . $consultaLancamento->error);
+        session_start();
+        if ($id_produto == 1 || $id_produto == 2) {
+            $_SESSION['Error_mp'] = 1;
+            exit;
         }
+        
+        $this->conectar();
+        $selectProduto = $this->conexao->prepare("SELECT * FROM produto WHERE id_produto = ? ");
+        $selectProduto->bind_param("i", $id_produto);
+        $selectProduto->execute();
+        $id_n = $selectProduto->get_result();
+        $id_n = $id_n->fetch_array(MYSQLI_NUM);
+
+        if($id_n['tipo'] == 'entrada'){
+            $id_novo = 1;
+        }else{
+            $id_novo = 2;
+        }
+
+        $updateProduto = $this->conexao->prepare("UPDATE `lancamento` SET `id_produto` = ? WHERE `lancamento`.`id_produto` = ?");
+        $updateProduto->bind_param('ii', $id_novo , $id_produto);
+        $updateProduto->execute();
+    
     
         $consultaProduto = $this->conexao->prepare("DELETE FROM produto WHERE id_produto = ?");
         $consultaProduto->bind_param("i", $id_produto);
@@ -58,32 +51,7 @@ class Produto extends Conexao {
             die("Erro ao excluir produto: " . $consultaProduto->error);
         }
     
-        $consultaLancamento->close();
         $consultaProduto->close();
-        $this->fecharConexao();
-    }
-    public function BuscarProduto($descricao) {
-        $this->conectar();
-
-    $consulta = $this->conexao->prepare("SELECT * FROM produto WHERE descricao = ?");
-    $consulta->bind_param("s", $descricao);
-    $consulta->execute();
-
-    $resultado = $consulta->get_result();
-
-    if ($resultado->num_rows > 0) {
-       
-        while ($row = $resultado->fetch_assoc()) {
-            
-            echo "id_produto: " . $row['id_produto'] . "<br>";
-            echo "Descrição: " . $row['descricao'] . "<br>";
-            echo "Tipo: " . $row['tipo'] . "<br>";
-          
-        }
-    } else {
-        echo "Nenhum produto encontrado.";
-    }
-        $consulta->close();
         $this->fecharConexao();
     }
     
@@ -97,6 +65,9 @@ class Produto extends Conexao {
             $rows[$i] = $row;
         }
         return $rows;
+        $consulta->close();
+        $this->fecharConexao();
+        
 }
 
 

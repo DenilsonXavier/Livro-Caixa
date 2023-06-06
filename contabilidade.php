@@ -1,11 +1,16 @@
 
 <?php
 include_once 'Controller/ContabilidadeController.php';
+include_once 'class/Lancamento.php';
 session_start();
 if (empty($_SESSION['nick']) || empty($_SESSION['nivel']) || empty($_SESSION['id_usuario']) ) {
      session_unset();
      session_abort();
      header('Location: ./login.php');
+}
+if (isset($_POST['deletar'])) {
+	$l = new Lancamento;
+	$l->deletarLancamento($_POST['id_lancamento']);
 }
 
 if(isset($_POST['p_tipo'])){$_SESSION['pes_tipo'] = $_POST['p_tipo'];}
@@ -42,7 +47,7 @@ $contarl = ceil(count($totalp)/15);
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Contabilidade</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-
+	<link rel="stylesheet" type="text/css" href="css\bootstrap-icons-1.10.5\font\bootstrap-icons.min.css">
 </head>
 <body >
 
@@ -59,6 +64,7 @@ $contarl = ceil(count($totalp)/15);
 						<th>Data</th>
 						<th>Descrição</th>
 						<th>Codigo</th>
+						<th>Forma de Pagamento</th>
 						<th>Valor Unitário</th>
 						<th>Tipo</th>
 						<th>Quantidade</th>
@@ -67,6 +73,8 @@ $contarl = ceil(count($totalp)/15);
 					</tr>
 					</thead>
 					<tbody class="table-group-divider">
+					<form action="./contabilidade.php" method="post">
+						<input type="hidden" name="deletar" value="1">
 						<?php 
 						
 							for ($i=0; isset($pesquisa[$i]) ; $i++) { 
@@ -83,16 +91,18 @@ $contarl = ceil(count($totalp)/15);
 							'<th>'.substr($pesquisa[$i]['dia'], 0, -15).'</th>
 							<th>'.$pesquisa[$i]['descricao'].'</th>
 							<th>'.$pesquisa[$i]['id_produto'].'</th>
+							<th>'.$pesquisa[$i]['forma_pagamento'].'</th>
 							<th>'.number_format((float)($pesquisa[$i]['VT']/$pesquisa[$i]['quantidade']), 2, '.', '').'</th>
 							<th>'.$pesquisa[$i]['tipo'].'</th>
 							<th>'.$pesquisa[$i]['quantidade'].'</th>
 							<th>'.number_format((float)$pesquisa[$i]['VT'], 2, '.', '').'</th>
-							<th><form action="#"><input type="hidden" name="id_lancamento" value=""><button type="submit" class="btn"><i class="bi bi-trash-fill text-danger"></i></button></form></th>
+							<th><button type="submit" name="id_lancamento" value="'.$pesquisa[$i]['id_lancamento'].'" class="btn"><i class="bi bi-trash-fill text-danger"></i></button></th>
 							</tr>'	
 								
 								;
 							}
 						?>
+					</form>
 					</tbody>
 					<tfoot>
 						<?php 
@@ -117,7 +127,7 @@ $contarl = ceil(count($totalp)/15);
 						}
 						?>
 						<tr class="text-start table-active ">
-							<th colspan="6">
+							<th colspan="7">
 								Total da pesquisa
 							</th>
 							<th colspan="2" class="text-center<?php echo $cor.'">'.number_format((float)$tvalor, 2, '.', ''); ?></th>

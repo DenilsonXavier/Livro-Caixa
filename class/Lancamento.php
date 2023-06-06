@@ -4,13 +4,13 @@ date_default_timezone_set('America/Sao_Paulo');
 
 class Lancamento extends Conexao {
     
-    public function adicionarLancamento($id_produto,$id_usuario,$quantidade, $vt) {
+    public function adicionarLancamento($id_produto,$id_usuario,$quantidade, $vt, $forma_pagamento) {
         $this->conectar();
         $data = date('Y-m-d H:i:s', time());
 
   
-        $consulta = $this->conexao->prepare("INSERT INTO `lancamento` (`id_lancamento`, `id_produto`, `id_usuario`, `quantidade`, `VT`, `dia`) VALUES (NULL, ?, ?, ?, ?, ?)");
-        $consulta->bind_param('iiids',$id_produto, $id_usuario, $quantidade, $vt, $data);
+        $consulta = $this->conexao->prepare("INSERT INTO `lancamento` (`id_lancamento`, `id_produto`, `id_usuario`, `quantidade`, `VT`, `dia`, `forma_pagamento`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+        $consulta->bind_param('iiidss',$id_produto, $id_usuario, $quantidade, $vt, $data, $forma_pagamento);
         $consulta->execute();
         
         if ($consulta->errno) {
@@ -22,12 +22,12 @@ class Lancamento extends Conexao {
     }
 
     
-    public function deletarLancamento($id_lancamento,$id_produto,$id_usuario) {
+    public function deletarLancamento($id_lancamento) {
         $this->conectar();
 
        
-        $consulta = $this->conexao->prepare("DELETE FROM lancamento WHERE id_lancamento = ?,id_produto = ?,id_usuario = ?");
-        $consulta->bind_param("i", $id_lancamento,$id_produto,$id_usuario);
+        $consulta = $this->conexao->prepare("DELETE FROM lancamento WHERE id_lancamento = ?");
+        $consulta->bind_param("i", $id_lancamento);
         $consulta->execute();
 
         
@@ -54,7 +54,7 @@ class Lancamento extends Conexao {
 public function BuscarLancamentosHoje(){
     $this->conectar();
     $dia = date('Y-m-d', time());
-    $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.VT, produto.descricao, produto.tipo FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto
+    $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.VT, lancamento.forma_pagamento, produto.descricao, produto.tipo FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto
      WHERE lancamento.dia LIKE '".$dia."%'ORDER BY lancamento.dia ASC");  
     $consulta->execute();
 
@@ -65,7 +65,7 @@ public function BuscarLancamentosHoje(){
     }
     return $rows;
 
-    
+
 }
 
 }

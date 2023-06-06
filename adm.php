@@ -233,13 +233,23 @@ $todosu = $u->BuscarTodosProdutos();
 
                     <div class="collapse multi-collapse" id="produto_e">
 						<div class="my-3 tw-bold h4"><span>Excluir produto</span></div>
+                                   <?php 
+                                        if(isset($_SESSION['error_mu'])){
+                                             echo '
+                                             <div class="my-3 tw-bold h3 text-danger">O Usuário não pode ser excluido em sua sessão.</div>
+                                             ';
+                                             unset($_SESSION['error_mu']);
+                                        }
+                                   ?>
 						<form action="./Controller/AdmCrontroller.php" method="post">
 							<div class="mb-3">
 									<select name="deletar_p" id="" class="form-select" >
 										<option selected>Escolha um produto</option>
                                              <?php 
                                                   for ($i=0; isset($todosp[$i]); $i++) { 
-                                                       echo '<option value="'.$todosp[$i]['id_produto'].'">'.$todosp[$i]['descricao'].'</option>';
+                                                       if ($todosp[$i]['id_produto'] <> 1 || $todosp[$i]['id_produto'] || 2) {
+                                                             echo '<option value="'.$todosp[$i]['id_produto'].'">'.$todosp[$i]['descricao'].'</option>';
+                                                       }
                                                   }
                                              ?>
 									</select>
