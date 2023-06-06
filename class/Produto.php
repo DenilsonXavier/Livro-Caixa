@@ -41,17 +41,25 @@ class Produto extends Conexao {
 
     public function deletarProduto($id_produto) {
         $this->conectar();
-
-        $consulta = $this->conexao->prepare("DELETE FROM produto WHERE id_produto = ?");
-        $consulta->bind_param("i", $id_produto);
-        $consulta->execute();
-
-      
-        if ($consulta->errno) {
-            die("Erro ao deletar produto: " . $consulta->error);
+    
+        $consultaLancamento = $this->conexao->prepare("DELETE FROM lancamento WHERE id_produto = ?");
+        $consultaLancamento->bind_param("i", $id_produto);
+        $consultaLancamento->execute();
+    
+        if ($consultaLancamento->errno) {
+            die("Erro ao excluir lancamentos relacionados ao produto: " . $consultaLancamento->error);
         }
-
-        $consulta->close();
+    
+        $consultaProduto = $this->conexao->prepare("DELETE FROM produto WHERE id_produto = ?");
+        $consultaProduto->bind_param("i", $id_produto);
+        $consultaProduto->execute();
+    
+        if ($consultaProduto->errno) {
+            die("Erro ao excluir produto: " . $consultaProduto->error);
+        }
+    
+        $consultaLancamento->close();
+        $consultaProduto->close();
         $this->fecharConexao();
     }
     public function BuscarProduto($descricao) {
