@@ -19,7 +19,7 @@ if(!isset($_SESSION['pes_pag'])){
 	$_SESSION['pes_data'] = '';
 	$_SESSION['pes_descricao'] = '';
 	$_SESSION['pes_id_produto'] = '';
-	$_SESSION['pes_ordem'] = 'ASC';
+	$_SESSION['pes_ordem'] = 'DESC';
 	$_SESSION['pes_pag'] = 1;
 
 }
@@ -140,8 +140,8 @@ $pesquisa = $p->busca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['p
 					<div class="input-group mb-1">
 						<span class="input-group-text">Ordem</span>
 						<select name="p_ordem" id="" class="form-select">
-							<option value="ASC" selected>Mais Recente</option>
-							<option value="DESC">Mais Antigo</option>
+							<option value="DESC" selected>Mais Recente</option>
+							<option value="ASC">Mais Antigo</option>
 						</select>
 					</div>
 					<div class="row mx-2">

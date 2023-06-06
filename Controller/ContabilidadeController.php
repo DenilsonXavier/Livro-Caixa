@@ -62,15 +62,14 @@ class Pesquisa extends Lancamento{
           }
           switch($ordem){
                case 'ASC':
-                    $Stringbusca .= " ORDER BY lancamento.id_produto ASC ";
+                    $Stringbusca .= " ORDER BY lancamento.dia ASC ";
                     break;
                case 'DESC':
-                    $Stringbusca .= " ORDER BY lancamento.id_produto DESC ";
+                    $Stringbusca .= " ORDER BY lancamento.dia DESC ";
                     break;
           }
           $Stringbusca .= "LIMIT ".($pag*15-15).", ".$pag*15;
           $this->conectar();
-          echo $Stringbusca;
           $consulta = $this->conexao->prepare($Stringbusca);
           $consulta->execute();
           $rows[0] = null;
