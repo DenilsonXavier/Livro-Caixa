@@ -3,8 +3,8 @@
 	include_once './class/Produto.php';
 	include_once './class/Lancamento.php';
 	session_start();
-	if (!isset($_SESSION['nick']) || !isset($_SESSION['nivel']) || !isset($_SESSION['id_usuario']) ) {
-		session_abort();
+	if (empty($_SESSION['nick']) || empty($_SESSION['nivel']) || empty($_SESSION['id_usuario']) ) {
+
 		header('Location: ./login.php');
 	}
 	$p = new Produto;
@@ -232,7 +232,7 @@
 			<div class="col-12 text-end" > 
 				<a href="adm.php" class="btn btn-warning">Administrar</a>
 				<a href="contabilidade.php" class="btn btn-success justify-content-end">Ver todos os valores</a>
-				<a href="#" class="btn btn-danger">Sair</a>
+				<a href="login.php" class="btn btn-danger">Sair</a>
 			</div>
 		</div>
 		

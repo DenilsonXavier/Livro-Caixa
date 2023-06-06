@@ -3,7 +3,8 @@ include_once 'class/Produto.php';
 include_once 'class/Usuario.php';
 
 session_start();
-if (!isset($_SESSION['nick']) || !isset($_SESSION['nivel']) || !isset($_SESSION['id_usuario']) ) {
+if (empty($_SESSION['nick']) || empty($_SESSION['nivel']) || empty($_SESSION['id_usuario']) ) {
+     session_unset();
      session_abort();
      header('Location: ./login.php');
 }

@@ -2,9 +2,10 @@
 <?php
 include_once 'Controller/ContabilidadeController.php';
 session_start();
-if (!isset($_SESSION['nick']) || !isset($_SESSION['nivel']) || !isset($_SESSION['id_usuario']) ) {
-	session_abort();
-	header('Location: ./login.php');
+if (empty($_SESSION['nick']) || empty($_SESSION['nivel']) || empty($_SESSION['id_usuario']) ) {
+     session_unset();
+     session_abort();
+     header('Location: ./login.php');
 }
 
 if(isset($_POST['p_tipo'])){$_SESSION['pes_tipo'] = $_POST['p_tipo'];}
@@ -309,7 +310,7 @@ $contarl = ceil(count($totalp)/15);
 			<div class="col-12 text-end" > 
 				<a href="index.php" class="btn btn-primary">Home</a>
 				<a href="adm.php" class="btn btn-warning">Administrar</a>
-				<a href="#" class="btn btn-danger">Sair</a>
+				<a href="login.php" class="btn btn-danger">Sair</a>
 			</div>
 		</div>
 
