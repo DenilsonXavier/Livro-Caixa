@@ -10,7 +10,7 @@
 	$p = new Produto;
 	$todosp = $p->BuscarTodosProdutos();
 	$l = new Lancamento;
-	$todosl = $l->BuscarTodosLancamentos();
+	$todosl = $l->BuscarLancamentosHoje();
 ?>
 <!DOCTYPE html>
 <html>
@@ -148,8 +148,8 @@
 			</div>
 
 			<!-- Area da Tabela -->
-			<div class="col-7 text-center" >
-			<div class="table-responsive">
+			<div class="col-7 text-center"  >
+			<div class="table-responsive" style="height: 90vh;">
 				<table class="table w-100 p-3 my-4 table-sm table-hover align-middle">
 					<thead>
 					<tr>

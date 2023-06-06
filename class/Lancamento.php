@@ -51,6 +51,20 @@ class Lancamento extends Conexao {
         }
         return $rows;
 }
+public function BuscarLancamentosHoje(){
+    $this->conectar();
+    $dia = date('Y-m-d', time());
+    $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.VT, produto.descricao, produto.tipo FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto
+     WHERE lancamento.dia LIKE '".$dia."%'ORDER BY lancamento.dia ASC");  
+    $consulta->execute();
+
+    $rows[0] = null;
+    $resultado = $consulta->get_result();
+    for ($i=0; $row = $resultado->fetch_assoc() ; $i++) { 
+        $rows[$i] = $row;
+    }
+    return $rows;
+}
 
 }
 ?>

@@ -14,9 +14,9 @@ if(isset($_POST['p_codigo'])){$_SESSION['pes_id_produto'] = $_POST['p_codigo'];}
 if(isset($_POST['p_ordem'])){$_SESSION['pes_ordem'] = $_POST['p_ordem'];}
 if(isset($_POST['p_pag'])){$_SESSION['pes_pag'] = $_POST['p_pag'];}
 
-if(!isset($_SESSION['pes_pag'])){
-	$_SESSION['pes_tipo'] = '';
-	$_SESSION['pes_data'] = '';
+if(!isset($_SESSION['pes_pag']) || isset($_POST['limpar_pes'])){
+	$_SESSION['pes_tipo'] = 0;
+	$_SESSION['pes_data'] = 0;
 	$_SESSION['pes_descricao'] = '';
 	$_SESSION['pes_id_produto'] = '';
 	$_SESSION['pes_ordem'] = 'DESC';
@@ -24,8 +24,10 @@ if(!isset($_SESSION['pes_pag'])){
 
 }
 $p = new Pesquisa;
-$pesquisa = $p->busca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['pes_descricao'], $_SESSION['pes_id_produto'], $_SESSION['pes_ordem'], $_SESSION['pes_pag']);;
-
+$p->PreparaBusca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['pes_descricao'], $_SESSION['pes_id_produto'], $_SESSION['pes_ordem']);;
+$pesquisa = $p->Busca($_SESSION['pes_pag']);
+$totalp = $p->Buscatodos();
+$contarl = ceil(count($totalp)/15);
 
 ?>
 
@@ -50,7 +52,7 @@ $pesquisa = $p->busca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['p
           <!-- Area Tabela -->
           <div class="col-8">
                <div class="table-responsive">
-				<table class="table w-100 p-3 my-4 table-sm table-hover"">
+				<table class="table w-100 p-3 my-4 table-sm table-hover text-end">
 					<thead>
 					<tr>
 						<th>Data</th>
@@ -92,11 +94,32 @@ $pesquisa = $p->busca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['p
 						?>
 					</tbody>
 					<tfoot>
-						<tr class="text-start table-active">
+						<?php 
+						
+						$tvalor = 0;
+
+						for ($i=0;isset($totalp[$i]); $i++) { 
+							switch ($totalp[$i]['tipo']) {
+								case 'entrada':
+									$tvalor += $totalp[$i]['VT'];
+									break;
+								case 'saida':
+									$tvalor -= $totalp[$i]['VT'];
+									break;
+							}
+							
+						}
+						if ($tvalor >= 1) {
+							$cor = ' text-success';
+						}else {
+							$cor = ' text-danger';
+						}
+						?>
+						<tr class="text-start table-active ">
 							<th colspan="6">
-								Total da Pesquisa
+								Total da pesquisa
 							</th>
-							<th>16000000</th>
+							<th colspan="2" class="text-center<?php echo $cor.'">'.number_format((float)$tvalor, 2, '.', ''); ?></th>
 						</tr>
 					</tfoot>
 				</table>
@@ -114,61 +137,161 @@ $pesquisa = $p->busca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['p
 					<div class="input-group mb-1">
 						<span class="input-group-text">Tipo</span>
 						<select name="p_tipo" id="" class="form-select">
-							<option value="" selected>Ambos</option>
-							<option value="1">Entrada</option>
-							<option value="2">Saida</option>
+							<?PHP 
+								if (isset($_SESSION['pes_tipo'])) {
+									switch ($_SESSION['pes_tipo']) {
+										case 1:
+											echo'
+											<option value="0" >Ambos</option>
+											<option value="1" selected>Entrada</option>
+											<option value="2">Saida</option>';
+											break;
+										case 2:
+											echo'
+											<option value="0" >Ambos</option>
+											<option value="1" >Entrada</option>
+											<option value="2" selected>Saida</option>';
+											break;
+										default:
+											echo'
+											<option value="0" selected>Ambos</option>
+											<option value="1" >Entrada</option>
+											<option value="2">Saida</option>';
+										break;
+									}
+								}
+								else{
+									echo'
+									<option value="0" selected>Ambos</option>
+									<option value="1" >Entrada</option>
+									<option value="2">Saida</option>';
+								}
+							?>
 						</select>
 					</div>
 					<div class="input-group mb-1">
                               <span class="input-group-text">Data</span>
 						<select name="p_data" id="" class="form-select">
-							<option value="" selected>Todos os dias</option>
-							<option value="1">Hoje</option>
-							<option value="2">Essa Semana</option>
-							<option value="3">Esse Mês</option>
-							<option value="4">Esse Anos</option>
+							<?PHP 
+								if (isset($_SESSION['pes_data'])) {
+									switch ($_SESSION['pes_data']) {
+										case 1:
+											echo'
+											<option value="0">Todos os dias</option>
+											<option value="1" selected>Hoje</option>
+											<option value="2">Essa Semana</option>
+											<option value="3">Esse Mês</option>
+											<option value="4">Esse Ano</option>';
+											break;
+										case 2:
+											echo'
+											<option value="0">Todos os dias</option>
+											<option value="1">Hoje</option>
+											<option value="2" selected>Essa Semana</option>
+											<option value="3">Esse Mês</option>
+											<option value="4">Esse Ano</option>';
+											break;
+										case 3:
+											echo'
+											<option value="0">Todos os dias</option>
+											<option value="1">Hoje</option>
+											<option value="2">Essa Semana</option>
+											<option value="3" selected>Esse Mês</option>
+											<option value="4">Esse Ano</option>';
+											break;
+										case 4:
+											echo'
+											<option value="0">Todos os dias</option>
+											<option value="1">Hoje</option>
+											<option value="2">Essa Semana</option>
+											<option value="3">Esse Mês</option>
+											<option value="4" selected>Esse Ano</option>';
+											break;
+										default:
+											echo'
+											<option value="0" selected>Todos os dias</option>
+											<option value="1">Hoje</option>
+											<option value="2">Essa Semana</option>
+											<option value="3">Esse Mês</option>
+											<option value="4">Esse Ano</option>';
+										break;
+									}
+								}
+								else{
+									echo'
+									<option value="0" selected>Todos os dias</option>
+									<option value="1">Hoje</option>
+									<option value="2">Essa Semana</option>
+									<option value="3">Esse Mês</option>
+									<option value="4" >Esse Ano</option>';
+								}
+							?>
 						</select>
 					</div>
 					<div class="input-group mb-1">
 						<span class="input-group-text">Descrição</span>
-						<input type="text" name="p_descricao" id="" class="form-control">
+						<input type="text" name="p_descricao" id="" value="<?php if(!empty($_SESSION['pes_descricao'])){echo $_SESSION['pes_descricao'];} ?>" class="form-control">
 					</div>
 					<div class="input-group mb-1">
 						<span class="input-group-text">Codigo produto</span>
-						<input type="text" name="p_codigo" id="" class="form-control">
+						<input type="text" name="p_codigo" id="" value="<?php if(!empty($_SESSION['pes_id_produto'])){echo $_SESSION['pes_id_produto'];} ?>" class="form-control">
 					</div>
 					<div class="input-group mb-1">
 						<span class="input-group-text">Ordem</span>
 						<select name="p_ordem" id="" class="form-select">
-							<option value="DESC" selected>Mais Recente</option>
-							<option value="ASC">Mais Antigo</option>
+							<?PHP 
+								if (isset($_SESSION['pes_ordem'])) {
+									switch ($_SESSION['pes_ordem']) {
+										case "DESC":
+											echo'
+											<option value="DESC" selected>Mais Recente</option>
+											<option value="ASC">Mais Antigo</option>';
+											break;
+										case "ASC":
+											echo'
+											<option value="DESC">Mais Recente</option>
+											<option value="ASC" selected>Mais Antigo</option>';
+											break;
+									}
+								}
+								else{
+									echo'
+									<option value="DESC" selected>Mais Recente</option>
+									<option value="ASC">Mais Antigo</option>';
+								}
+							?>
 						</select>
 					</div>
 					<div class="row mx-2">
-						<a href="#" class="btn btn-outline-primary mb-1">Limpar</a>
+						<button type="submit" name="limpar_pes" value="1" class="btn btn-outline-primary mb-1">Limpar</button>
 						<button type="submit" class="btn btn-outline-success ">Pesquisar</button>
 					</div>
                     </form>
 
 				<div class="row ">
 					<div class="col-12  my-3">
-						<nav aria-label="Page navigation ">
-							<ul class="pagination justify-content-center">
-							  <li class="page-item">
-							    <a class="page-link" href="#" aria-label="Previous">
-								 <span aria-hidden="true">&laquo;</span>
-							    </a>
-							  </li>
-							  <li class="page-item"><a class="page-link" href="#">1</a></li>
-							  <li class="page-item"><a class="page-link" href="#">2</a></li>
-							  <li class="page-item"><a class="page-link" href="#">3</a></li>
-							  <li class="page-item">
-							    <a class="page-link" href="#" aria-label="Next">
-								 <span aria-hidden="true">&raquo;</span>
-							    </a>
-							  </li>
-							</ul>
-						</nav>
+						<form action="./contabilidade.php" method="post">
+							<nav aria-label="Page navigation ">
+								<ul class="pagination justify-content-center">
+								<li class="page-item">
+								<a class="page-link" href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+								</li>
+										<?php for ($i=0; $i < $contarl; $i++) { 
+											if(($i+1) == $_SESSION['pes_pag']){ $linkstart ='<li class="page-item active"><button class="page-link" name="p_pag" value="';}else{$linkstart ='<li class="page-item"><button class="page-link" name="p_pag" value="';}
+											echo  $linkstart.($i+1).'">'.($i+1).'</button></li>
+										';
+										}?>
+								<li class="page-item">
+								<a class="page-link" href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+								</li>
+								</ul>
+							</nav>
+						</form>
+
 					</div>
 				</div>
 

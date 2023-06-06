@@ -3,7 +3,9 @@ include_once './class/Lancamento.php';
 
 class Pesquisa extends Lancamento{
      
-     public function busca($tipo,$data,$descricao,$id_produto,$ordem,$pag)
+     private $consulta;
+
+     public function PreparaBusca($tipo,$data,$descricao,$id_produto,$ordem)
      {
 
 		$contartipos = 0;
@@ -68,6 +70,15 @@ class Pesquisa extends Lancamento{
                     $Stringbusca .= " ORDER BY lancamento.dia DESC ";
                     break;
           }
+
+          $this->consulta = $Stringbusca;
+
+
+
+     }
+     public function Busca($pag)
+     {       
+          $Stringbusca = $this->consulta;   
           $Stringbusca .= "LIMIT ".($pag*15-15).", ".$pag*15;
           $this->conectar();
           $consulta = $this->conexao->prepare($Stringbusca);
@@ -78,12 +89,24 @@ class Pesquisa extends Lancamento{
             $rows[$i] = $row;
              }
           return $rows;
-
-
-
+     }
+     public function Buscatodos(){
+          $Stringbusca = $this->consulta;
+          $this->conectar();
+          $consulta = $this->conexao->prepare($Stringbusca);
+          $consulta->execute();
+          $rows[0] = null;
+           $resultado = $consulta->get_result();
+           for ($i=0; $row = $resultado->fetch_assoc() ; $i++) { 
+            $rows[$i] = $row;
+             }
+          return $rows;
 
      }
+
      
+
+
 }
 
 
