@@ -1,6 +1,13 @@
 <?php
 require_once '../class/Usuario.php';
 require_once '../class/Produto.php';
+session_start();
+if($_SESSION['validacao_hash'] <> $_POST['validacao_hash']){
+    header('Location:  ../adm.php');
+    exit;
+}
+
+
 
 class adm extends Usuario {
     public function alteraUsuarioNick($nick, $id) {
@@ -88,6 +95,7 @@ switch ($_POST['tipo_acao']) {
         $adm = new adm();
         $adm->adicionarUsuario($nick, $senha, $nivel);
         header('Location: ../adm.php');
+        exit;
         break;
 
     case 'f_excluir':
@@ -96,6 +104,7 @@ switch ($_POST['tipo_acao']) {
         $adm = new adm();
         $adm->deletarUsuario($id);
         header('Location: ../adm.php');
+        exit;
         break;
 
     case 'f_alterarnome':
@@ -105,6 +114,7 @@ switch ($_POST['tipo_acao']) {
         $adm = new adm();
         $adm->alteraUsuarioNick($nick, $id);
         header('Location: ../adm.php');
+        exit;
         break;
 
     case 'f_alterarsenha':
@@ -114,6 +124,7 @@ switch ($_POST['tipo_acao']) {
         $adm = new adm();
         $adm->alteraUsuarioSenha($senha, $id);
         header('Location: ../adm.php');
+        exit;
         break;
 
     case 'f_alterarnivel':
@@ -123,6 +134,7 @@ switch ($_POST['tipo_acao']) {
         $adm = new adm();
         $adm->alteraUsuarioNivel($nivel, $id);
         header('Location: ../adm.php');
+        exit;
         break;
 
     case 'p_adicionar':
@@ -132,6 +144,7 @@ switch ($_POST['tipo_acao']) {
         $prod = new prod();
         $prod->adicionarProduto($descricao, $tipo);
         header('Location: ../adm.php');
+        exit;
         break;
 
     case 'p_excluir':
@@ -140,6 +153,7 @@ switch ($_POST['tipo_acao']) {
         $prod->deletarProduto($id);
         header('Location: ../adm.php');
 
+        exit;
         break;
 
     case 'p_alterardescricaor':
@@ -148,6 +162,7 @@ switch ($_POST['tipo_acao']) {
         $prod = new prod();
         $prod->alterarDescricaoProduto($id, $descricao);
         header('Location: ../adm.php');
+        exit;
         break;
 
     case 'p_alterarTipo':
@@ -157,10 +172,12 @@ switch ($_POST['tipo_acao']) {
         $prod = new prod();
         $prod->alterarTipoProduto($id, $tipo);
         header('Location: ../adm.php');
+        exit;
         break;
 
     default:
         header('Location: ../adm.php');
+        exit;
         break;
 }
 ?>

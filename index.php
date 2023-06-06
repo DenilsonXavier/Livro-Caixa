@@ -7,6 +7,7 @@
 
 		header('Location: ./login.php');
 	}
+	$_SESSION['validacao_hash'] = md5(rand());
 	$p = new Produto;
 	$todosp = $p->BuscarTodosProdutos();
 	$l = new Lancamento;
@@ -83,6 +84,7 @@
 									</div>
 									<div class="d-grid gap-2 mb-3">
 										<input type="hidden" name="tipo_acao" value="entrada">
+										<input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
 										 <button type="submit" class="btn btn-outline-success  justify-content-start">Lançar</button>
 									</div>
 									<div class="mb-3 input-group ">
@@ -137,6 +139,7 @@
 
 									<div class="d-grid gap-2 mb-3">
 										<input type="hidden" name="tipo_acao" value="saida">
+										<input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
 										 <button type="submit" class="btn btn-outline-danger justify-content-start">Lançar</button>
 									</div>
 

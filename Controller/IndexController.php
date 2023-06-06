@@ -1,6 +1,10 @@
 <?php
 include_once '../class/Lancamento.php';
 session_start();
+if($_SESSION['validacao_hash'] <> $_POST['validacao_hash']){
+    header('Location:  ../adm.php');
+    exit;
+}
 
 
      $l = new Lancamento;
