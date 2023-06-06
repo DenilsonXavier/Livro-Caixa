@@ -8,6 +8,9 @@ if (empty($_SESSION['nick']) || empty($_SESSION['nivel']) || empty($_SESSION['id
      session_abort();
      header('Location: ./login.php');
 }
+if ($_SESSION['nivel'] <> 'administrador') {
+     header("Location: index.php");
+}
 $_SESSION['validacao_hash'] = md5(rand());
 $p = new Produto;
 $todosp = $p->BuscarTodosProdutos();

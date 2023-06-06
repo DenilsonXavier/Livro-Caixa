@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06-Jun-2023 às 00:45
+-- Tempo de geração: 07-Jun-2023 às 01:34
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.2.4
 
@@ -33,19 +33,9 @@ CREATE TABLE `lancamento` (
   `id_usuario` int(11) NOT NULL,
   `quantidade` int(11) NOT NULL,
   `VT` double NOT NULL,
-  `dia` datetime(6) NOT NULL
+  `dia` datetime(6) NOT NULL,
+  `forma_pagamento` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Extraindo dados da tabela `lancamento`
---
-
-INSERT INTO `lancamento` (`id_lancamento`, `id_produto`, `id_usuario`, `quantidade`, `VT`, `dia`) VALUES
-(62, 120, 7, 2, 240, '2023-06-05 17:05:58.000000'),
-(63, 122, 7, 1, 235, '2023-06-05 17:06:07.000000'),
-(64, 123, 7, 1, 1234, '2023-06-05 17:06:13.000000'),
-(65, 121, 7, 1, 12, '2023-06-05 17:07:26.000000'),
-(66, 120, 7, 4, 2240, '2023-06-05 17:07:43.000000');
 
 -- --------------------------------------------------------
 
@@ -64,10 +54,8 @@ CREATE TABLE `produto` (
 --
 
 INSERT INTO `produto` (`id_produto`, `descricao`, `tipo`) VALUES
-(120, 'Manutenção', 'entrada'),
-(121, 'Manutenção', 'saida'),
-(122, 'Reparo', 'entrada'),
-(123, 'Limpeza', 'saida');
+(1, 'ProdutoPadrão', 'entrada'),
+(2, 'ServiçoPadrão', 'saida');
 
 -- --------------------------------------------------------
 
@@ -87,7 +75,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `nick`, `senha`, `Nivel`) VALUES
-(7, 'ted', 'senha123', 'administrador');
+(10, 'admin', 'e8d95a51f3af4a3b134bf6bb680a213a', 'administrador'),
+(20, 'funcionario', '827ccb0eea8a706c4c34a16891f84e7b', 'funcionario');
 
 --
 -- Índices para tabelas despejadas
@@ -121,7 +110,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `lancamento`
 --
 ALTER TABLE `lancamento`
-  MODIFY `id_lancamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id_lancamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
@@ -133,7 +122,7 @@ ALTER TABLE `produto`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Restrições para despejos de tabelas

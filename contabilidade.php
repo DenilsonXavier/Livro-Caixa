@@ -319,7 +319,11 @@ $contarl = ceil(count($totalp)/15);
 		<div class="row position-fixed fixed-bottom p-1" >
 			<div class="col-12 text-end" > 
 				<a href="index.php" class="btn btn-primary">Home</a>
-				<a href="adm.php" class="btn btn-warning">Administrar</a>
+				<?php 
+					if ($_SESSION['nivel'] == 'administrador') {
+						echo '<a href="adm.php" class="btn btn-warning">Administrar</a>';
+					}
+				?>
 				<a href="login.php" class="btn btn-danger">Sair</a>
 			</div>
 		</div>
