@@ -7,6 +7,10 @@
 
 		header('Location: ./login.php');
 	}
+	if (isset($_POST['deletar_l'])) {
+		$l = new Lancamento;
+		$l->deletarLancamento($_POST['id_lancamento']);
+	}
 	$_SESSION['validacao_hash'] = md5(rand());
 	$p = new Produto;
 	$todosp = $p->BuscarTodosProdutos();
@@ -168,6 +172,8 @@
 					</tr>
 					</thead>
 					<tbody>
+						<form action="./index.php" method="post">
+							<input type="hidden" name="deletar_l" value="1">
 						<?php 
 						
 							for ($i=0; isset($todosl[$i]) ; $i++) { 
@@ -189,12 +195,13 @@
 							<th>'.$todosl[$i]['tipo'].'</th>
 							<th>'.$todosl[$i]['quantidade'].'</th>
 							<th>'.number_format((float)$todosl[$i]['VT'], 2, '.', '').'</th>
-							<th><form action="#"><input type="hidden" name="id_lancamento" value=""><button type="submit" class="btn"><i class="bi bi-trash-fill text-danger"></i></button></form></th>
+							<th><button type="submit" name="id_lancamento" value="'.$todosl[$i]['id_lancamento'].'" class="btn"><i class="bi bi-trash-fill text-danger"></i></button></th>
 							</tr>'	
 								
 								;
 							}
 						?>
+						</form>
 					</tbody>
 					<tfoot>
 						<?php 
@@ -219,7 +226,7 @@
 						}
 						?>
 						<tr class="text-start table-active ">
-							<th colspan="6">
+							<th colspan="7">
 								Total do dia
 								
 								
