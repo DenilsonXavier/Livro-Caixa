@@ -15,7 +15,7 @@ session_abort();
 <body>
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
         <form class="login-form p-5 border rounded shadow" method="post" action="./Controller/LoginCrontroller.php">
-            <h2 class="text-center mb-4 h1">BEM-    VINDO</h2>
+            <h2 class="text-center mb-4 h1">BEM-VINDO</h2>
             <?php
             ?>
             <div class="input-group my-1">

@@ -8,6 +8,7 @@ if (empty($_SESSION['nick']) || empty($_SESSION['nivel']) || empty($_SESSION['id
      session_abort();
      header('Location: ./login.php');
 }
+$_SESSION['validacao_hash'] = md5(time());
 $p = new Produto;
 $todosp = $p->BuscarTodosProdutos();
 $u = new Usuario;
@@ -88,6 +89,7 @@ $todosu = $u->BuscarTodosProdutos();
                               </div>
                               <div class="mb-3 d-grid">
 							<input type="hidden" name="tipo_acao" value="f_adicionar">
+                                   <input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
                                    <button type="submit" class="btn btn-outline-success">Registrar</button>
                               </div>
                          </form>
@@ -115,6 +117,7 @@ $todosu = $u->BuscarTodosProdutos();
                                         </div>
                               </div>
 							<input type="hidden" name="tipo_acao" value="f_excluir">
+                                   <input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
 							<div class="mb-3 d-grid"><button type="submit" class="btn btn-outline-danger">Excluir</button></div>
                          </form>
                     </div>
@@ -138,6 +141,7 @@ $todosu = $u->BuscarTodosProdutos();
                                    </select>
                               </div>
 							<input type="hidden" name="tipo_acao" value="f_alterarnome">
+                                   <input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
 							<div class="text-center d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Nome</button></div>
                          </form>
                     </div>
@@ -161,6 +165,7 @@ $todosu = $u->BuscarTodosProdutos();
                                    </select>
                               </div>
 							<input type="hidden" name="tipo_acao" value="f_alterarsenha">
+                                   <input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
 							<div class="text-cente d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Senha</button></div>
                          </form>
                     </div>
@@ -187,6 +192,7 @@ $todosu = $u->BuscarTodosProdutos();
                                    </select>
                               </div>
 							<input type="hidden" name="tipo_acao" value="f_alterarnivel">
+                                   <input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
 							<div class="text-center d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Nivel</button></div>
                          </form>
                     </div>
