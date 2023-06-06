@@ -97,6 +97,14 @@ $todosu = $u->BuscarTodosProdutos();
 
                     <div class="collapse multi-collapse" id="Funcionario_e">
                          <div class="my-3 tw-bold h4"><span>Excluir funcionario</span></div>
+                         <?php 
+                              if(isset($_SESSION['error_mu'])){
+                                   echo '
+                                   <div class="my-3 tw-bold h3 text-danger">O Usuário não pode ser excluido em sua sessão.</div>
+                                   ';
+                                   unset($_SESSION['error_mu']);
+                              }
+                         ?>
                          <form action="./Controller/AdmCrontroller.php" method="post">
                               <div class="mb-3">
                                         <select name="deletar_f" id="" class="form-select" >

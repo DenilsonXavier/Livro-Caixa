@@ -41,6 +41,16 @@ class Usuario extends Conexao {
     public function deletarUsuario($id_usuario) {
         $this->conectar();
 
+        if($_SESSION['id_usuario'] == $id_usuario){
+            $_SESSION['error_mu'] = 1;
+            header("Location: ../adm.php");
+            exit;
+        }
+
+        $updateLancamento = $this->conexao->prepare("UPDATE `lancamento` SET `id_usuario` = ? WHERE `lancamento`.`id_usuario` = ?");
+        $updateLancamento->bind_param('ii', $_SESSION['id_usuario'], $id_usuario);
+        $updateLancamento->execute();
+
         $excluirLancamentos = $this->conexao->prepare("DELETE FROM lancamento WHERE id_usuario = ?");
         $excluirLancamentos->bind_param("i", $id_usuario);
         $excluirLancamentos->execute();
