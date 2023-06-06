@@ -297,7 +297,7 @@ $todosu = $u->BuscarTodosProdutos();
 			<div class="col-12 text-end" > 
 				<a href="index.php" class="btn btn-primary">Home</a>
 				<a href="contabilidade.php" class="btn btn-success justify-content-end">Ver todos os valores</a>
-				<a href="#" class="btn btn-danger">Sair</a>
+				<a href="login.php" class="btn btn-danger">Sair</a>
 			</div>
 		</div>
            

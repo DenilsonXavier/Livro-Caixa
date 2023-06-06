@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -28,5 +29,18 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function validateForm() {
+            var nick = document.getElementById("nick").value;
+            var senha = document.getElementById("senha").value;
+            
+            if (nick.trim() === "" || senha.trim() === "") {
+                alert("Por favor, preencha todos os campos.");
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
 </body>
 </html>
