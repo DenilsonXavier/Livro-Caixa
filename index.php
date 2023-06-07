@@ -17,7 +17,6 @@
 	$l = new Lancamento;
 	$todosl = $l->BuscarLancamentosHoje();
 
-	echo system("git pull");
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,7 +45,7 @@
 										<div class="input-group ">
 											<span class="input-group-text">Descrição</span>
 											<select name="descricao_p" id="descricao_p" class="form-select " required>
-												  <option selected>Escolha serviço</option>
+												  <option selected value="0">Escolha serviço</option>
 												  <?php 
 												  	$i =0;
 												 	for ($i = 0; isset($todosp[$i]); $i++) { 
@@ -57,17 +56,29 @@
 												  ?>
 											</select>
 										</div>
+											<?php 
+											if (isset($_SESSION['Errofdes'])) {
+												echo '<label for="" class="h6 form-label text-danger">Esse campo é obrigatorio</label>';
+												unset($_SESSION['Errofdes']);
+											}
+											?>
 									</div>
 									<div class="mb-3">
 										<div class="input-group ">
 											<span class="input-group-text">Forma de pagamento</span>
 											<select name="forma_p" id="forma_p" class="form-select " required>
-												  <option selected>Escolha a forma de Pagamento</option>
+												  <option selected value="0">Escolha a forma de Pagamento</option>
 												  <option value="Dinheiro">Dinheiro</option>
 												  <option value="Cartão">Cartão</option>
 												  <option value="Pix">Pix</option>
 											</select>
 										</div>
+											<?php 
+											if (isset($_SESSION['Errofpag'])) {
+												echo '<label for="" class="h6 form-label text-danger">Esse campo é obrigatorio</label>';
+												unset($_SESSION['Errofpag']);
+											}
+											?>
 									</div>
 									<div class="mb-3 ">
 										<div class="input-group ">
@@ -114,7 +125,7 @@
 											<span class="input-group-text">Descrição</span>
 
 											<select name="descricao_p" id="descricao_p" class="form-select " required>
-												  <option selected>Escolha Serviço</option>
+												  <option selected value="0">Escolha Serviço</option>
 												  <?php 
 												  	$i =0;
 												 	for ($i = 0; isset($todosp[$i]); $i++) { 
@@ -125,19 +136,31 @@
 												  ?>
 											</select>
 										</div>
+											<?php 
+											if (isset($_SESSION['Errofdess'])) {
+												echo '<label for="" class="h6 form-label text-danger">Esse campo é obrigatorio</label>';
+												unset($_SESSION['Errofdess']);
+											}
+											?>
 									</div>
 
-									
+
 									<div class="mb-3">
 										<div class="input-group ">
 											<span class="input-group-text">Forma de pagamento</span>
 											<select name="forma_p" id="forma_p" class="form-select " required>
-												  <option selected>Escolha a forma de Pagamento</option>
+												  <option selected value="0">Escolha a forma de Pagamento</option>
 												  <option value="Dinheiro">Dinheiro</option>
 												  <option value="Cartão">Cartão</option>
 												  <option value="Pix">Pix</option>
 											</select>
 										</div>
+											<?php 
+											if (isset($_SESSION['Errofpag'])) {
+												echo '<label for="" class="h6 form-label text-danger">Esse campo é obrigatorio</label>';
+												unset($_SESSION['Errofpag']);
+											}
+											?>
 									</div>
 
 									

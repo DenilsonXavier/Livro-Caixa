@@ -2,8 +2,20 @@
 include_once '../class/Lancamento.php';
 session_start();
 if($_SESSION['validacao_hash'] <> $_POST['validacao_hash']){
-    header('Location:  ../adm.php');
+    header('Location:  ../index.php');
     exit;
+}
+if ($_POST['forma_p'] == 0) {
+     $_SESSION['Errofpag'] = true;
+     header('Location:  ../index.php');
+     exit;
+}
+if (isset($_POST['descricao_p'])) {
+     if ($_POST['descricao_p'] == 0) {
+          $_SESSION['Errofdes'] = true;
+          header('Location:  ../index.php');
+          exit;
+     }
 }
 
 
