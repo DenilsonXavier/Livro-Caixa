@@ -125,7 +125,7 @@
 											<span class="input-group-text">Descrição</span>
 
 											<select name="descricao_p" id="descricao_p" class="form-select " required>
-												  <option selected value="0">Escolha Serviço</option>
+												  <option value="0" selected>Escolha Serviço</option>
 												  <?php 
 												  	$i =0;
 												 	for ($i = 0; isset($todosp[$i]); $i++) { 
@@ -149,14 +149,14 @@
 										<div class="input-group ">
 											<span class="input-group-text">Forma de pagamento</span>
 											<select name="forma_p" id="forma_p" class="form-select " required>
-												  <option selected value="0">Escolha a forma de Pagamento</option>
+												  <option  value="0" selected>Escolha a forma de Pagamento</option>
 												  <option value="Dinheiro">Dinheiro</option>
 												  <option value="Cartão">Cartão</option>
 												  <option value="Pix">Pix</option>
 											</select>
 										</div>
 											<?php 
-											if (isset($_SESSION['Errofpag'])) {
+											if (isset($_SESSION['Errofpags'])) {
 												echo '<label for="" class="h6 form-label text-danger">Esse campo é obrigatorio</label>';
 												unset($_SESSION['Errofpag']);
 											}
