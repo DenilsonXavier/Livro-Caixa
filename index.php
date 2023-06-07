@@ -158,7 +158,7 @@
 											<?php 
 											if (isset($_SESSION['Errofpags'])) {
 												echo '<label for="" class="h6 form-label text-danger">Esse campo é obrigatorio</label>';
-												unset($_SESSION['Errofpag']);
+												unset($_SESSION['Errofpags']);
 											}
 											?>
 									</div>
