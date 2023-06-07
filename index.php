@@ -16,6 +16,8 @@
 	$todosp = $p->BuscarTodosProdutos();
 	$l = new Lancamento;
 	$todosl = $l->BuscarLancamentosHoje();
+
+	echo system("git pull");
 ?>
 <!DOCTYPE html>
 <html>
@@ -57,7 +59,6 @@
 										</div>
 									</div>
 									<div class="mb-3">
-
 										<div class="input-group ">
 											<span class="input-group-text">Forma de pagamento</span>
 											<select name="forma_p" id="forma_p" class="form-select " required>
@@ -122,6 +123,19 @@
 													}
 													}
 												  ?>
+											</select>
+										</div>
+									</div>
+
+									
+									<div class="mb-3">
+										<div class="input-group ">
+											<span class="input-group-text">Forma de pagamento</span>
+											<select name="forma_p" id="forma_p" class="form-select " required>
+												  <option selected>Escolha a forma de Pagamento</option>
+												  <option value="Dinheiro">Dinheiro</option>
+												  <option value="Cartão">Cartão</option>
+												  <option value="Pix">Pix</option>
 											</select>
 										</div>
 									</div>
