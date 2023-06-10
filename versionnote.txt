@@ -1,5 +1,10 @@
 Nota de relação de atualizações:
 
+1.1.0{
+     Add opção Forma de Pagamento na Pesquisa;
+     Sutil modelação na tabela;
+     Otimização de Processamento;
+}
 
 1.0.4{
      leve repaginização nas tabelas Home e Contabilidade;

@@ -5,11 +5,11 @@ class Pesquisa extends Lancamento{
      
      private $consulta;
 
-     public function PreparaBusca($tipo,$data,$descricao,$id_produto,$ordem)
+     public function PreparaBusca($tipo,$data,$id_fpagamento,$descricao,$id_produto,$ordem)
      {
 
 		$contartipos = 0;
-          if (!empty($tipo) || !empty($data) || !empty($descricao) || !empty($id) || !empty($id_produto) ) {
+          if (!empty($tipo) || !empty($data) || !empty($id_fpagamento) || !empty($descricao) || !empty($id) || !empty($id_produto)) {
                $Stringbusca = "SELECT * FROM `lancamento` INNER join produto on lancamento.id_produto = produto.id_produto WHERE ";
           }else{
                $Stringbusca = "SELECT * FROM `lancamento` INNER join produto on lancamento.id_produto = produto.id_produto ";
@@ -30,36 +30,41 @@ class Pesquisa extends Lancamento{
                case 1:
                    if ($contartipos > 0) {$Stringbusca .= " AND ";}
                      $dia = date('Y-m-d', time());
-                     $Stringbusca .= " lancamento.dia LIKE '".$dia."%'";
+                     $Stringbusca .= " lancamento.dia LIKE '{$dia}%'";
                      $contartipos = 1;
                     break;
                case 2:
                     if ($contartipos > 0) {$Stringbusca .= " AND ";}
                       $dia = date('Y-m-d', strtotime('-1 week'));
-                      $Stringbusca .= "lancamento.dia > '".$dia."' ";
+                      $Stringbusca .= "lancamento.dia > '{$dia}' ";
                       $contartipos = 1;
                     break;
                case 3:
                     if ($contartipos > 0) {$Stringbusca .= " AND ";}
                       $dia = date('Y-m-d', strtotime('-1 month'));
-                      $Stringbusca .= "lancamento.dia > '".$dia."' ";
+                      $Stringbusca .= "lancamento.dia > '{$dia}' ";
                       $contartipos = 1;
                     break;
                case 4:
                     if ($contartipos > 0) {$Stringbusca .= " AND ";}
                       $dia = date('Y-m-d', strtotime('-1 year'));
-                      $Stringbusca .= "lancamento.dia > '".$dia."' ";
+                      $Stringbusca .= "lancamento.dia > '{$dia}' ";
                       $contartipos = 1;
                     break;
           }
           if (!empty($descricao)) {
                if ($contartipos > 0) {$Stringbusca .= " AND ";}
-               $Stringbusca .= "produto.descricao = '".$descricao."' ";
+               $Stringbusca .= "produto.descricao LIKE '{$descricao}%' ";
                $contartipos = 1;
           }
           if (!empty($id_produto)) {
                if ($contartipos > 0) {$Stringbusca .= " AND ";}
-               $Stringbusca .= "produto.id_produto = '".$id_produto."' ";
+               $Stringbusca .= "produto.id_produto = '{$id_produto}' ";
+               $contartipos = 1;
+          }
+          if (!empty($id_fpagamento)) {
+               if ($contartipos > 0) {$Stringbusca .= " AND ";}
+               $Stringbusca .= "lancamento.forma_pagamento = '{$id_fpagamento}' ";
                $contartipos = 1;
           }
           switch($ordem){
@@ -70,7 +75,6 @@ class Pesquisa extends Lancamento{
                     $Stringbusca .= " ORDER BY lancamento.dia DESC ";
                     break;
           }
-
           $this->consulta = $Stringbusca;
 
 

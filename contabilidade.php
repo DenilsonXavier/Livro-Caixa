@@ -15,6 +15,7 @@ if (isset($_POST['deletar'])) {
 
 if(isset($_POST['p_tipo'])){$_SESSION['pes_tipo'] = $_POST['p_tipo'];}
 if(isset($_POST['p_data'])){$_SESSION['pes_data'] = $_POST['p_data'];}
+if(isset($_POST['p_fpagamento'])){$_SESSION['pes_fpagamento'] = $_POST['p_fpagamento'];}
 if(isset($_POST['p_descricao'])){$_SESSION['pes_descricao'] = $_POST['p_descricao'];}
 if(isset($_POST['p_codigo'])){$_SESSION['pes_id_produto'] = $_POST['p_codigo'];}
 if(isset($_POST['p_ordem'])){$_SESSION['pes_ordem'] = $_POST['p_ordem'];}
@@ -23,6 +24,7 @@ if(isset($_POST['p_pag'])){$_SESSION['pes_pag'] = $_POST['p_pag'];}
 if(!isset($_SESSION['pes_pag']) || isset($_POST['limpar_pes'])){
 	$_SESSION['pes_tipo'] = 0;
 	$_SESSION['pes_data'] = 0;
+	$_SESSION['pes_fpagamento'] = '';
 	$_SESSION['pes_descricao'] = '';
 	$_SESSION['pes_id_produto'] = '';
 	$_SESSION['pes_ordem'] = 'DESC';
@@ -30,7 +32,7 @@ if(!isset($_SESSION['pes_pag']) || isset($_POST['limpar_pes'])){
 
 }
 $p = new Pesquisa;
-$p->PreparaBusca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['pes_descricao'], $_SESSION['pes_id_produto'], $_SESSION['pes_ordem']);;
+$p->PreparaBusca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['pes_fpagamento'],$_SESSION['pes_descricao'], $_SESSION['pes_id_produto'], $_SESSION['pes_ordem']);;
 $pesquisa = $p->Busca($_SESSION['pes_pag']);
 $totalp = $p->Buscatodos();
 $contarl = ceil(count($totalp)/15);
@@ -58,8 +60,8 @@ $contarl = ceil(count($totalp)/15);
           <!-- Area Tabela -->
           <div class="col-8">
                <div class="table-responsive">
-				<table class="table w-100 p-3 my-4 table-sm table-hover text-end">
-					<thead>
+				<table class="table w-100 p-3 my-4 table-sm table-hover text-center">
+					<thead class="text-center">
 					<tr>
 						<th>Data</th>
 						<th>Descrição</th>
@@ -75,8 +77,7 @@ $contarl = ceil(count($totalp)/15);
 					<tbody class="table-group-divider">
 					<form action="./contabilidade.php" method="post">
 						<input type="hidden" name="deletar" value="1">
-						<?php 
-						
+						<?php
 							for ($i=0; isset($pesquisa[$i]) ; $i++) { 
 								switch($pesquisa[$i]['tipo']){
 									case 'entrada':
@@ -92,11 +93,11 @@ $contarl = ceil(count($totalp)/15);
 							<th>{$pesquisa[$i]['descricao']}</th>
 							<th>{$pesquisa[$i]['id_produto']}</th>
 							<th>{$pesquisa[$i]['forma_pagamento']}</th>
-							<th>".number_format((float)($pesquisa[$i]['VT']/$pesquisa[$i]['quantidade']), 2, '.', '')."</th>
+							<th class='text-end'>".number_format((float)($pesquisa[$i]['VT']/$pesquisa[$i]['quantidade']), 2, '.', '')."</th>
 							<th>{$pesquisa[$i]['tipo']}</th>
 							<th>{$pesquisa[$i]['quantidade']}</th>
-							<th>".number_format((float)$pesquisa[$i]['VT'], 2, '.', '')."</th>
-							<th><button type='submit' 'name='id_lancamento' value='{$pesquisa[$i]['id_lancamento']}' class='btn'><i class='bi bi-trash-fill text-danger'></i></button></th>
+							<th class='text-end'>".number_format((float)$pesquisa[$i]['VT'], 2, '.', '')."</th>
+							<th><button type='submit' name='id_lancamento' value='{$pesquisa[$i]['id_lancamento']}' class='btn'><i class='bi bi-trash-fill text-danger'></i></button></th>
 							</tr>";
 							}
 						?>
@@ -146,95 +147,28 @@ $contarl = ceil(count($totalp)/15);
 					<div class="input-group mb-1">
 						<span class="input-group-text">Tipo</span>
 						<select name="p_tipo" id="" class="form-select">
-							<?PHP 
-								if (isset($_SESSION['pes_tipo'])) {
-									switch ($_SESSION['pes_tipo']) {
-										case 1:
-											echo'
-											<option value="0" >Ambos</option>
-											<option value="1" selected>Entrada</option>
-											<option value="2">Saida</option>';
-											break;
-										case 2:
-											echo'
-											<option value="0" >Ambos</option>
-											<option value="1" >Entrada</option>
-											<option value="2" selected>Saida</option>';
-											break;
-										default:
-											echo'
-											<option value="0" selected>Ambos</option>
-											<option value="1" >Entrada</option>
-											<option value="2">Saida</option>';
-										break;
-									}
-								}
-								else{
-									echo'
-									<option value="0" selected>Ambos</option>
-									<option value="1" >Entrada</option>
-									<option value="2">Saida</option>';
-								}
-							?>
+							<option value="0">Ambos</option>
+							<option value="1" <?php if($_SESSION['pes_tipo'] == 1){echo 'selected';} ?>>Entrada</option>
+							<option value="2" <?php if($_SESSION['pes_tipo'] == 2){echo 'selected';} ?>>Saida</option>
 						</select>
 					</div>
 					<div class="input-group mb-1">
                               <span class="input-group-text">Data</span>
 						<select name="p_data" id="" class="form-select">
-							<?PHP 
-								if (isset($_SESSION['pes_data'])) {
-									switch ($_SESSION['pes_data']) {
-										case 1:
-											echo'
-											<option value="0">Todos os dias</option>
-											<option value="1" selected>Hoje</option>
-											<option value="2">Essa Semana</option>
-											<option value="3">Esse Mês</option>
-											<option value="4">Esse Ano</option>';
-											break;
-										case 2:
-											echo'
-											<option value="0">Todos os dias</option>
-											<option value="1">Hoje</option>
-											<option value="2" selected>Essa Semana</option>
-											<option value="3">Esse Mês</option>
-											<option value="4">Esse Ano</option>';
-											break;
-										case 3:
-											echo'
-											<option value="0">Todos os dias</option>
-											<option value="1">Hoje</option>
-											<option value="2">Essa Semana</option>
-											<option value="3" selected>Esse Mês</option>
-											<option value="4">Esse Ano</option>';
-											break;
-										case 4:
-											echo'
-											<option value="0">Todos os dias</option>
-											<option value="1">Hoje</option>
-											<option value="2">Essa Semana</option>
-											<option value="3">Esse Mês</option>
-											<option value="4" selected>Esse Ano</option>';
-											break;
-										default:
-											echo'
-											<option value="0" selected>Todos os dias</option>
-											<option value="1">Hoje</option>
-											<option value="2">Essa Semana</option>
-											<option value="3">Esse Mês</option>
-											<option value="4">Esse Ano</option>';
-										break;
-									}
-								}
-								else{
-									echo'
-									<option value="0" selected>Todos os dias</option>
-									<option value="1">Hoje</option>
-									<option value="2">Essa Semana</option>
-									<option value="3">Esse Mês</option>
-									<option value="4" >Esse Ano</option>';
-								}
-							?>
+							<option value="0">Todos os dias</option>
+							<option value="1" <?php if($_SESSION['pes_data'] == 1){echo 'selected';} ?>>Hoje</option>
+							<option value="2" <?php if($_SESSION['pes_data'] == 2){echo 'selected';} ?>>Essa Semana</option>
+							<option value="3" <?php if($_SESSION['pes_data'] == 3){echo 'selected';} ?>>Esse Mês</option>
+							<option value="4" <?php if($_SESSION['pes_data'] == 4){echo 'selected';} ?>>Esse Ano</option>
+						</select>
+					</div>
+					<div class="input-group mb-1">
+						<span class="input-group-text">Forma Pagamento</span>
+						<select name="p_fpagamento" id="" class="form-select">
+							<option value="" >Todas</option>
+							<option value="Dinheiro" <?php if($_SESSION['pes_fpagamento'] == 'Dinheiro'){echo 'selected';} ?>>Dinheiro</option>
+							<option value="Cartão" <?php if($_SESSION['pes_fpagamento'] == 'Cartão'){echo 'selected';} ?>>Cartão</option>
+							<option value="Pix" <?php if($_SESSION['pes_fpagamento'] == 'Pix'){echo 'selected';} ?>>Pix</option>
 						</select>
 					</div>
 					<div class="input-group mb-1">
@@ -247,33 +181,15 @@ $contarl = ceil(count($totalp)/15);
 					</div>
 					<div class="input-group mb-1">
 						<span class="input-group-text">Ordem</span>
-						<select name="p_ordem" id="" class="form-select">
-							<?PHP 
-								if (isset($_SESSION['pes_ordem'])) {
-									switch ($_SESSION['pes_ordem']) {
-										case "DESC":
-											echo'
-											<option value="DESC" selected>Mais Recente</option>
-											<option value="ASC">Mais Antigo</option>';
-											break;
-										case "ASC":
-											echo'
-											<option value="DESC">Mais Recente</option>
-											<option value="ASC" selected>Mais Antigo</option>';
-											break;
-									}
-								}
-								else{
-									echo'
-									<option value="DESC" selected>Mais Recente</option>
-									<option value="ASC">Mais Antigo</option>';
-								}
-							?>
+						<select name="p_ordem" id="" class="form-select">	
+						<option value="DESC" <?php if($_SESSION['pes_ordem'] == 'DESC'){echo 'selected';} ?>>Mais Recente</option>
+						<option value="ASC" <?php if($_SESSION['pes_ordem'] == 'ASC'){echo 'selected';} ?>>Mais Antigo</option>
 						</select>
 					</div>
-					<div class="row mx-2">
-						<button type="submit" name="limpar_pes" value="1" class="btn btn-outline-primary mb-1">Limpar</button>
-						<button type="submit" class="btn btn-outline-success ">Pesquisar</button>
+					<div class="text-center mb-1">Total da Pesquisa: <?php echo count($pesquisa);?></div>
+					<div class="row mx-2 text-center">
+						<button type="submit" class="btn btn-outline-success mb-1">Pesquisar</button>
+						<button type="submit" name="limpar_pes" value="1" class="btn btn-outline-primary ">Limpar</button>
 					</div>
                     </form>
 
