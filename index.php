@@ -33,7 +33,7 @@
 		<div  class="row h-100">
 
 			<!-- Area das entradas e saidas-->
-			<div class="col-5">
+			<div class="col-xl-5 col-lg-3">
 				<div class="row shadow border-2 rounded-4">
 						<div class="col-12 h4 ">
 								<div class="display-4 my-2 text-center fw-bold">
@@ -192,7 +192,7 @@
 			</div>
 
 			<!-- Area da Tabela -->
-			<div class="col-7 text-center"  >
+			<div class="col-xl-7 col-lg-9 text-center"  >
 			<div class="table-responsive" style="height: 90vh;">
 				<table class="table w-100 p-3 my-4 table-sm table-hover align-middle">
 					<thead>
