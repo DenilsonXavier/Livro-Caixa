@@ -199,6 +199,7 @@
 					<tr>
 						<th>Data</th>
 						<th>Descrição</th>
+						<th>Responsavel</th>
 						<th>Codigo Produto</th>
 						<th>Forma Pagamento</th>
 						<th>Valor Unitário</th>
@@ -226,6 +227,7 @@
 							"<tr class='{$cor}'>
 							<th>".substr($todosl[$i]['dia'], 0, -15)."</th>
 							<th>{$todosl[$i]['descricao']}</th>
+							<th>{$todosl[$i]['nick']}</th>
 							<th>{$todosl[$i]['id_produto']}</th>
 							<th>{$todosl[$i]['forma_pagamento']}</th>
 							<th>".number_format((float)($todosl[$i]['VT']/$todosl[$i]['quantidade']), 2, '.', '')."</th>
@@ -261,7 +263,7 @@
 						}
 						?>
 						<tr class="text-start table-active ">
-							<th colspan="7">
+							<th colspan="8">
 								Total do dia
 								
 								
