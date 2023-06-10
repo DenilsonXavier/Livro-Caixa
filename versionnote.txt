@@ -1,5 +1,9 @@
 Nota de relação de atualizações:
 
+1.1.2{
+     Leve mudança de layout Home;
+}
+
 1.1.1{
      Add coluna RESPONSAVEL nas tabelas;
      Responsividade em telas quadradas;
