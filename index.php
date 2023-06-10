@@ -12,11 +12,31 @@
 		$l->deletarLancamento($_POST['id_lancamento']);
 	}
 	$_SESSION['validacao_hash'] = md5(rand());
+
 	$p = new Produto;
 	$todosp = $p->BuscarTodosProdutos();
+
 	$l = new Lancamento;
 	$todosl = $l->BuscarLancamentosHoje();
-
+	
+	$tvalor = 0;
+	for ($i=0;isset($todosl[$i]); $i++) { 
+		switch ($todosl[$i]['tipo']) {
+			case 'entrada':
+				$tvalor += $todosl[$i]['VT'];
+				break;
+			case 'saida':
+				$tvalor -= $todosl[$i]['VT'];
+				break;
+		}
+		
+	}
+	if ($tvalor >= 1) {
+		$cortv = ' text-success';
+	}else {
+		$cortv = ' text-danger';
+	}
+	
 ?>
 <!DOCTYPE html>
 <html>
@@ -103,9 +123,9 @@
 										<input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
 										 <button type="submit" class="btn btn-outline-success  justify-content-start">Lançar</button>
 									</div>
-									<div class="mb-3 input-group ">
+									<div class="mb-3 input-group d-flex">
 										<span class="input-group-text ">Valor total Do dia</span>
-										<input type="text" placeholder="00.00" class="form-control " disabled>
+										<span <?php echo " class='input-group-text flex-fill {$cortv}'" ;?>><?php echo number_format((float)$todosl[$i]['VT'], 2, '.', ''); ?> </span>
 									</div>
 
 								</form>
@@ -241,34 +261,11 @@
 						</form>
 					</tbody>
 					<tfoot>
-						<?php 
-						
-						$tvalor = 0;
-
-						for ($i=0;isset($todosl[$i]); $i++) { 
-							switch ($todosl[$i]['tipo']) {
-								case 'entrada':
-									$tvalor += $todosl[$i]['VT'];
-									break;
-								case 'saida':
-									$tvalor -= $todosl[$i]['VT'];
-									break;
-							}
-							
-						}
-						if ($tvalor >= 1) {
-							$cor = ' text-success';
-						}else {
-							$cor = ' text-danger';
-						}
-						?>
 						<tr class="text-start table-active ">
 							<th colspan="8">
 								Total do dia
-								
-								
 							</th>
-							<th colspan="2" class="text-center<?php echo $cor.'">'.number_format((float)$tvalor, 2, '.', ''); ?></th>
+							<th colspan="2" class="text-center<?php echo $cortv.'">'.number_format((float)$tvalor, 2, '.', ''); ?></th>
 						</tr>
 					</tfoot>
 				</table>

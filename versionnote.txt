@@ -1,5 +1,11 @@
 Nota de relação de atualizações:
 
+1.1.1{
+     Add coluna RESPONSAVEL nas tabelas;
+     Responsividade em telas quadradas;
+     Pequena mudança no layout das tabelas;
+}
+
 1.1.0{
      Add opção Forma de Pagamento na Pesquisa;
      Sutil modelação na tabela;
@@ -7,7 +13,7 @@ Nota de relação de atualizações:
 }
 
 1.0.4{
-     leve repaginização nas tabelas Home e Contabilidade;
+     Leve repaginização nas tabelas Home e Contabilidade;
 }
 
 1.0.3{
