@@ -65,9 +65,9 @@
 									</div>
 									<div class="mb-3">
 										<div class="input-group ">
-											<span class="input-group-text">Forma de pagamento</span>
+											<span class="input-group-text">Pagamento</span>
 											<select name="forma_p" id="forma_p" class="form-select " required>
-												  <option selected value="0">Escolha a forma de Pagamento</option>
+												  <option selected value="0">Forma de Pagamento</option>
 												  <option value="Dinheiro">Dinheiro</option>
 												  <option value="Cartão">Cartão</option>
 												  <option value="Pix">Pix</option>
@@ -88,7 +88,7 @@
 												}
 												$_SESSION['Erronume'] = null;
 											?>
-											<span class="input-group-text">Valor do Lançamento</span>
+											<span class="input-group-text">Valor </span>
 											<span class="input-group-text">R$</span>
 											<input type="text" name="valor_l" id="valor_l" class="form-control" required>
 										</div>
@@ -147,9 +147,9 @@
 
 									<div class="mb-3">
 										<div class="input-group ">
-											<span class="input-group-text">Forma de pagamento</span>
+											<span class="input-group-text">Pagamento</span>
 											<select name="forma_p" id="forma_p" class="form-select " required>
-												  <option  value="0" selected>Escolha a forma de Pagamento</option>
+												  <option  value="0" selected>Forma de Pagamento</option>
 												  <option value="Dinheiro">Dinheiro</option>
 												  <option value="Cartão">Cartão</option>
 												  <option value="Pix">Pix</option>
@@ -172,7 +172,7 @@
 												}
 												$_SESSION['Erronums'] = null;
 												?>
-											<span class="input-group-text">Valor do Lançamento</span>
+											<span class="input-group-text">Valor </span>
 											<span class="input-group-text">R$</span>
 											<input type="text" name="valor_l" id="valor_l" class="form-control" required>
 										</div>
@@ -202,8 +202,8 @@
 						<th>Responsavel</th>
 						<th>Codigo Produto</th>
 						<th>Forma Pagamento</th>
-						<th>Valor Unitário</th>
 						<th>Tipo</th>
+						<th>Valor Unitário</th>
 						<th>Quantidade</th>
 						<th>Valor Total</th>
 
@@ -230,10 +230,10 @@
 							<th>{$todosl[$i]['nick']}</th>
 							<th>{$todosl[$i]['id_produto']}</th>
 							<th>{$todosl[$i]['forma_pagamento']}</th>
-							<th>".number_format((float)($todosl[$i]['VT']/$todosl[$i]['quantidade']), 2, '.', '')."</th>
 							<th>{$todosl[$i]['tipo']}</th>
+							<th class='text-end'>".number_format((float)($todosl[$i]['VT']/$todosl[$i]['quantidade']), 2, '.', '')."</th>
 							<th>{$todosl[$i]['quantidade']}</th>
-							<th>".number_format((float)$todosl[$i]['VT'], 2, '.', '')."</th>
+							<th class='text-end'>".number_format((float)$todosl[$i]['VT'], 2, '.', '')."</th>
 							<th><button type='submit' 'name='id_lancamento' value='{$todosl[$i]['id_lancamento']}' class='btn'><i class='bi bi-trash-fill text-danger'></i></button></th>
 							</tr>";
 							}

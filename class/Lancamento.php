@@ -40,7 +40,7 @@ class Lancamento extends Conexao {
     }
     public function BuscarTodosLancamentos(){
         $this->conectar();
-        $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.VT, produto.descricao, produto.tipo FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto
+        $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.VT, lancamento.forma_pagamento, produto.descricao, produto.tipo, usuario.nick FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto join usuario on lancamento.id_usuario = usuario.id_usuario 
          ORDER BY lancamento.dia ASC");  
         $consulta->execute();
 

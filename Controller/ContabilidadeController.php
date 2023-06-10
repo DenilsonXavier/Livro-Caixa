@@ -10,9 +10,20 @@ class Pesquisa extends Lancamento{
 
 		$contartipos = 0;
           if (!empty($tipo) || !empty($data) || !empty($id_fpagamento) || !empty($descricao) || !empty($id) || !empty($id_produto)) {
-               $Stringbusca = "SELECT * FROM `lancamento` INNER join produto on lancamento.id_produto = produto.id_produto WHERE ";
+               $Stringbusca = "SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.VT, lancamento.forma_pagamento, produto.descricao, produto.tipo, usuario.nick
+                FROM `lancamento` 
+                join produto 
+                    on lancamento.id_produto = produto.id_produto 
+                join usuario 
+                    on lancamento.id_usuario = usuario.id_usuario
+                 WHERE ";
           }else{
-               $Stringbusca = "SELECT * FROM `lancamento` INNER join produto on lancamento.id_produto = produto.id_produto ";
+               $Stringbusca = "SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.VT, lancamento.forma_pagamento, produto.descricao, produto.tipo, usuario.nick
+                FROM `lancamento` 
+                join produto 
+                    on lancamento.id_produto = produto.id_produto 
+                join usuario 
+                    on lancamento.id_usuario = usuario.id_usuario";
           }
 
           switch($tipo){
