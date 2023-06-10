@@ -114,7 +114,7 @@ $todosu = $u->BuscarTodosProdutos();
                                              <option selected>Escolha um usuario</option>
                                              <?php 
                                                   for ($i=0; isset($todosu[$i]); $i++) { 
-                                                       echo '<option value="'.$todosu[$i]['id_usuario'].'">'.$todosu[$i]['nick'].'</option>';
+                                                       echo "<option value='{$todosu[$i]['id_usuario']}'>{$todosu[$i]['nick']}  -  {$todosu[$i]['Nivel']}</option>";
                                                   }
                                              ?>
                                         </select>
@@ -146,7 +146,7 @@ $todosu = $u->BuscarTodosProdutos();
                                         <option selected>Selecione</option>
                                              <?php 
                                                   for ($i=0; isset($todosu[$i]); $i++) { 
-                                                       echo '<option value="'.$todosu[$i]['id_usuario'].'">'.$todosu[$i]['nick'].'</option>';
+                                                       echo "<option value='{$todosu[$i]['id_usuario']}'>{$todosu[$i]['nick']}  -  {$todosu[$i]['Nivel']}</option>";
                                                   }
                                              ?>
                                    </select>
@@ -170,7 +170,7 @@ $todosu = $u->BuscarTodosProdutos();
                                         <option selected>Selecione</option>
                                              <?php 
                                                   for ($i=0; isset($todosu[$i]); $i++) { 
-                                                       echo '<option value="'.$todosu[$i]['id_usuario'].'">'.$todosu[$i]['nick'].'</option>';
+                                                       echo "<option value='{$todosu[$i]['id_usuario']}'>{$todosu[$i]['nick']}  -  {$todosu[$i]['Nivel']}</option>";
                                                   }
                                              ?>
                                    </select>
@@ -197,7 +197,9 @@ $todosu = $u->BuscarTodosProdutos();
                                         <option selected>Selecione</option>
                                              <?php 
                                                   for ($i=0; isset($todosu[$i]); $i++) { 
-                                                       echo '<option value="'.$todosu[$i]['id_usuario'].'">'.$todosu[$i]['nick'].'</option>';
+                                                       if($_SESSION['id_usuario'] <> $todosu[$i]['id_usuario']){
+                                                       echo "<option value='{$todosu[$i]['id_usuario']}'>{$todosu[$i]['nick']}  -  {$todosu[$i]['Nivel']}</option>";
+                                                       }
                                                   }
                                              ?>
                                    </select>
@@ -237,11 +239,11 @@ $todosu = $u->BuscarTodosProdutos();
                     <div class="collapse multi-collapse" id="produto_e">
 						<div class="my-3 tw-bold h4"><span>Excluir produto</span></div>
                                    <?php 
-                                        if(isset($_SESSION['error_mu'])){
+                                        if(isset($_SESSION['Error_mp'])){
                                              echo '
-                                             <div class="my-3 tw-bold h3 text-danger">O Usuário não pode ser excluido em sua sessão.</div>
+                                             <div class="my-3 tw-bold h4 text-danger">O Produto não pode ser excluido, é um produto padrão.</div>
                                              ';
-                                             unset($_SESSION['error_mu']);
+                                             unset($_SESSION['Error_mp']);
                                         }
                                    ?>
 						<form action="./Controller/AdmCrontroller.php" method="post">
@@ -250,8 +252,8 @@ $todosu = $u->BuscarTodosProdutos();
 										<option selected>Escolha um produto</option>
                                              <?php 
                                                   for ($i=0; isset($todosp[$i]); $i++) { 
-                                                       if ($todosp[$i]['id_produto'] <> 1 || $todosp[$i]['id_produto'] || 2) {
-                                                             echo '<option value="'.$todosp[$i]['id_produto'].'">'.$todosp[$i]['descricao'].'</option>';
+                                                       if($todosp[$i]['id_produto'] > 2) {
+                                                             echo "<option value='{$todosp[$i]['id_produto']}'>{$todosp[$i]['descricao']}   -   {$todosp[$i]['tipo']}</option>";
                                                        }
                                                   }
                                              ?>
@@ -284,7 +286,7 @@ $todosu = $u->BuscarTodosProdutos();
 									<option selected>Selecione</option>
                                              <?php 
                                                   for ($i=0; isset($todosp[$i]); $i++) { 
-                                                       echo '<option value="'.$todosp[$i]['id_produto'].'">'.$todosp[$i]['descricao'].'</option>';
+                                                       echo "<option value='{$todosp[$i]['id_produto']}'>{$todosp[$i]['descricao']}   -   {$todosp[$i]['tipo']}</option>";
                                                   }
                                              ?>
 								</select>
@@ -311,7 +313,9 @@ $todosu = $u->BuscarTodosProdutos();
 									<option selected>Selecione</option>
                                              <?php 
                                                   for ($i=0; isset($todosp[$i]); $i++) { 
-                                                       echo '<option value="'.$todosp[$i]['id_produto'].'">'.$todosp[$i]['descricao'].'</option>';
+                                                       if($todosp[$i]['id_produto'] > 2) {
+                                                            echo "<option value='{$todosp[$i]['id_produto']}'>{$todosp[$i]['descricao']}   -   {$todosp[$i]['tipo']}</option>";
+                                                  }
                                                   }
                                              ?>
 								</select>

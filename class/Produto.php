@@ -19,9 +19,9 @@ class Produto extends Conexao {
     }
 
     public function deletarProduto($id_produto) {
-        session_start();
         if ($id_produto == 1 || $id_produto == 2) {
             $_SESSION['Error_mp'] = 1;
+            header("Location: ../adm.php");
             exit;
         }
         

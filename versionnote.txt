@@ -1,0 +1,7 @@
+Nota de relação de atualizações:
+
+1.0.3{
+     Visibilidade do Nivel do Funcionario/Administrador na hora de Alteração ou Exclusão;
+     Visibilidade do tipo de produto na hora de Alteração ou Exclusão;
+     Remoção de ProdutoPadrão e ServiçoPadrão em Exclusão e Alteração de Tipo;
+}

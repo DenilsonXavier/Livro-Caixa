@@ -148,6 +148,12 @@ switch ($_POST['tipo_acao']) {
         break;
 
     case 'p_excluir':
+        
+        if ($_POST['deletar_p'] == 1 || $_POST['deletar_p'] == 2) {
+            $_SESSION['Error_mp'] = 1;
+            header("Location: ../adm.php");
+            exit;
+        }
 
         $id = $_POST['deletar_p'];
         $prod = new Produto;
