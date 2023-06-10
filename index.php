@@ -33,7 +33,7 @@
 	}
 	if ($tvalor >= 1) {
 		$cortv = ' text-success';
-	}else {
+	}elseif ($tvalor <= 0) {
 		$cortv = ' text-danger';
 	}
 	
@@ -125,7 +125,7 @@
 									</div>
 									<div class="mb-3 input-group d-flex">
 										<span class="input-group-text ">Valor total Do dia</span>
-										<span <?php echo " class='input-group-text flex-fill {$cortv}'" ;?>><?php echo number_format((float)$todosl[$i]['VT'], 2, '.', ''); ?> </span>
+										<span <?php echo " class='input-group-text flex-fill {$cortv}'" ;?>><?php echo number_format((float)$tvalor, 2, '.', ''); ?> </span>
 									</div>
 
 								</form>
