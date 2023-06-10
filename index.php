@@ -199,7 +199,7 @@
 					<tr>
 						<th>Data</th>
 						<th>Descrição</th>
-						<th>Codigo</th>
+						<th>Codigo Produto</th>
 						<th>Forma Pagamento</th>
 						<th>Valor Unitário</th>
 						<th>Tipo</th>
@@ -216,26 +216,24 @@
 							for ($i=0; isset($todosl[$i]) ; $i++) { 
 								switch($todosl[$i]['tipo']){
 									case 'entrada':
-										$cor = ' class="text-success">';
+										$cor = 'text-success';
 										break;
 									case 'saida':
-										$cor = ' class="text-danger">';
+										$cor = 'text-danger';
 										break;
 								} 
 							echo 
-							'<tr'.$cor.
-							'<th>'.substr($todosl[$i]['dia'], 0, -15).'</th>
-							<th>'.$todosl[$i]['descricao'].'</th>
-							<th>'.$todosl[$i]['id_produto'].'</th>
-							<th>'.$todosl[$i]['forma_pagamento'].'</th>
-							<th>'.number_format((float)($todosl[$i]['VT']/$todosl[$i]['quantidade']), 2, '.', '').'</th>
-							<th>'.$todosl[$i]['tipo'].'</th>
-							<th>'.$todosl[$i]['quantidade'].'</th>
-							<th>'.number_format((float)$todosl[$i]['VT'], 2, '.', '').'</th>
-							<th><button type="submit" name="id_lancamento" value="'.$todosl[$i]['id_lancamento'].'" class="btn"><i class="bi bi-trash-fill text-danger"></i></button></th>
-							</tr>'	
-								
-								;
+							"<tr class='{$cor}'>
+							<th>".substr($todosl[$i]['dia'], 0, -15)."</th>
+							<th>{$todosl[$i]['descricao']}</th>
+							<th>{$todosl[$i]['id_produto']}</th>
+							<th>{$todosl[$i]['forma_pagamento']}</th>
+							<th>".number_format((float)($todosl[$i]['VT']/$todosl[$i]['quantidade']), 2, '.', '')."</th>
+							<th>{$todosl[$i]['tipo']}</th>
+							<th>{$todosl[$i]['quantidade']}</th>
+							<th>".number_format((float)$todosl[$i]['VT'], 2, '.', '')."</th>
+							<th><button type='submit' 'name='id_lancamento' value='{$todosl[$i]['id_lancamento']}' class='btn'><i class='bi bi-trash-fill text-danger'></i></button></th>
+							</tr>";
 							}
 						?>
 						</form>

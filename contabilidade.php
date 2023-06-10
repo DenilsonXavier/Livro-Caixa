@@ -63,7 +63,7 @@ $contarl = ceil(count($totalp)/15);
 					<tr>
 						<th>Data</th>
 						<th>Descrição</th>
-						<th>Codigo</th>
+						<th>Codigo Produto</th>
 						<th>Forma de Pagamento</th>
 						<th>Valor Unitário</th>
 						<th>Tipo</th>
@@ -80,26 +80,24 @@ $contarl = ceil(count($totalp)/15);
 							for ($i=0; isset($pesquisa[$i]) ; $i++) { 
 								switch($pesquisa[$i]['tipo']){
 									case 'entrada':
-										$cor = ' class="text-success">';
+										$cor = 'text-success';
 										break;
 									case 'saida':
-										$cor = ' class="text-danger">';
+										$cor = 'text-danger';
 										break;
 								} 
 							echo 
-							'<tr'.$cor.
-							'<th>'.substr($pesquisa[$i]['dia'], 0, -15).'</th>
-							<th>'.$pesquisa[$i]['descricao'].'</th>
-							<th>'.$pesquisa[$i]['id_produto'].'</th>
-							<th>'.$pesquisa[$i]['forma_pagamento'].'</th>
-							<th>'.number_format((float)($pesquisa[$i]['VT']/$pesquisa[$i]['quantidade']), 2, '.', '').'</th>
-							<th>'.$pesquisa[$i]['tipo'].'</th>
-							<th>'.$pesquisa[$i]['quantidade'].'</th>
-							<th>'.number_format((float)$pesquisa[$i]['VT'], 2, '.', '').'</th>
-							<th><button type="submit" name="id_lancamento" value="'.$pesquisa[$i]['id_lancamento'].'" class="btn"><i class="bi bi-trash-fill text-danger"></i></button></th>
-							</tr>'	
-								
-								;
+							"<tr class='{$cor}'>
+							<th>".substr($pesquisa[$i]['dia'], 0, -15)."</th>
+							<th>{$pesquisa[$i]['descricao']}</th>
+							<th>{$pesquisa[$i]['id_produto']}</th>
+							<th>{$pesquisa[$i]['forma_pagamento']}</th>
+							<th>".number_format((float)($pesquisa[$i]['VT']/$pesquisa[$i]['quantidade']), 2, '.', '')."</th>
+							<th>{$pesquisa[$i]['tipo']}</th>
+							<th>{$pesquisa[$i]['quantidade']}</th>
+							<th>".number_format((float)$pesquisa[$i]['VT'], 2, '.', '')."</th>
+							<th><button type='submit' 'name='id_lancamento' value='{$pesquisa[$i]['id_lancamento']}' class='btn'><i class='bi bi-trash-fill text-danger'></i></button></th>
+							</tr>";
 							}
 						?>
 					</form>
