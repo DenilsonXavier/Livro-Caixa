@@ -62,6 +62,17 @@ $todosu = $u->BuscarTodosProdutos();
                                         </li>
                                    </div>
                          </ul>
+                         <ul class="list-group list-group-flush mt-1">     
+                              <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#backup_control" role="button" aria-expanded="false" aria-controls="backup_control" ><p class="h2">Backup</p></a></div></li>
+                                   <div class="collapse multi-collapse" id="backup_control">
+                                        <li class="list-group-item ">
+                                             <ul class="list-group list-group-flush ">
+                                                  <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#backup_c" role="button" aria-expanded="false" aria-controls="backup_c">Criar</a></div></li>
+                                                  <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#backup_r" role="button" aria-expanded="false" aria-controls="backup_r">Restaurar</a></div></li>
+                                             </ul>
+                                        </li>
+                                   </div>
+                         </ul>
                </div>
              
                <div class="col-8 p-3 text-center">
@@ -324,6 +335,32 @@ $todosu = $u->BuscarTodosProdutos();
                                    <input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
 							<div class="text-center mb-3 d-grid"><button type="submit" class="btn btn-outline-warning">Alterar Tipo</button></div>
 						</form>
+                    </div>
+                    <div class="collapse multi-collapse" id="backup_c">
+					<div class="my-3"><span class="tw-bold h4 ">Criar Backup</span></div>
+                         <form action="./contabilidade.php" method="post">
+                              <input type="hidden" name="tipo_acao" value="b_criar">
+                              <input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
+                              <div class="text-center mb-3 d-grid"><button type="submit" class="btn btn-outline-primary">Criar</button></div>
+                         </form>     
+                    </div>
+                    <div class="collapse multi-collapse" id="backup_r">
+						<div class="my-3"><span class="tw-bold h4 ">Recuperar Backup</span> </div>
+                              <form action="./contabilidade.php" method="post">
+                                   <select name="b_qual" id="" class="form-select mb-1">
+                                        <option>backup - 12/05/23</option>
+                                        <option>backup - 12/04/23</option>
+                                        <option>backup - 12/03/23</option>
+                                        <option>backup - 12/02/23</option>
+                                   </select>
+                                   <div class="form-check text-start mb-1">
+                                        <input type="checkbox" name="" id="flexCheckDefault" class="form-check-input" required>
+                                        <label for="flexCheckDefault" class="form-check-label">Tem certeza?</label>
+                                   </div>
+                                   <input type="hidden" name="tipo_acao" value="b_recuperar">
+                                   <input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
+                                   <div class="text-center mb-3 d-grid"><button type="submit" class="btn btn-outline-warning">Criar</button></div>
+                              </form>  
                     </div>
                </div>
           </div>

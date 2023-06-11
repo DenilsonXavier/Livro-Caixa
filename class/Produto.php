@@ -19,11 +19,6 @@ class Produto extends Conexao {
     }
 
     public function deletarProduto($id_produto) {
-        if ($id_produto == 1 || $id_produto == 2) {
-            $_SESSION['Error_mp'] = 1;
-            header("Location: ../adm.php");
-            exit;
-        }
         
         $this->conectar();
         $selectProduto = $this->conexao->prepare("SELECT * FROM produto WHERE id_produto = ? ");
@@ -64,9 +59,9 @@ class Produto extends Conexao {
         for ($i=0; $row = $resultado->fetch_assoc() ; $i++) { 
             $rows[$i] = $row;
         }
-        return $rows;
         $consulta->close();
         $this->fecharConexao();
+        return $rows;
         
 }
 
