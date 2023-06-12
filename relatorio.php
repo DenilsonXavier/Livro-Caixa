@@ -1,14 +1,55 @@
 <?php 
-//  $a = array(0 =>'Janeiro',1 => 'Fevereiro', 2 =>'Março', 3 =>'Abril', 4 =>'Maio', 5 =>'Junho', 6 =>'Julho', 7 =>'Agosto',8 =>'Setembro', 9 =>'Outubro', 10 =>'Novembro', 11 =>'Dezembro');
 $label = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto','Setembro', 'Outubro', 'Novembro', 'Dezembro');
+$cores =array('#84b6f4', '#fdfd96', '#77dd77', '#ff6961', '#fdcae1' , '#ff85d5', '#ffe180', '#a3ffac', '#ffda9e');
 $funcionarioname = array('admin','funcionario');
+
+$funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
+$funcionariolucrovalor = array(15000,32100);
 $balancaen = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
 $balancasa = array(300, 250, 400, 200, 350, 150, 200, 150, 300, 250, 400, 41);
 
 
 
+$funcionariovendas = ''; 
+for ($i=0; isset($funcionarioname[$i]); $i++) { 
+     $funcionariovendas .= "{label: '".$funcionarioname[$i]."',data:[";
+     for ($s=0;  isset($funcionariovendasvalor[$s]); $s++) { 
+          $funcionariovendas .= $funcionariovendasvalor[$s];
+          if (isset($funcionariovendas[$s+1])) {$funcionariovendas .= ',';}
+     }
+     $funcionariovendas .= "],backgroundColor: '{$cores[$i]}'}";
+     if (isset($funcionarioname[$i+1])) {$funcionariovendas .= ',';}
+}
+$funcionariolucro[0] = "label: 'My First Vendas',data: ["; 
+for ($s=0; isset($funcionariolucrovalor[$s]); $s++) { 
+          $funcionariolucro[0] .= $funcionariolucrovalor[$s];
+          if (isset($funcionariolucrovalor[$s+1])) {$funcionariolucro[0] .= ',';}
+     }
+$funcionariolucro[0] .= "],backgroundColor: [";
+for ($c=0; isset($funcionarioname[$c]) ; $c++) { 
+     $funcionariolucro[0] .= "'{$cores[$c]}' ";
+     if (isset($funcionarioname[$c+1])) { $funcionariolucro[0] .= ',';}
+     }
+$funcionariolucro[0] .= "],
+hoverOffset: 4";
+
+$funcionariolucro[1] = ''; 
+for ($i=0; isset($funcionarioname[$i]); $i++) { 
+     $funcionariolucro[1] .= "'{$funcionarioname[$i]}' " ;
+     if (isset($funcionarioname[$i+1])) {$funcionariolucro[1] .= ',';} 
+     }
+
+
+// label: 'My First Dataset',
+// data: [300, 50, 100],
+// backgroundColor: [
+//   'rgb(255, 99, 132)',
+//   'rgb(54, 162, 235)',
+//   'rgb(255, 205, 86)'
+// ]
+
+$funcionariolucro;
 $labels = json_encode($label);
-$funcionarionames = json_encode($funcionarioname);
 $databen = json_encode($balancaen);
 $databsa = json_encode($balancasa);
 ?>
@@ -93,9 +134,11 @@ $databsa = json_encode($balancasa);
                          <div class="text-center h3 fw-bold fst-italic"><span>Funcionários Vendas</span></div>
                          <canvas id="Funcionario_fve" style="height: 10vh;"></canvas>
                     </div>
-                    <div class="collapse multi-collapse my-2" style="height: 10vh;" id="Funcionario_lc">
+                    <div class="collapse multi-collapse my-2 text-center" style="height: 10vh;" id="Funcionario_lc">
                          <div class="text-center h3 fw-bold fst-italic"><span>Funcionárois Lucro</span></div>
-                         <canvas id="Funcionario_flc" style="height: 10vh;"></canvas>
+                         <div class="d-flex justify-content-center">
+                              <canvas id="Funcionario_flc" style="height: 50vh;" ></canvas>
+                         </div>
                     </div>
 
 
@@ -109,7 +152,6 @@ $databsa = json_encode($balancasa);
      <script src="js/bootstrap.bundle.min.js"></script>
      <script>
           var labels = JSON.parse('<?php echo $labels; ?>');
-          var funcionarionames = JSON.parse('<?php echo $funcionarionames; ?>');
           var databen = JSON.parse('<?php echo $databen; ?>');
           var databsa = JSON.parse('<?php echo $databsa; ?>');
 
@@ -177,14 +219,29 @@ $databsa = json_encode($balancasa);
           type: 'bar',
           data: {
           labels: labels,
-          datasets: [{
-               label: 'Vendas',
-               data: databsa,
-               backgroundColor: '#28a745'
-          }]
+          datasets: [
+               <?php 
+               echo $funcionariovendas;
+                    ?>]
           },
           options: {
           responsive: true,
+          scales: {
+          }
+          }
+          });
+          // Grafico Funcionarios Lucro
+          var ctx = document.getElementById('Funcionario_flc').getContext('2d');
+          var myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+          labels: [<?php echo $funcionariolucro[1];?>],
+          datasets: [{
+               <?php echo $funcionariolucro[0];?>}
+          ]
+          },
+          options: {
+          responsive: false,
           scales: {
           }
           }
