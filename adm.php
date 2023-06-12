@@ -33,7 +33,6 @@ $todosu = $u->BuscarTodosProdutos();
           <div class="row p-3 shadow rounded border" style=" width: 100vh;">
           
                <div class="col-4 p-3">
-           
                          <ul class="list-group list-group-flush mt-3">
                               <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#Funcionario_control" role="button" aria-expanded="false" aria-controls="Funcionario_control" ><p class="h2">Funcionario</p></a></div></li>
                                   
