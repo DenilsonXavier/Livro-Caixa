@@ -64,21 +64,21 @@ $databsa = json_encode($balancasa);
 </head>
 <body>
      <div class="container-fluid">
-          <div class="row">
+          <div class="row ">
                <div class="col-12 text-center my-3">
                     <div class="display-4 fst-italic my-3">Relatorio</div>
                     <form action="">
-                    <div class="d-flex flex-row justify-content-center border-top">
-                         <div class="p-2 flex-fill d-grid border-end bg-secondary-subtle"><button type="submit" name="tipo_acao" value="0" class="btn "><span class=" fst-italic h3">Hoje</span></button></div>
-                         <div class="p-2 flex-fill d-grid border-end"><button type="submit" name="tipo_acao" value="1" class="btn "><span class=" fst-italic h3">Essa Semana</span></button></div>
-                         <div class="p-2 flex-fill d-grid border-end"><button type="submit" name="tipo_acao" value="2" class="btn "><span class=" fst-italic h3">Esse Mês</span></button></div>
-                         <div class="p-2 flex-fill d-grid border-end"><button type="submit" name="tipo_acao" value="3" class="btn "><span class=" fst-italic h3">Esse Ano</span></button></div>
+                    <div class="d-flex flex-row justify-content-center bg-dark-subtle rounded-5">
+                         <div class="p-2 flex-fill d-grid "><button type="submit" name="tipo_acao" value="0" class="btn "><span class=" fst-italic h3">Hoje</span></button></div>
+                         <div class="p-2 flex-fill d-grid  "><button type="submit" name="tipo_acao" value="1" class="btn "><span class=" fst-italic h3">Essa Semana</span></button></div>
+                         <div class="p-2 flex-fill d-grid "><button type="submit" name="tipo_acao" value="2" class="btn "><span class=" fst-italic h3">Esse Mês</span></button></div>
+                         <div class="p-2 flex-fill d-grid  "><button type="submit" name="tipo_acao" value="3" class="btn "><span class=" fst-italic h3">Esse Ano</span></button></div>
                          <div class="p-2 flex-fill d-grid"><button type="submit" name="tipo_acao" value="4" class="btn "><span class=" fst-italic h3">Todos os Anos</span></button></div>
                     </div>
                     </form>
                </div>
           </div>
-          <div class="row ">
+          <div class="row shadow">
                <div class="col-3">
                     <ul class="list-group list-group-flush mt-3">
                          <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#balanca_control" role="button" aria-expanded="false" aria-controls="balanca_control" ><p class="h2">Balança</p></a></div></li>
