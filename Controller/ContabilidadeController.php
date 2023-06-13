@@ -94,7 +94,7 @@ class Pesquisa extends Lancamento{
      public function Busca($pag)
      {       
           $Stringbusca = $this->consulta;   
-          $Stringbusca .= "LIMIT ".($pag*15-15).", ".$pag*15;
+          $Stringbusca .= "LIMIT ".($pag*13-13).", ".$pag*13;
           $this->conectar();
           $consulta = $this->conexao->prepare($Stringbusca);
           $consulta->execute();

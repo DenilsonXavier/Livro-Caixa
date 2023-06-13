@@ -26,7 +26,9 @@ $todosu = $u->BuscarTodosProdutos();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=25">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-
+    <link rel="stylesheet" type="text/css" href="css\bootstrap-icons-1.10.5\font\bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="css/bootstrap-icons-1.10.5/gear-fill.svg" type="image/x-icon">
+     
 </head>
 <body>
     <div class=" container d-flex justify-content-center align-items-center" style="height: 100vh;" >
@@ -280,8 +282,8 @@ $todosu = $u->BuscarTodosProdutos();
 							<input type="hidden" name="tipo_acao" value="p_excluir">
                                    <input type="hidden" name="validacao_hash" value="<?php echo $_SESSION['validacao_hash'] ?>">
 							<div class="mb-3 d-grid"><button type="submit" class="btn btn-outline-danger">Excluir</button></div>
-						</form>
-                    </div>
+						</form>        
+                         </div>
 
                     <div class="collapse multi-collapse" id="produto_ad">
 						<div class="my-3"><span class="tw-bold h4 ">Alterar Descrição</span> </div>
@@ -365,12 +367,22 @@ $todosu = $u->BuscarTodosProdutos();
           </div>
 			
 		<!-- Area da seção Admin e logout -->
-		<div class="row position-fixed fixed-bottom p-1" >
-			<div class="col-12 text-end" > 
-				<a href="index.php" class="btn btn-primary">Home</a>
-				<a href="contabilidade.php" class="btn btn-success justify-content-end">Ver todos os valores</a>
-				<a href="login.php" class="btn btn-danger">Sair</a>
-			</div>
+		<div class="row p-1" >
+               <div class="row fixed-bottom " >
+                    <div class="col-12 text-end" > 
+                         <div class="d-flex d-inline justify-content-end align-bottom mb-4" style="height: 5vh;">
+                              <div class="collapse multi-collapse" id="menu_control">
+                                   <div class="d-inline d-flex">
+                                        <div><a href="index.php" class="btn btn "><p class="h2"><i class="bi bi-house"></i></p></a></div>
+						     	<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h3"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
+                                        <div><a href="contabilidade.php" class="btn btn "><p class="h2"><i class="bi bi-journals"></i></p></a></div>
+                                        <div><a href="login.php" class="btn btn "><p class="h2 text-danger"><i class="bi bi-door-open"></i></p></a></div>
+                                   </div>
+                              </div>
+                              <div><a class="btn " data-bs-toggle="collapse" href="#menu_control" role="button" aria-expanded="false" aria-controls="menu_control" ><p class="h2"><i class='bi bi-list '></i></p></a></div>
+                         </div>
+                    </div>
+               </div>
 		</div>
            
     </div>

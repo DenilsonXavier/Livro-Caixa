@@ -35,7 +35,7 @@ $p = new Pesquisa;
 $p->PreparaBusca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['pes_fpagamento'],$_SESSION['pes_descricao'], $_SESSION['pes_id_produto'], $_SESSION['pes_ordem']);;
 $pesquisa = $p->Busca($_SESSION['pes_pag']);
 $totalp = $p->Buscatodos();
-$contarl = ceil(count($totalp)/15);
+$contarl = ceil(count($totalp)/13);
 ?>
 
 
@@ -49,6 +49,7 @@ $contarl = ceil(count($totalp)/15);
      <title>Contabilidade</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css\bootstrap-icons-1.10.5\font\bootstrap-icons.min.css">
+	<link rel="shortcut icon" href="css/bootstrap-icons-1.10.5/journals.svg" type="image/x-icon">
 </head>
 <body >
 
@@ -57,24 +58,24 @@ $contarl = ceil(count($totalp)/15);
           <div class="row">
                
           <!-- Area Tabela -->
-          <div class="col-xl-8 col-lg-9">
+          <div class="col-xl-8 col-lg-9" style="height: 100vh;">
                <div class="table-responsive">
 				<table class="table my-4 table-sm table-hover text-center">
 					<thead class="text-center">
 					<tr>
-						<th>Data</th>
+						<th >Data</th>
 						<th>Descrição</th>
-						<th>Responsável</th>
+						<th>Lançado por:</th>
 						<th>Codigo Produto</th>
 						<th>Forma de Pagamento</th>
 						<th>Tipo</th>
 						<th>Valor Unitário</th>
-						<th>Quantidade</th>
+						<th>Qtn</th>
 						<th>Valor Total</th>
 
 					</tr>
 					</thead>
-					<tbody class="table-group-divider">
+					<tbody class="table-group-divider ">
 					<form action="./contabilidade.php" method="post">
 						<input type="hidden" name="deletar" value="1">
 						<?php
@@ -89,7 +90,7 @@ $contarl = ceil(count($totalp)/15);
 								} 
 							echo 
 							"<tr class='{$cor}'>
-							<th>".substr($pesquisa[$i]['dia'], 0, -15)."</th>
+							<th class='text-nowrap'>".substr($pesquisa[$i]['dia'], 0, -15)."</th>
 							<th>{$pesquisa[$i]['descricao']}</th>
 							<th>{$pesquisa[$i]['nick']}</th>
 							<th>{$pesquisa[$i]['id_produto']}</th>
@@ -130,7 +131,7 @@ $contarl = ceil(count($totalp)/15);
 							<th colspan="7">
 								Total da pesquisa
 							</th>
-							<th colspan="2" class="text-center<?php echo $cor.'">'.number_format((float)$tvalor, 2, '.', ''); ?></th>
+							<th colspan="3" class="text-center<?php echo $cor.'">'.number_format((float)$tvalor, 2, '.', ''); ?></th>
 						</tr>
 					</tfoot>
 				</table>
@@ -187,7 +188,7 @@ $contarl = ceil(count($totalp)/15);
 						<option value="ASC" <?php if($_SESSION['pes_ordem'] == 'ASC'){echo 'selected';} ?>>Mais Antigo</option>
 						</select>
 					</div>
-					<div class="text-center mb-1">Total da Pesquisa: <?php echo count($pesquisa);?></div>
+					<div class="text-center mb-1">Total da Pesquisa: <?php echo count($totalp);?></div>
 					<div class="row mx-2 text-center">
 						<button type="submit" class="btn btn-outline-success mb-1">Pesquisar</button>
 						<button type="submit" name="limpar_pes" value="1" class="btn btn-outline-primary ">Limpar</button>
@@ -220,7 +221,6 @@ $contarl = ceil(count($totalp)/15);
 
 					</div>
 				</div>
-
 			</div>
 
           <!-- /Area Pesquias -->
@@ -232,14 +232,18 @@ $contarl = ceil(count($totalp)/15);
 		
 		<!-- Area da seção Admin e logout -->
 		<div class="row position-fixed fixed-bottom p-1" >
-			<div class="col-12 text-end" > 
-				<a href="index.php" class="btn btn-primary">Home</a>
-				<?php 
-					if ($_SESSION['nivel'] == 'administrador') {
-						echo '<a href="adm.php" class="btn btn-warning">Administrar</a>';
-					}
-				?>
-				<a href="login.php" class="btn btn-danger">Sair</a>
+			<div class="col-12 fixed-bottom text-end" > 
+				<div class="d-flex d-inline justify-content-end align-bottom mb-4">
+					<div class="collapse multi-collapse collapse-horizontal" id="menu_control">
+						<div class="d-inline d-flex">
+							<div><a href="index.php" class="btn btn "><p class="h3"><i class="bi bi-house"></i></p></a></div>
+							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h3"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
+							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h3"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
+							<div><a href="login.php" class="btn btn "><p class="h3 text-danger"><i class="bi bi-door-open"></i></p></a></div>
+						</div>
+					</div>
+					<div><a class="btn " data-bs-toggle="collapse" href="#menu_control" role="button" aria-expanded="false" aria-controls="menu_control" ><p class="h2"><i class='bi bi-list '></i></p></a></div>
+				</div>
 			</div>
 		</div>
 

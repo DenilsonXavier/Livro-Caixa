@@ -46,6 +46,7 @@
 	<title>Home</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css\bootstrap-icons-1.10.5\font\bootstrap-icons.min.css">
+	<link rel="shortcut icon" href="css/bootstrap-icons-1.10.5/house-fill.svg" type="image/x-icon">
 </head>
 <body >
 
@@ -274,15 +275,19 @@
 		</div>
 
 		<!-- Area da seção Admin e logout -->
-		<div class="row position-fixed fixed-bottom p-1" >
-			<div class="col-12 text-end" > 
-				<?php 
-					if ($_SESSION['nivel'] == 'administrador') {
-						echo '<a href="adm.php" class="btn btn-warning">Administrar</a>';
-					}
-				?>
-				<a href="contabilidade.php" class="btn btn-success justify-content-end">Ver todos os valores</a>
-				<a href="login.php" class="btn btn-danger">Sair</a>
+		<div class="row fixed-bottom p-1" >
+			<div class="col-12 fixed-bottom text-end" > 
+				<div class="d-flex d-inline justify-content-end align-bottom mb-2">
+					<div class="collapse multi-collapse collapse-horizontal" id="menu_control">
+						<div class="d-inline d-flex">
+							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h2"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
+							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h2"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
+							<div><a href="contabilidade.php" class="btn btn "><p class="h2"><i class="bi bi-journals"></i></p></a></div>
+							<div><a href="login.php" class="btn btn "><p class="h2 text-danger"><i class="bi bi-door-open"></i></p></a></div>
+						</div>
+					</div>
+					<div><a class="btn " data-bs-toggle="collapse" href="#menu_control" role="button" aria-expanded="false" aria-controls="menu_control" ><p class="h2"><i class='bi bi-list '></i></p></a></div>
+				</div>
 			</div>
 		</div>
 		

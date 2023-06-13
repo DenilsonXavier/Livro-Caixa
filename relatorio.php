@@ -1,4 +1,5 @@
 <?php 
+session_start();
 $label = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto','Setembro', 'Outubro', 'Novembro', 'Dezembro');
 $cores =array('#84b6f4', '#fdfd96', '#77dd77', '#ff6961', '#fdcae1' , '#ff85d5', '#ffe180', '#a3ffac', '#ffda9e');
 $funcionarioname = array('admin','funcionario');
@@ -60,7 +61,9 @@ $databsa = json_encode($balancasa);
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel="stylesheet" href="css/bootstrap.min.css">
-     <title>Relatorio</title>
+    <link rel="stylesheet" type="text/css" href="css\bootstrap-icons-1.10.5\font\bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="css/bootstrap-icons-1.10.5/pie-chart-fill.svg" type="image/x-icon">
+    <title>Relatorio</title>
 </head>
 <body>
      <div class="container-fluid">
@@ -146,6 +149,28 @@ $databsa = json_encode($balancasa);
 
                </div>
           </div>
+
+
+		<!-- Area da seção Admin e logout -->
+		<div class="row p-1" >
+               <div class="row fixed-bottom " >
+                    <div class="col-12 text-end" > 
+                         <div class="d-flex d-inline justify-content-end align-bottom mb-4" style="height: 5vh;">
+                              <div class="collapse multi-collapse" id="menu_control">
+                                   <div class="d-inline d-flex">
+                                        <div><a href="index.php" class="btn btn "><p class="h2"><i class="bi bi-house"></i></p></a></div>
+							     <?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h2"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
+                                        <div><a href="contabilidade.php" class="btn btn "><p class="h2"><i class="bi bi-journals"></i></p></a></div>
+                                        <div><a href="login.php" class="btn btn "><p class="h2 text-danger"><i class="bi bi-door-open"></i></p></a></div>
+                                   </div>
+                              </div>
+                              <div><a class="btn " data-bs-toggle="collapse" href="#menu_control" role="button" aria-expanded="false" aria-controls="menu_control" ><p class="h2"><i class='bi bi-list '></i></p></a></div>
+                         </div>
+                    </div>
+               </div>
+		</div>
+
+          <!-- ------------- fim do container ------------- -->
      </div>
 
      <script src="js/cdn.jsdelivr.chart.js.umd.min.js"></script>
