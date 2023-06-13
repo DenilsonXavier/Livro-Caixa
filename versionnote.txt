@@ -1,5 +1,11 @@
 Nota de relação de atualizações:
 
+1.2.1{
+     -Add relatorio;
+     -Reformulação de navegador;
+     -Correção de pequenos bugs;
+}
+
 1.1.2{
      Leve mudança de layout Home;
 }
