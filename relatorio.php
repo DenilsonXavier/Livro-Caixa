@@ -3,17 +3,24 @@ session_start();
 $label = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto','Setembro', 'Outubro', 'Novembro', 'Dezembro');
 $cores =array('#84b6f4', '#fdfd96', '#77dd77', '#ff6961', '#fdcae1' , '#ff85d5', '#ffe180', '#a3ffac', '#ffda9e');
 $funcionarioname = array('admin','funcionario');
+$produtonameen = array('Manutenção','Reparo');
+$produtonamesa = array('Limpeza', 'Carlão da Esquina');
 
-$funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
-$funcionariolucrovalor = array(15000,32100);
 $balancaen = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
 $balancasa = array(300, 250, 400, 200, 350, 150, 200, 150, 300, 250, 400, 41);
+$funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
+$funcionariolucrovalor = array(15000,32100);
+$produtoenvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
+$produtosavalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
+$produtoenlucro = array(1500, 3500);
+$produtosagastos = array(120, 1540);
+
 
 
 
 $funcionariovendas = ''; 
 for ($i=0; isset($funcionarioname[$i]); $i++) { 
-     $funcionariovendas .= "{label: '".$funcionarioname[$i]."',data:[";
+     $funcionariovendas .= "{label: '{$funcionarioname[$i]}',data:[";
      for ($s=0;  isset($funcionariovendasvalor[$s]); $s++) { 
           $funcionariovendas .= $funcionariovendasvalor[$s];
           if (isset($funcionariovendas[$s+1])) {$funcionariovendas .= ',';}
@@ -21,36 +28,45 @@ for ($i=0; isset($funcionarioname[$i]); $i++) {
      $funcionariovendas .= "],backgroundColor: '{$cores[$i]}'}";
      if (isset($funcionarioname[$i+1])) {$funcionariovendas .= ',';}
 }
-$funcionariolucro[0] = "label: 'My First Vendas',data: ["; 
+
+$funcionariolucro = "label: 'Numero de Vendas',data: ["; 
 for ($s=0; isset($funcionariolucrovalor[$s]); $s++) { 
-          $funcionariolucro[0] .= $funcionariolucrovalor[$s];
-          if (isset($funcionariolucrovalor[$s+1])) {$funcionariolucro[0] .= ',';}
+          $funcionariolucro .= $funcionariolucrovalor[$s];
+          if (isset($funcionariolucrovalor[$s+1])) {$funcionariolucro .= ',';}
      }
-$funcionariolucro[0] .= "],backgroundColor: [";
+$funcionariolucro .= "],backgroundColor: [";
 for ($c=0; isset($funcionarioname[$c]) ; $c++) { 
-     $funcionariolucro[0] .= "'{$cores[$c]}' ";
-     if (isset($funcionarioname[$c+1])) { $funcionariolucro[0] .= ',';}
+     $funcionariolucro .= "'{$cores[$c]}' ";
+     if (isset($funcionarioname[$c+1])) { $funcionariolucro .= ',';}
      }
-$funcionariolucro[0] .= "],
+$funcionariolucro .= "],
 hoverOffset: 4";
 
-$funcionariolucro[1] = ''; 
-for ($i=0; isset($funcionarioname[$i]); $i++) { 
-     $funcionariolucro[1] .= "'{$funcionarioname[$i]}' " ;
-     if (isset($funcionarioname[$i+1])) {$funcionariolucro[1] .= ',';} 
+$produtovendas = '';
+for ($i=0; isset($produtonameen[$i]); $i++) { 
+     $produtovendas .= "{label: '{$produtonameen[$i]}', data:[";
+     for ($s=0; isset($produtoenvalor[$s]) ; $s++) { 
+          $produtovendas .= $produtoenvalor[$s];
+               if(isset($produtoenvalor[($s+1)])){$produtovendas .= ',';}
      }
+     $produtovendas .= "], backgroundColor:'$cores[$i]'}"; 
+     if (isset($produtonameen[($i+1)])) {$produtovendas .= ',';}
+}
 
 
-// label: 'My First Dataset',
-// data: [300, 50, 100],
-// backgroundColor: [
-//   'rgb(255, 99, 132)',
-//   'rgb(54, 162, 235)',
-//   'rgb(255, 205, 86)'
-// ]
 
-$funcionariolucro;
+     // {label: 'admin',
+     // data:[100,200,150,300,250,400,41,50,12,121,48,500,],
+     // backgroundColor: '#84b6f4'}
+     // ,{label: 'funcionario',
+     //      data:[100,200,150,300,250,400,41,50,12,121,48,500,],
+     //      backgroundColor: '#fdfd96'}
+
+
 $labels = json_encode($label);
+$labelfun = json_encode($funcionarioname);
+$labelproen = json_encode($produtonameen);
+$labelprosa = json_encode($produtonamesa);
 $databen = json_encode($balancaen);
 $databsa = json_encode($balancasa);
 ?>
@@ -143,6 +159,24 @@ $databsa = json_encode($balancasa);
                               <canvas id="Funcionario_flc" style="height: 50vh;" ></canvas>
                          </div>
                     </div>
+                    <div class="collapse multi-collapse my-2 text-center" style="height: 10vh;" id="produto_ve">
+                         <div class="text-center h3 fw-bold fst-italic"><span>Produto Vendas</span></div>
+                         <div class="d-flex justify-content-center">
+                              <canvas id="produto_pve" style="height: 10vh;"></canvas>
+                         </div>
+                    </div>
+                    <div class="collapse multi-collapse my-2 text-center" style="height: 10vh;" id="produto_lc">
+                         <div class="text-center h3 fw-bold fst-italic"><span>Produto Lucro</span></div>
+                         <div class="d-flex justify-content-center">
+                              <canvas id="produto_plc" style="height: 50vh;" ></canvas>
+                         </div>
+                    </div>
+                    <div class="collapse multi-collapse my-2 text-center" style="height: 10vh;" id="produto_gt">
+                         <div class="text-center h3 fw-bold fst-italic"><span>Produto Gastos</span></div>
+                         <div class="d-flex justify-content-center">
+                              <canvas id="produto_pgt" style="height: 50vh;" ></canvas>
+                         </div>
+                    </div>
 
 
 
@@ -177,6 +211,9 @@ $databsa = json_encode($balancasa);
      <script src="js/bootstrap.bundle.min.js"></script>
      <script>
           var labels = JSON.parse('<?php echo $labels; ?>');
+          var labelfun = JSON.parse('<?php echo $labelfun; ?>');
+          var labelproen = JSON.parse('<?php echo $labelproen; ?>');
+          var labelprosa = JSON.parse('<?php echo $labelprosa; ?>');
           var databen = JSON.parse('<?php echo $databen; ?>');
           var databsa = JSON.parse('<?php echo $databsa; ?>');
 
@@ -245,6 +282,7 @@ $databsa = json_encode($balancasa);
           data: {
           labels: labels,
           datasets: [
+               
                <?php 
                echo $funcionariovendas;
                     ?>]
@@ -260,9 +298,57 @@ $databsa = json_encode($balancasa);
           var myChart = new Chart(ctx, {
           type: 'pie',
           data: {
-          labels: [<?php echo $funcionariolucro[1];?>],
+          labels: labelfun,
           datasets: [{
-               <?php echo $funcionariolucro[0];?>}
+               <?php echo $funcionariolucro;?>}
+          ]
+          },
+          options: {
+          responsive: false,
+          scales: {
+          }
+          }
+          });
+          // Grafico Produto Vendas
+          var ctx = document.getElementById('produto_pve').getContext('2d');
+          var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+          labels: labels,
+          datasets: [
+               <?php echo $produtovendas;?>
+          ]
+          },
+          options: {
+          responsive: true,
+          scales: {
+          }
+          }
+          });
+          // Grafico Produto Lucro
+          var ctx = document.getElementById('produto_plc').getContext('2d');
+          var myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+          labels: labels,
+          datasets: [{
+               <?php echo $funcionariolucro;?>}
+          ]
+          },
+          options: {
+          responsive: false,
+          scales: {
+          }
+          }
+          });
+          // Grafico Produto Gastos
+          var ctx = document.getElementById('produto_pgt').getContext('2d');
+          var myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+          labels: labels,
+          datasets: [{
+               <?php echo $funcionariolucro;?>}
           ]
           },
           options: {

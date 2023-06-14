@@ -31,3 +31,5 @@ Nota de relação de atualizações:
      Visibilidade do tipo de produto na hora de Alteração ou Exclusão;
      Remoção de ProdutoPadrão e ServiçoPadrão em Exclusão e Alteração de Tipo;
 }
+
+Aojds12$
