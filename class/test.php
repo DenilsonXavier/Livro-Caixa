@@ -28,7 +28,6 @@ class back extends Conexao{
 $con = new back;
 $con->fazer();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
