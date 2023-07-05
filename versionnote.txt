@@ -1,5 +1,11 @@
 Nota de relação de atualizações:
 
+1.2.6{
+     -Relatorio modelado;
+     -Relatorio Parcialmente Funcional
+     -Otimização do Relatorio
+}
+
 1.2.1{
      -Add relatorio;
      -Reformulação de navegador;
