@@ -1,74 +1,180 @@
 <?php 
 session_start();
-$label = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto','Setembro', 'Outubro', 'Novembro', 'Dezembro');
-$cores =array('#84b6f4', '#fdfd96', '#77dd77', '#ff6961', '#fdcae1' , '#ff85d5', '#ffe180', '#a3ffac', '#ffda9e');
-$funcionarioname = array('admin','funcionario');
-$produtonameen = array('Manutenção','Reparo');
-$produtonamesa = array('Limpeza', 'Carlão da Esquina');
-
-$balancaen = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
-$balancasa = array(300, 250, 400, 200, 350, 150, 200, 150, 300, 250, 400, 41);
-$funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
-$funcionariolucrovalor = array(15000,32100);
-$produtoenvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
-$produtosavalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
-$produtoenlucro = array(1500, 3500);
-$produtosagastos = array(120, 1540);
+date_default_timezone_set('America/Sao_Paulo');
+setlocale(LC_TIME, 'pt-br');
+include_once 'Controller/RelatorioController.php';
+$cores =array('#84b6f4', '#fdfd96', '#0079FF', '#77dd77', '#ff6961', '#fdcae1' , '#ff85d5', '#ffe180', '#a3ffac', '#ffda9e');
 
 
 
 
-$funcionariovendas = ''; 
-for ($i=0; isset($funcionarioname[$i]); $i++) { 
-     $funcionariovendas .= "{label: '{$funcionarioname[$i]}',data:[";
-     for ($s=0;  isset($funcionariovendasvalor[$s]); $s++) { 
-          $funcionariovendas .= $funcionariovendasvalor[$s];
-          if (isset($funcionariovendas[$s+1])) {$funcionariovendas .= ',';}
-     }
-     $funcionariovendas .= "],backgroundColor: '{$cores[$i]}'}";
-     if (isset($funcionarioname[$i+1])) {$funcionariovendas .= ',';}
+
+if (empty($_GET['tipo_acao']) || is_null($_SESSION['data'])) {
+     $_SESSION['data'] = 0;
+}else{
+     $_SESSION['data'] = $_GET['tipo_acao'];
 }
+$lancamentos = new Relatorio;
 
-$funcionariolucro = "label: 'Numero de Vendas',data: ["; 
-for ($s=0; isset($funcionariolucrovalor[$s]); $s++) { 
-          $funcionariolucro .= $funcionariolucrovalor[$s];
-          if (isset($funcionariolucrovalor[$s+1])) {$funcionariolucro .= ',';}
-     }
-$funcionariolucro .= "],backgroundColor: [";
-for ($c=0; isset($funcionarioname[$c]) ; $c++) { 
-     $funcionariolucro .= "'{$cores[$c]}' ";
-     if (isset($funcionarioname[$c+1])) { $funcionariolucro .= ',';}
-     }
-$funcionariolucro .= "],
-hoverOffset: 4";
-
-$produtovendas = '';
-for ($i=0; isset($produtonameen[$i]); $i++) { 
-     $produtovendas .= "{label: '{$produtonameen[$i]}', data:[";
-     for ($s=0; isset($produtoenvalor[$s]) ; $s++) { 
-          $produtovendas .= $produtoenvalor[$s];
-               if(isset($produtoenvalor[($s+1)])){$produtovendas .= ',';}
-     }
-     $produtovendas .= "], backgroundColor:'$cores[$i]'}"; 
-     if (isset($produtonameen[($i+1)])) {$produtovendas .= ',';}
+$label;
+switch ($_SESSION['data']) {
+     case 0:
+          $label = array('Hoje');
+          $lancamentos->setData(date('Y-m-d', time()));
+          $Balanca = $lancamentos->getlancamentos();
+          $tempo = 'today';
+          break;
+     case 1:
+          $label = array('Domingo','Segunda','Térça',"Quarta",'Quinta','Sexta','Sábado');
+          $lancamentos->setData(date('Y-m-d', strtotime('-'.(date('w',time())).' day')));
+          $Balanca = $lancamentos->getlancamentos();
+          $tempo = 'week';
+          break;
+     case 2:
+          $label = array('1º a 3º','4º a 6º','7º a 9º', '10º a 12º', '13º a 15º', '16º a 18º', '19º a 21º', '22º a 24º', '25º a 27º', '28º a 30º', '31º');
+          $lancamentos->setData(date('Y-m-', time()).'01');
+          $Balanca = $lancamentos->getlancamentos();
+          $tempo = 'month';
+          break;
+     case 3:
+          $label = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto','Setembro', 'Outubro', 'Novembro', 'Dezembro');
+          $lancamentos->setData(date('Y-', time()).'-01-01');
+          $Balanca = $lancamentos->getlancamentos();
+          $tempo = 'year';
+          break;
+     case 4:
+          $label = 'Hoje';
+          break;
+     
+     default:
+          $label = 'Hoje';
+          break;
 }
-
-
-
-     // {label: 'admin',
-     // data:[100,200,150,300,250,400,41,50,12,121,48,500,],
-     // backgroundColor: '#84b6f4'}
-     // ,{label: 'funcionario',
-     //      data:[100,200,150,300,250,400,41,50,12,121,48,500,],
-     //      backgroundColor: '#fdfd96'}
-
 
 $labels = json_encode($label);
+$fmt = new Formater($tempo);
+$keys = array();$k = 0;
+for ($i=0; isset($Balanca[$i]) ; $i++) { 
+     if(!in_array($Balanca[$i]["id_produto"],$keys)){
+          $keys[$Balanca[$i]["id_produto"]] = $k;
+          $k++;
+     }
+     $fmt->add_format($keys[$Balanca[$i]["id_produto"]],$Balanca[$i]["id_produto"],$Balanca[$i]["descricao"],$Balanca[$i]["VT"],$Balanca[$i]["quantidade"],$Balanca[$i]["dia"],$Balanca[$i]["tipo"]);
+}
+
+$Balanca = $fmt->get_result();
+
+$ke = 0;$ks = 0; $c = 0;
+$balancaen =array('name' => array(),'lucro' => array(), 'data' => array() );
+$balancasa =array('name' => array(),'lucro' => array(), 'data' => array() );
+$produtoen = array();
+$coresp = array();
+for ($i=0; isset($Balanca[$i]); $i++) { 
+     $balancaen['data'][$i] = 0;
+     $balancasa['data'][$i] = 0;
+     $Bkeys = array_keys($Balanca[$i]);
+     for ($s=0; isset($Bkeys[$s]) ; $s++) { 
+          $Barray = $Balanca[$i][$Bkeys[$s]];
+          if (isset($Barray['ID'])) {
+               if (!(in_array($Barray['ID'],$coresp))) {
+                    $coresp[$Balanca[$i][$Bkeys[$s]]['ID']] = $cores[$c];
+               }
+               switch($Balanca[$i][$Bkeys[$s]]['TIPO']){
+               case 'entrada':
+                    $balancaen['name'][$ke] = $Barray['name'];
+                    $balancaen['lucro'][$ke] = $Barray['VT'];
+                    $balancaen['id'][$ke] = $Barray['ID'];
+                    $balancaen['data'][$i] += $Barray['VT'];
+                    $ke++;
+
+                    if (!isset($produtoen[$Barray['ID']])) {
+                         $produtoen[$Barray['ID']] = array('name' => '','VT' => 0,'QT' => 0);
+                    }
+                    $produtoen[$Barray['ID']]['name'] = $Barray['name'];
+                    $produtoen[$Barray['ID']]['VT'] += $Barray['VT'];
+                    $produtoen[$Barray['ID']]['QT'] += $Barray['QT'];
+                    break;
+               case 'saida':
+                    $balancasa['name'][$ks] = $Barray['name'];
+                    $balancasa['lucro'][$ks] = $Barray['VT'];
+                    $balancasa['id'][$ke] = $Barray['ID'];
+                    $balancasa['data'][$i] += $Barray['VT'];
+                    $ks++;
+                    
+                    if (!isset($produtosa[$Barray['ID']])) {
+                         $produtosa[$Barray['ID']] = array('name' => '','VT' => 0,'QT' => 0);
+                    }
+                    $produtosa[$Barray['ID']]['name'] = $Barray['name'];
+                    $produtosa[$Barray['ID']]['VT'] += $Barray['VT'];
+                    $produtosa[$Barray['ID']]['QT'] += $Barray['QT'];
+                    break;
+               }
+          }
+         
+     }
+
+}
+$databen = json_encode($balancaen['data']);
+$databsa = json_encode($balancasa['data']);
+
+$funcionarioname = array('admin','funcionario');
+
+$funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
+$funcionariolucrovalor = array(15000,32100);
+
+
+
+$chart_pie = new Chart_pie("Numero de vendas");
+
+// Gerar os dataset do Grafito de Vendas dos Funcionarios
+$funcionariovendas = '';
+// ------------------------------------------------------ //
+
+
+// Gerar os dataset do Grafito de Lucro dos Funcionarios
+$chart_pie->add_data($funcionariolucrovalor);
+$chart_pie->add_backcolor($cores);
+$funcionariolucro = $chart_pie->getResult(); 
+// ------------------------------------------------------ //
+
+
+// Gerar os dataset do Grafito de Vendas dos Produtos
+$produtovendas = '';
+
+
+// Gerar os dataset do Grafito de Lucro dos Produtos
+$kproden = array_keys($produtoen);
+$datapen = array(); 
+for ($i=0; isset($kproden[$i]); $i++) { 
+     $datapen[$i] = $produtoen[$kproden[$i]]['VT'];
+     $labelproen[$i] = $produtoen[$kproden[$i]]['name'];
+
+}
+$chart_pie->add_head("Quantidade de Vendas");
+$chart_pie->add_data($datapen);
+$chart_pie->add_backcolor($cores);
+$produtolucro = $chart_pie->getResult();
+$labelproen = json_encode($labelproen);
+// ------------------------------------------------------ //
+
+
+// Gerar os dataset do Grafito de Gastos dos Produtos
+
+$kprodsa = array_keys($produtosa);
+$datapsa = array(); 
+for ($i=0; isset($kprodsa[$i]); $i++) { 
+     $datapsa[$i] = $produtosa[$kprodsa[$i]]['VT'];
+     $labelprosa[$i] = $produtosa[$kprodsa[$i]]['name'];
+}
+$chart_pie->add_head("Gastos em R$");
+$chart_pie->add_data($datapsa);
+$chart_pie->add_backcolor($cores);
+$produtogastos = $chart_pie->getResult();
+$labelprosa = json_encode($labelprosa);
+// ------------------------------------------------------ //
+
+
 $labelfun = json_encode($funcionarioname);
-$labelproen = json_encode($produtonameen);
-$labelprosa = json_encode($produtonamesa);
-$databen = json_encode($balancaen);
-$databsa = json_encode($balancasa);
 ?>
 
 <!DOCTYPE html>
@@ -83,22 +189,24 @@ $databsa = json_encode($balancasa);
 </head>
 <body>
      <div class="container-fluid">
-          <div class="row ">
-               <div class="col-12 text-center my-3">
-                    <div class="display-4 fst-italic my-3">Relatorio</div>
-                    <form action="">
-                    <div class="d-flex flex-row justify-content-center bg-dark-subtle rounded-5">
-                         <div class="p-2 flex-fill d-grid "><button type="submit" name="tipo_acao" value="0" class="btn "><span class=" fst-italic h3">Hoje</span></button></div>
-                         <div class="p-2 flex-fill d-grid  "><button type="submit" name="tipo_acao" value="1" class="btn "><span class=" fst-italic h3">Essa Semana</span></button></div>
-                         <div class="p-2 flex-fill d-grid "><button type="submit" name="tipo_acao" value="2" class="btn "><span class=" fst-italic h3">Esse Mês</span></button></div>
-                         <div class="p-2 flex-fill d-grid  "><button type="submit" name="tipo_acao" value="3" class="btn "><span class=" fst-italic h3">Esse Ano</span></button></div>
-                         <div class="p-2 flex-fill d-grid"><button type="submit" name="tipo_acao" value="4" class="btn "><span class=" fst-italic h3">Todos os Anos</span></button></div>
-                    </div>
-                    </form>
-               </div>
-          </div>
           <div class="row shadow">
                <div class="col-3">
+                    <ul class="list-group list-group-flush mt-3 text-center">
+                         <li class="list-group-item"><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#relatorio_control" role="button" aria-expanded="false" aria-controls="relatorio_control" ><p class="display-5 fst-italic">Relatorio</p></a></div></li>
+                         <div class="collapse multi-collapse" id="relatorio_control">
+                              <li class="list-group-item">
+                                   <ul class="list-group  list-group-flush">
+                                        <form action="./relatorio.php" method="get">
+                                        <li class="list-group-item"><button type="submit" name="tipo_acao" value="0" class="btn "><span class=" fst-italic h4">Hoje</span></button></li>
+                                        <li class="list-group-item"><button type="submit" name="tipo_acao" value="1" class="btn "><span class=" fst-italic h4">Essa Semana</span></button></li>
+                                        <li class="list-group-item"><button type="submit" name="tipo_acao" value="2" class="btn "><span class=" fst-italic h4">Esse Mês</span></button></li>
+                                        <li class="list-group-item"><button type="submit" name="tipo_acao" value="3" class="btn "><span class=" fst-italic h4">Esse Ano</span></button></li>
+                                        <li class="list-group-item"><button type="submit" name="tipo_acao" value="4" class="btn "><span class=" fst-italic h4">Todos os Anos</span></button></li>
+                                        </form>
+                                   </ul>
+                              </li>
+                         </div>
+                    </ul>
                     <ul class="list-group list-group-flush mt-3">
                          <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#balanca_control" role="button" aria-expanded="false" aria-controls="balanca_control" ><p class="h2">Balança</p></a></div></li>
                               <div class="collapse multi-collapse" id="balanca_control">
@@ -154,7 +262,7 @@ $databsa = json_encode($balancasa);
                          <canvas id="Funcionario_fve" style="height: 10vh;"></canvas>
                     </div>
                     <div class="collapse multi-collapse my-2 text-center" style="height: 10vh;" id="Funcionario_lc">
-                         <div class="text-center h3 fw-bold fst-italic"><span>Funcionárois Lucro</span></div>
+                         <div class="text-center h3 fw-bold fst-italic"><span>Funcionárois Faturamento</span></div>
                          <div class="d-flex justify-content-center">
                               <canvas id="Funcionario_flc" style="height: 50vh;" ></canvas>
                          </div>
@@ -193,10 +301,11 @@ $databsa = json_encode($balancasa);
                               <div class="collapse multi-collapse" id="menu_control">
                                    <div class="d-inline d-flex">
                                         <div><a href="index.php" class="btn btn "><p class="h2"><i class="bi bi-house"></i></p></a></div>
-							     <?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h2"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
+						     	<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h2"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
+						     	<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h2"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
                                         <div><a href="contabilidade.php" class="btn btn "><p class="h2"><i class="bi bi-journals"></i></p></a></div>
                                         <div><a href="login.php" class="btn btn "><p class="h2 text-danger"><i class="bi bi-door-open"></i></p></a></div>
-                                   </div>
+                                   </div>v>
                               </div>
                               <div><a class="btn " data-bs-toggle="collapse" href="#menu_control" role="button" aria-expanded="false" aria-controls="menu_control" ><p class="h2"><i class='bi bi-list '></i></p></a></div>
                          </div>
@@ -282,7 +391,6 @@ $databsa = json_encode($balancasa);
           data: {
           labels: labels,
           datasets: [
-               
                <?php 
                echo $funcionariovendas;
                     ?>]
@@ -300,7 +408,8 @@ $databsa = json_encode($balancasa);
           data: {
           labels: labelfun,
           datasets: [{
-               <?php echo $funcionariolucro;?>}
+               <?php echo $funcionariolucro;?>
+          }
           ]
           },
           options: {
@@ -315,8 +424,8 @@ $databsa = json_encode($balancasa);
           type: 'bar',
           data: {
           labels: labels,
-          datasets: [
-               <?php echo $produtovendas;?>
+          datasets: [{
+               <?php echo $produtovendas;?>}
           ]
           },
           options: {
@@ -330,9 +439,9 @@ $databsa = json_encode($balancasa);
           var myChart = new Chart(ctx, {
           type: 'pie',
           data: {
-          labels: labels,
+          labels: labelproen,
           datasets: [{
-               <?php echo $funcionariolucro;?>}
+               <?php echo $produtolucro;?>}
           ]
           },
           options: {
@@ -346,9 +455,9 @@ $databsa = json_encode($balancasa);
           var myChart = new Chart(ctx, {
           type: 'pie',
           data: {
-          labels: labels,
+          labels: labelprosa,
           datasets: [{
-               <?php echo $funcionariolucro;?>}
+               <?php echo $produtogastos;?>}
           ]
           },
           options: {

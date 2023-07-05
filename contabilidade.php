@@ -35,7 +35,11 @@ $p = new Pesquisa;
 $p->PreparaBusca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['pes_fpagamento'],$_SESSION['pes_descricao'], $_SESSION['pes_id_produto'], $_SESSION['pes_ordem']);;
 $pesquisa = $p->Busca($_SESSION['pes_pag']);
 $totalp = $p->Buscatodos();
-$contarl = ceil(count($totalp)/13);
+if ($totalp != false) {
+	$contarl = ceil(count($totalp)/13);
+}else {
+	$contarl = 0;
+}
 ?>
 
 
@@ -188,7 +192,7 @@ $contarl = ceil(count($totalp)/13);
 						<option value="ASC" <?php if($_SESSION['pes_ordem'] == 'ASC'){echo 'selected';} ?>>Mais Antigo</option>
 						</select>
 					</div>
-					<div class="text-center mb-1">Total da Pesquisa: <?php echo count($totalp);?></div>
+					<div class="text-center mb-1">Total da Pesquisa: <?php if($totalp != false){echo count($totalp);}else{echo 0;} ?></div>
 					<div class="row mx-2 text-center">
 						<button type="submit" class="btn btn-outline-success mb-1">Pesquisar</button>
 						<button type="submit" name="limpar_pes" value="1" class="btn btn-outline-primary ">Limpar</button>
@@ -236,13 +240,14 @@ $contarl = ceil(count($totalp)/13);
 				<div class="d-flex d-inline justify-content-end align-bottom mb-4">
 					<div class="collapse multi-collapse collapse-horizontal" id="menu_control">
 						<div class="d-inline d-flex">
-							<div><a href="index.php" class="btn btn "><p class="h3"><i class="bi bi-house"></i></p></a></div>
-							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h3"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
-							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h3"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
-							<div><a href="login.php" class="btn btn "><p class="h3 text-danger"><i class="bi bi-door-open"></i></p></a></div>
+							<div><a href="index.php" class="btn btn "><p class="h5"><i class="bi bi-house"></i></p></a></div>
+							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h5"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
+							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h5"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
+							<div><a href="contabilidade.php" class="btn btn "><p class="h5"><i class="bi bi-journals"></i></p></a></div>
+							<div><a href="login.php" class="btn btn "><p class="h5 text-danger"><i class="bi bi-door-open"></i></p></a></div>
 						</div>
 					</div>
-					<div><a class="btn " data-bs-toggle="collapse" href="#menu_control" role="button" aria-expanded="false" aria-controls="menu_control" ><p class="h2"><i class='bi bi-list '></i></p></a></div>
+					<div><a class="btn " data-bs-toggle="collapse" href="#menu_control" role="button" aria-expanded="false" aria-controls="menu_control" ><p class="h4"><i class='bi bi-list '></i></p></a></div>
 				</div>
 			</div>
 		</div>

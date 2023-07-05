@@ -96,20 +96,29 @@ class Pesquisa extends Lancamento{
           $Stringbusca = $this->consulta;   
           $Stringbusca .= "LIMIT ".($pag*13-13).", ".$pag*13;
           $this->conectar();
-          $consulta = $this->conexao->prepare($Stringbusca);
-          $consulta->execute();
-          $rows[0] = null;
+          try {
+               $consulta = $this->conexao->prepare($Stringbusca);
+               $consulta->execute();
+          } catch (\Throwable $th) {
+               return false;
+          }
+          $rows = null;
            $resultado = $consulta->get_result();
            for ($i=0; $row = $resultado->fetch_assoc() ; $i++) { 
             $rows[$i] = $row;
              }
+          
           return $rows;
      }
      public function Buscatodos(){
           $Stringbusca = $this->consulta;
           $this->conectar();
-          $consulta = $this->conexao->prepare($Stringbusca);
-          $consulta->execute();
+          try {
+               $consulta = $this->conexao->prepare($Stringbusca);
+               $consulta->execute();
+          } catch (\Throwable $th) {
+               return false;
+          }
           $rows[0] = null;
            $resultado = $consulta->get_result();
            for ($i=0; $row = $resultado->fetch_assoc() ; $i++) { 

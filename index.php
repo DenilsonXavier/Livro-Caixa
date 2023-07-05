@@ -280,6 +280,7 @@
 				<div class="d-flex d-inline justify-content-end align-bottom mb-2">
 					<div class="collapse multi-collapse collapse-horizontal" id="menu_control">
 						<div class="d-inline d-flex">
+							<div><a href="index.php" class="btn btn "><p class="h2"><i class="bi bi-house"></i></p></a></div>
 							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h2"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
 							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h2"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
 							<div><a href="contabilidade.php" class="btn btn "><p class="h2"><i class="bi bi-journals"></i></p></a></div>

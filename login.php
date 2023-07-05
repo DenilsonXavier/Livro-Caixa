@@ -10,7 +10,7 @@ session_abort();
     <title>Tela de Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=25">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
@@ -20,20 +20,20 @@ session_abort();
             ?>
             <div class="input-group my-1">
                 <span class="input-group-text">Usuario</span>
-                <input type="text" name="nick" class="form-control"  required>
+                <input type="text" name="nick" id="nick" class="form-control"  required>
             </div>
             <div class="input-group my-1">
                 <span class="input-group-text">Senha</span>
-                <input type="password" name="senha" class="form-control"  required>
+                <input type="password" name="senha" id="senha" class="form-control"  required>
             </div>
             <div class="input-group my-1">
-                <input type="submit" value="Entrar" class="btn btn-success btn-block">
+                <input type="submit" value="Entrar"onclick="validateForm()" class="btn btn-success btn-block">
             </div>
         </form>
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script>
         function validateForm() {
             var nick = document.getElementById("nick").value;

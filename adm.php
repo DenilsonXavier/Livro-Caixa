@@ -31,8 +31,8 @@ $todosu = $u->BuscarTodosProdutos();
      
 </head>
 <body>
-    <div class=" container d-flex justify-content-center align-items-center" style="height: 100vh;" >
-          <div class="row p-3 shadow rounded border" style=" width: 100vh;">
+    <div class="container d-flex justify-content-center align-items-center mt-5" >
+          <div class="row p-3 shadow rounded border" style=" width: 100vh; ">
           
                <div class="col-4 p-3">
                          <ul class="list-group list-group-flush mt-3">
@@ -374,7 +374,8 @@ $todosu = $u->BuscarTodosProdutos();
                               <div class="collapse multi-collapse" id="menu_control">
                                    <div class="d-inline d-flex">
                                         <div><a href="index.php" class="btn btn "><p class="h2"><i class="bi bi-house"></i></p></a></div>
-						     	<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h3"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
+						     	<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h2"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
+						     	<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h2"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
                                         <div><a href="contabilidade.php" class="btn btn "><p class="h2"><i class="bi bi-journals"></i></p></a></div>
                                         <div><a href="login.php" class="btn btn "><p class="h2 text-danger"><i class="bi bi-door-open"></i></p></a></div>
                                    </div>
