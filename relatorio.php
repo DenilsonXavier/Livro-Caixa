@@ -3,7 +3,7 @@ session_start();
 date_default_timezone_set('America/Sao_Paulo');
 setlocale(LC_TIME, 'pt-br');
 include_once 'Controller/RelatorioController.php';
-$cores =array('#84b6f4', '#fdfd96', '#0079FF', '#77dd77', '#ff6961', '#fdcae1' , '#ff85d5', '#ffe180', '#a3ffac', '#ffda9e');
+$cores =array( '#fdfd96', '#0079FF', '#77dd77', '#ff6961', '#fdcae1' , '#ff85d5', '#ffe180', '#a3ffac', '#ffda9e');
 
 
 
@@ -65,9 +65,8 @@ for ($i=0; isset($Balanca[$i]) ; $i++) {
 $Balanca = $fmt->get_result();
 
 $ke = 0;$ks = 0; $c = 0;
-$balancaen =array('name' => array(),'lucro' => array(), 'data' => array() );
-$balancasa =array('name' => array(),'lucro' => array(), 'data' => array() );
-$produtoen = array();
+$balancaen =array('name' => array(),'lucro' => array(), 'data' => array() ); $balancasa =array('name' => array(),'lucro' => array(), 'data' => array() );
+$produtoen = array(); $produtosa = array();
 $coresp = array();
 for ($i=0; isset($Balanca[$i]); $i++) { 
      $balancaen['data'][$i] = 0;
@@ -75,15 +74,14 @@ for ($i=0; isset($Balanca[$i]); $i++) {
      $Bkeys = array_keys($Balanca[$i]);
      for ($s=0; isset($Bkeys[$s]) ; $s++) { 
           $Barray = $Balanca[$i][$Bkeys[$s]];
+
           if (isset($Barray['ID'])) {
-               if (!(in_array($Barray['ID'],$coresp))) {
-                    $coresp[$Balanca[$i][$Bkeys[$s]]['ID']] = $cores[$c];
-               }
+               if (!(in_array($Barray['ID'],$coresp))) {$coresp[$Balanca[$i][$Bkeys[$s]]['ID']] = $cores[$c];}
+     
+
                switch($Balanca[$i][$Bkeys[$s]]['TIPO']){
                case 'entrada':
-                    $balancaen['name'][$ke] = $Barray['name'];
-                    $balancaen['lucro'][$ke] = $Barray['VT'];
-                    $balancaen['id'][$ke] = $Barray['ID'];
+                    
                     $balancaen['data'][$i] += $Barray['VT'];
                     $ke++;
 
@@ -95,9 +93,6 @@ for ($i=0; isset($Balanca[$i]); $i++) {
                     $produtoen[$Barray['ID']]['QT'] += $Barray['QT'];
                     break;
                case 'saida':
-                    $balancasa['name'][$ks] = $Barray['name'];
-                    $balancasa['lucro'][$ks] = $Barray['VT'];
-                    $balancasa['id'][$ke] = $Barray['ID'];
                     $balancasa['data'][$i] += $Barray['VT'];
                     $ks++;
                     
@@ -114,17 +109,43 @@ for ($i=0; isset($Balanca[$i]); $i++) {
      }
 
 }
-$databen = json_encode($balancaen['data']);
-$databsa = json_encode($balancasa['data']);
+
+
 
 $funcionarioname = array('admin','funcionario');
+$funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
+$funcionariolucrovalor = array(15000,32100);
 
+$chart_pie = new Chart_pie("Numero de vendas",$funcionarioname);
+$chart_bar = new Chart_bar($label);
+
+// Cria o grafico em Barra de Balança Geral
+$chart_bar->add_head($label);
+$chart_bar->add_Data("Vendas",$balancaen['data'],'#007bff');
+$chart_bar->add_Data("Saida",json_encode($balancasa['data']),'#28a745');
+$databge = $chart_bar->getResult();
+$chart_bar->clear();
+
+
+// Cria o grafico em Barra de Balança Entrada
+$chart_bar->add_head($label);
+$chart_bar->add_Data("Vendas",$balancaen['data'],'#007bff');
+$databen = $chart_bar->getResult();
+$chart_bar->clear();
+
+
+// Cria o grafico em Barra de Balança Saida
+$chart_bar->add_head($label);
+$chart_bar->add_Data("Vendas",$balancasa['data'],'#28a745');
+$databsa = $chart_bar->getResult();
+$chart_bar->clear();
+
+$funcionarioname = array('admin','funcionario');
 $funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
 $funcionariolucrovalor = array(15000,32100);
 
 
 
-$chart_pie = new Chart_pie("Numero de vendas");
 
 // Gerar os dataset do Grafito de Vendas dos Funcionarios
 $funcionariovendas = '';
@@ -139,22 +160,66 @@ $funcionariolucro = $chart_pie->getResult();
 
 
 // Gerar os dataset do Grafito de Vendas dos Produtos
-$produtovendas = '';
+$chart_bar->add_head($label);
+$produtovendas = array();
+$pro = array();
+for ($i=0; isset($Balanca[$i]) ; $i++) { 
+     $Bkeys = array_keys($Balanca[$i]);
+
+     for ($s=0; isset($Bkeys[$s]); $s++) { 
+          $Barray = $Balanca[$i][$Bkeys[$s]];
+               if (isset($Barray['TIPO']) && ($Barray['TIPO'] == 'entrada')) {
+                         if (!isset($produtovendas[$Barray["ID"]]['name'])) {
+                              $produtovendas[$Barray["ID"]] = 
+                              array("name" => $Barray["name"], "data" => array()); 
+                         }
+                         if (!isset($produtovendas[$Barray['ID']]['data'][$i])) {
+                              $produtovendas[$Barray['ID']]['data'][$i] = 0;
+                         }
+                         $produtovendas[$Barray["ID"]]["data"][$i] += $Barray["VT"];
+               }
+
+     }
+
+}
+
+
+$PVkeys = array_keys($produtovendas);
+for ($i=0; isset($Balanca[$i]); $i++) { 
+     
+     for ($s=0; isset($PVkeys[$s]); $s++) { 
+          if (!isset($produtovendas[$PVkeys[$s]]['data'][$i])) {
+               $produtovendas[$PVkeys[$s]]['data'][$i] = 0;
+          }
+     }
+}
+
+if (isset($PVkeys)) {
+     for ($i=0; isset($PVkeys[$i]) ; $i++) {
+          ksort($produtovendas[$PVkeys[$i]]['data']);
+          $data = $produtovendas[$PVkeys[$i]]['data'];
+          $chart_bar->add_Data($produtovendas[$PVkeys[$i]]['name'],array_values($data),$cores[$i]);
+     }
+}
+
+$produtovendas = $chart_bar->getResult();
+$chart_bar->clear();
+
 
 
 // Gerar os dataset do Grafito de Lucro dos Produtos
 $kproden = array_keys($produtoen);
 $datapen = array(); 
+$labelproen = array();
 for ($i=0; isset($kproden[$i]); $i++) { 
      $datapen[$i] = $produtoen[$kproden[$i]]['VT'];
      $labelproen[$i] = $produtoen[$kproden[$i]]['name'];
 
 }
-$chart_pie->add_head("Quantidade de Vendas");
+$chart_pie->add_head("Quantidade de Vendas",$labelproen);
 $chart_pie->add_data($datapen);
 $chart_pie->add_backcolor($cores);
 $produtolucro = $chart_pie->getResult();
-$labelproen = json_encode($labelproen);
 // ------------------------------------------------------ //
 
 
@@ -162,15 +227,15 @@ $labelproen = json_encode($labelproen);
 
 $kprodsa = array_keys($produtosa);
 $datapsa = array(); 
+$labelprosa = array();
 for ($i=0; isset($kprodsa[$i]); $i++) { 
      $datapsa[$i] = $produtosa[$kprodsa[$i]]['VT'];
      $labelprosa[$i] = $produtosa[$kprodsa[$i]]['name'];
 }
-$chart_pie->add_head("Gastos em R$");
+$chart_pie->add_head("Gastos em R$",$labelprosa);
 $chart_pie->add_data($datapsa);
 $chart_pie->add_backcolor($cores);
 $produtogastos = $chart_pie->getResult();
-$labelprosa = json_encode($labelprosa);
 // ------------------------------------------------------ //
 
 
@@ -321,69 +386,23 @@ $labelfun = json_encode($funcionarioname);
      <script>
           var labels = JSON.parse('<?php echo $labels; ?>');
           var labelfun = JSON.parse('<?php echo $labelfun; ?>');
-          var labelproen = JSON.parse('<?php echo $labelproen; ?>');
-          var labelprosa = JSON.parse('<?php echo $labelprosa; ?>');
-          var databen = JSON.parse('<?php echo $databen; ?>');
-          var databsa = JSON.parse('<?php echo $databsa; ?>');
 
           // Grafico Balança Geral
           var ctx = document.getElementById('Relatorio_bge').getContext('2d');
-          var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-          labels: labels,
-          datasets: [{
-               label: 'Vendas',
-               data: databen,
-               backgroundColor: '#007bff'
-          }, {
-               label: 'Receitas',
-               data: databsa,
-               backgroundColor: '#28a745'
-          }]
-          },
-          options: {
-          responsive: true,
-          scales: {
-          }
-          }
-          });
+          var myChart = new Chart(ctx, 
+               <?php echo $databge; ?>);
+
           // Grafico Balança Entrada
           var ctx = document.getElementById('Relatorio_ben').getContext('2d');
-          var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-          labels: labels,
-          datasets: [{
-               label: 'Vendas',
-               data: databen,
-               backgroundColor: '#007bff'
-          }]
-          },
-          options: {
-          responsive: true,
-          scales: {
-          }
-          }
-          });
+          var myChart = new Chart(ctx, 
+          <?php echo $databen; ?>);
+
           // Grafico Balança Saida
           var ctx = document.getElementById('Relatorio_bsa').getContext('2d');
-          var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-          labels: labels,
-          datasets: [{
-               label: 'Receitas',
-               data: databsa,
-               backgroundColor: '#28a745'
-          }]
-          },
-          options: {
-          responsive: true,
-          scales: {
-          }
-          }
-          });
+          var myChart = new Chart(ctx, 
+          <?php echo $databsa; ?>);
+
+
           // Grafico Funcionarios vendas
           var ctx = document.getElementById('Funcionario_fve').getContext('2d');
           var myChart = new Chart(ctx, {
@@ -403,69 +422,22 @@ $labelfun = json_encode($funcionarioname);
           });
           // Grafico Funcionarios Lucro
           var ctx = document.getElementById('Funcionario_flc').getContext('2d');
-          var myChart = new Chart(ctx, {
-          type: 'pie',
-          data: {
-          labels: labelfun,
-          datasets: [{
-               <?php echo $funcionariolucro;?>
-          }
-          ]
-          },
-          options: {
-          responsive: false,
-          scales: {
-          }
-          }
-          });
+          var myChart = new Chart(ctx, 
+               <?php echo $funcionariolucro;?>);
+
           // Grafico Produto Vendas
           var ctx = document.getElementById('produto_pve').getContext('2d');
-          var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-          labels: labels,
-          datasets: [{
-               <?php echo $produtovendas;?>}
-          ]
-          },
-          options: {
-          responsive: true,
-          scales: {
-          }
-          }
-          });
+          var myChart = new Chart(ctx, 
+               <?php echo $produtovendas;?>);
+
           // Grafico Produto Lucro
           var ctx = document.getElementById('produto_plc').getContext('2d');
-          var myChart = new Chart(ctx, {
-          type: 'pie',
-          data: {
-          labels: labelproen,
-          datasets: [{
-               <?php echo $produtolucro;?>}
-          ]
-          },
-          options: {
-          responsive: false,
-          scales: {
-          }
-          }
-          });
+          var myChart = new Chart(ctx, 
+               <?php echo $produtolucro;?>);
+
           // Grafico Produto Gastos
           var ctx = document.getElementById('produto_pgt').getContext('2d');
-          var myChart = new Chart(ctx, {
-          type: 'pie',
-          data: {
-          labels: labelprosa,
-          datasets: [{
-               <?php echo $produtogastos;?>}
-          ]
-          },
-          options: {
-          responsive: false,
-          scales: {
-          }
-          }
-          });
+          var myChart = new Chart(ctx, <?php echo $produtogastos;?>);
 
           
      </script>
