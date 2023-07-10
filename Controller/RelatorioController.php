@@ -1,8 +1,10 @@
 <?php
+date_default_timezone_set('America/Sao_Paulo');
+setlocale(LC_TIME, 'pt-br');
 include_once ".\class\Conect.php";
 include ".\class\Formater.php";
 include ".\class\Chart_mount.php";
-
+$cores = file("./etc/colors.txt",FILE_IGNORE_NEW_LINES);
 class Relatorio extends Conexao{
      private $data;
 
@@ -35,6 +37,244 @@ class Relatorio extends Conexao{
 
 
 }
+
+
+
+
+
+
+
+if (empty($_GET['tipo_acao']) || is_null($_SESSION['data'])) {
+     $_SESSION['data'] = 0;
+}else{
+     $_SESSION['data'] = $_GET['tipo_acao'];
+}
+$lancamentos = new Relatorio;
+
+$label;
+switch ($_SESSION['data']) {
+     case 0:
+          $label = array('Hoje');
+          $lancamentos->setData(date('Y-m-d', time()));
+          $Balanca = $lancamentos->getlancamentos();
+          $tempo = 'today';
+          break;
+     case 1:
+          $label = array('Domingo','Segunda','Térça',"Quarta",'Quinta','Sexta','Sábado');
+          $lancamentos->setData(date('Y-m-d', strtotime('-'.(date('w',time())).' day')));
+          $Balanca = $lancamentos->getlancamentos();
+          $tempo = 'week';
+          break;
+     case 2:
+          $label = array('1º a 3º','4º a 6º','7º a 9º', '10º a 12º', '13º a 15º', '16º a 18º', '19º a 21º', '22º a 24º', '25º a 27º', '28º a 30º', '31º');
+          $lancamentos->setData(date('Y-m-', time()).'01');
+          $Balanca = $lancamentos->getlancamentos();
+          $tempo = 'month';
+          break;
+     case 3:
+          $label = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto','Setembro', 'Outubro', 'Novembro', 'Dezembro');
+          $lancamentos->setData(date('Y-', time()).'-01-01');
+          $Balanca = $lancamentos->getlancamentos();
+          $tempo = 'year';
+          break;
+     case 4:
+          $label = 'Hoje';
+          break;
+     
+     default:
+          $label = 'Hoje';
+          break;
+}
+
+$labels = json_encode($label);
+$fmt = new Formater($tempo);
+$keys = array();$k = 0;
+for ($i=0; isset($Balanca[$i]) ; $i++) { 
+     if(!in_array($Balanca[$i]["id_produto"],$keys)){
+          $keys[$Balanca[$i]["id_produto"]] = $k;
+          $k++;
+     }
+     $fmt->add_format($keys[$Balanca[$i]["id_produto"]],$Balanca[$i]["id_produto"],$Balanca[$i]["descricao"],$Balanca[$i]["VT"],$Balanca[$i]["quantidade"],$Balanca[$i]["dia"],$Balanca[$i]["tipo"]);
+}
+
+$Balanca = $fmt->get_result();
+
+$ke = 0;$ks = 0; $c = 0;
+$balancaen =array('name' => array(),'lucro' => array(), 'data' => array() ); $balancasa =array('name' => array(),'lucro' => array(), 'data' => array() );
+$produtoen = array(); $produtosa = array();
+$coresp = array();
+for ($i=0; isset($Balanca[$i]); $i++) { 
+     $balancaen['data'][$i] = 0;
+     $balancasa['data'][$i] = 0;
+     $Bkeys = array_keys($Balanca[$i]);
+     for ($s=0; isset($Bkeys[$s]) ; $s++) { 
+          $Barray = $Balanca[$i][$Bkeys[$s]];
+
+          if (isset($Barray['ID'])) {
+               if (!(in_array($Barray['ID'],$coresp))) {$coresp[$Balanca[$i][$Bkeys[$s]]['ID']] = $cores[$c];}
+     
+
+               switch($Balanca[$i][$Bkeys[$s]]['TIPO']){
+               case 'entrada':
+                    
+                    $balancaen['data'][$i] += $Barray['VT'];
+                    $ke++;
+
+                    if (!isset($produtoen[$Barray['ID']])) {
+                         $produtoen[$Barray['ID']] = array('name' => '','VT' => 0,'QT' => 0);
+                    }
+                    $produtoen[$Barray['ID']]['name'] = $Barray['name'];
+                    $produtoen[$Barray['ID']]['VT'] += $Barray['VT'];
+                    $produtoen[$Barray['ID']]['QT'] += $Barray['QT'];
+                    break;
+               case 'saida':
+                    $balancasa['data'][$i] += $Barray['VT'];
+                    $ks++;
+                    
+                    if (!isset($produtosa[$Barray['ID']])) {
+                         $produtosa[$Barray['ID']] = array('name' => '','VT' => 0,'QT' => 0);
+                    }
+                    $produtosa[$Barray['ID']]['name'] = $Barray['name'];
+                    $produtosa[$Barray['ID']]['VT'] += $Barray['VT'];
+                    $produtosa[$Barray['ID']]['QT'] += $Barray['QT'];
+                    break;
+               }
+          }
+         
+     }
+
+}
+
+
+
+$funcionarioname = array('admin','funcionario');
+$funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
+$funcionariolucrovalor = array(15000,32100);
+
+$chart_pie = new Chart_pie("Numero de vendas",$funcionarioname);
+$chart_bar = new Chart_bar($label);
+
+// Cria o grafico em Barra de Balança Geral
+$chart_bar->add_head($label);
+$chart_bar->add_Data("Vendas",$balancaen['data'],'#007bff');
+$chart_bar->add_Data("Saida",json_encode($balancasa['data']),'#28a745');
+$databge = $chart_bar->getResult();
+$chart_bar->clear();
+
+
+// Cria o grafico em Barra de Balança Entrada
+$chart_bar->add_head($label);
+$chart_bar->add_Data("Vendas",$balancaen['data'],'#007bff');
+$databen = $chart_bar->getResult();
+$chart_bar->clear();
+
+
+// Cria o grafico em Barra de Balança Saida
+$chart_bar->add_head($label);
+$chart_bar->add_Data("Vendas",$balancasa['data'],'#28a745');
+$databsa = $chart_bar->getResult();
+$chart_bar->clear();
+
+$funcionarioname = array('admin','funcionario');
+$funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
+$funcionariolucrovalor = array(15000,32100);
+
+
+
+
+// Gerar os dataset do Grafito de Vendas dos Funcionarios
+$funcionariovendas = '';
+// ------------------------------------------------------ //
+
+
+// Gerar os dataset do Grafito de Lucro dos Funcionarios
+$chart_pie->add_data($funcionariolucrovalor);
+$chart_pie->add_backcolor($cores);
+$funcionariolucro = $chart_pie->getResult(); 
+// ------------------------------------------------------ //
+
+
+// Gerar os dataset do Grafito de Vendas dos Produtos
+$chart_bar->add_head($label);
+$produtovendas = array();
+$pro = array();
+for ($i=0; isset($Balanca[$i]) ; $i++) { 
+     $Bkeys = array_keys($Balanca[$i]);
+
+     for ($s=0; isset($Bkeys[$s]); $s++) { 
+          $Barray = $Balanca[$i][$Bkeys[$s]];
+               if (isset($Barray['TIPO']) && ($Barray['TIPO'] == 'entrada')) {
+                         if (!isset($produtovendas[$Barray["ID"]]['name'])) {
+                              $produtovendas[$Barray["ID"]] = 
+                              array("name" => $Barray["name"], "data" => array()); 
+                         }
+                         if (!isset($produtovendas[$Barray['ID']]['data'][$i])) {
+                              $produtovendas[$Barray['ID']]['data'][$i] = 0;
+                         }
+                         $produtovendas[$Barray["ID"]]["data"][$i] += $Barray["VT"];
+               }
+
+     }
+
+}
+
+
+$PVkeys = array_keys($produtovendas);
+for ($i=0; isset($Balanca[$i]); $i++) { 
+     
+     for ($s=0; isset($PVkeys[$s]); $s++) { 
+          if (!isset($produtovendas[$PVkeys[$s]]['data'][$i])) {
+               $produtovendas[$PVkeys[$s]]['data'][$i] = 0;
+          }
+     }
+}
+
+if (isset($PVkeys)) {
+     for ($i=0; isset($PVkeys[$i]) ; $i++) {
+          ksort($produtovendas[$PVkeys[$i]]['data']);
+          $data = $produtovendas[$PVkeys[$i]]['data'];
+          $chart_bar->add_Data($produtovendas[$PVkeys[$i]]['name'],array_values($data),$cores[$i]);
+     }
+}
+
+$produtovendas = $chart_bar->getResult();
+$chart_bar->clear();
+
+
+
+// Gerar os dataset do Grafito de Lucro dos Produtos
+$kproden = array_keys($produtoen);
+$datapen = array(); 
+$labelproen = array();
+for ($i=0; isset($kproden[$i]); $i++) { 
+     $datapen[$i] = $produtoen[$kproden[$i]]['VT'];
+     $labelproen[$i] = $produtoen[$kproden[$i]]['name'];
+
+}
+$chart_pie->add_head("Quantidade de Vendas",$labelproen);
+$chart_pie->add_data($datapen);
+$chart_pie->add_backcolor($cores);
+$produtolucro = $chart_pie->getResult();
+// ------------------------------------------------------ //
+
+
+// Gerar os dataset do Grafito de Gastos dos Produtos
+
+$kprodsa = array_keys($produtosa);
+$datapsa = array(); 
+$labelprosa = array();
+for ($i=0; isset($kprodsa[$i]); $i++) { 
+     $datapsa[$i] = $produtosa[$kprodsa[$i]]['VT'];
+     $labelprosa[$i] = $produtosa[$kprodsa[$i]]['name'];
+}
+$chart_pie->add_head("Gastos em R$",$labelprosa);
+$chart_pie->add_data($datapsa);
+$chart_pie->add_backcolor($cores);
+$produtogastos = $chart_pie->getResult();
+// ------------------------------------------------------ //
+
+
+$labelfun = json_encode($funcionarioname);
 
 
 ?>
