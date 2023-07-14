@@ -23,63 +23,33 @@ class Formater{
      }
      function get_result(){
           return $this->result;
-}
+     }
+     function get_date(){
+          switch ($this->layout) {
+               case 'today':
+                    $date = 1;
+                    break;
+               case 'week':
+                    $date = 7;
+                    break;
+               case 'month':
+                    $date = 12;
+                    break;
+               case 'year':
+                    $date = 12;
+                    break;
+          }
+          return $date;
+     }
 
 
      function prepare_result(){
-          switch ($this->layout) {
-               case 'today':
-                    $this->result = array(0 => array(array()));
-                    break;
-               case 'week':
-                    $this->result = array(0 => array(array())
-                    ,1=> array(array())
-                    ,2=> array(array())
-                    ,3=> array(array())
-                    ,4=> array(array())
-                    ,5=> array(array())
-                    ,6=> array(array())
-               );
-                    break;
-               case 'month':
-                    $this->result = array(0 => array(array())
-                    ,1=> array(array())
-                    ,2=> array(array())
-                    ,3=> array(array())
-                    ,4=> array(array())
-                    ,5=> array(array())
-                    ,6=> array(array())
-                    ,7=> array(array())
-                    ,8=> array(array())
-                    ,9=> array(array())
-                    ,10=> array(array())
-               );
-                    break;
-               case 'year':
-                    $this->result = array(0 => array()
-                    ,1=> array()
-                    ,2=> array()
-                    ,3=> array()
-                    ,4=> array()
-                    ,5=> array()
-                    ,6=> array()
-                    ,7=> array()
-                    ,8=> array()
-                    ,9=> array()
-                    ,10=> array()
-                    ,11=> array()
-               );
-                    break;
-               
-               default:
-                    return false;
-                    break;
-          }
 
+          $this->result = array();
           return true;
      }
 
-     function add_format($key,$id,$des,$value,$qtn,$dia,$tipo = ''){
+     function add_format($id,$des,$value,$qtn,$dia,$tipo = ''){
           switch ($this->layout) {
                case 'today':
                       $tempo = 0;
@@ -94,16 +64,19 @@ class Formater{
                        $tempo = (date("m", strtotime($dia))-1);
                     break;
           }
-          if (!(in_array($key, $this->result[$tempo]))) {
-               $this->result[$tempo][$key] = array();
-               $this->result[$tempo][$key]['name'] = $des;
-               $this->result[$tempo][$key]['VT'] = 0;
-               $this->result[$tempo][$key]['QT'] = 0;
-               $this->result[$tempo][$key]['ID'] = $id;
-               $this->result[$tempo][$key]['TIPO'] = $tipo;
+          if (!(isset($this->result[$id]))) {
+               $this->result[$id] = array();
           }
-          $this->result[$tempo][$key]['VT'] += $value;
-          $this->result[$tempo][$key]['QT'] += $qtn;
+          if (!(isset($this->result[$id][$tempo]))) {
+               $this->result[$id][$tempo] = array();
+               $this->result[$id][$tempo]['name'] = $des;
+               $this->result[$id][$tempo]['VT'] = 0;
+               $this->result[$id][$tempo]['QT'] = 0;
+               $this->result[$id][$tempo]['ID'] = $id;
+               $this->result[$id][$tempo]['TIPO'] = $tipo;
+          }
+          $this->result[$id][$tempo]['VT'] += $value;
+          $this->result[$id][$tempo]['QT'] += $qtn;
           
      return true;
 }

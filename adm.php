@@ -63,7 +63,7 @@ $todosu = $u->BuscarTodosProdutos();
                                         </li>
                                    </div>
                          </ul>
-                         <ul class="list-group list-group-flush mt-1">     
+                         <!-- <ul class="list-group list-group-flush mt-1">     
                               <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#backup_control" role="button" aria-expanded="false" aria-controls="backup_control" ><p class="h2">Backup</p></a></div></li>
                                    <div class="collapse multi-collapse" id="backup_control">
                                         <li class="list-group-item ">
@@ -73,7 +73,7 @@ $todosu = $u->BuscarTodosProdutos();
                                              </ul>
                                         </li>
                                    </div>
-                         </ul>
+                         </ul> -->
                </div>
              
                <div class="col-8 p-3 text-center">
@@ -375,7 +375,7 @@ $todosu = $u->BuscarTodosProdutos();
                                    <div class="d-inline d-flex">
                                         <div><a href="index.php" class="btn btn "><p class="h2"><i class="bi bi-house"></i></p></a></div>
 						     	<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h2"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
-						     	<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h2"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
+						     	<!-- <?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h2"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?> -->
                                         <div><a href="contabilidade.php" class="btn btn "><p class="h2"><i class="bi bi-journals"></i></p></a></div>
                                         <div><a href="login.php" class="btn btn "><p class="h2 text-danger"><i class="bi bi-door-open"></i></p></a></div>
                                    </div>

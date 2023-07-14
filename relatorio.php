@@ -128,33 +128,26 @@ include_once 'Controller/RelatorioController.php';
                               <canvas id="produto_pgt" style="height: 50vh;" ></canvas>
                          </div>
                     </div>
-
-
-
-
                </div>
+
           </div>
 
 
 		<!-- Area da seção Admin e logout -->
-		<div class="row p-1" >
-               <div class="row fixed-bottom " >
-                    <div class="col-12 text-end" > 
-                         <div class="d-flex d-inline justify-content-end align-bottom mb-4" style="height: 5vh;">
-                              <div class="collapse multi-collapse" id="menu_control">
-                                   <div class="d-inline d-flex">
-                                        <div><a href="index.php" class="btn btn "><p class="h2"><i class="bi bi-house"></i></p></a></div>
-						     	<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h2"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
-						     	<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h2"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
-                                        <div><a href="contabilidade.php" class="btn btn "><p class="h2"><i class="bi bi-journals"></i></p></a></div>
-                                        <div><a href="login.php" class="btn btn "><p class="h2 text-danger"><i class="bi bi-door-open"></i></p></a></div>
-                                   </div>v>
-                              </div>
-                              <div><a class="btn " data-bs-toggle="collapse" href="#menu_control" role="button" aria-expanded="false" aria-controls="menu_control" ><p class="h2"><i class='bi bi-list '></i></p></a></div>
+          <div class="position-fixed bottom-0 end-0">
+               <div class="d-flex d-inline justify-content-end align-bottom mb-4 " style="height: 5vh;">
+                    <div class="collapse multi-collapse" id="menu_control">
+                         <div class="d-inline d-flex">
+                              <div><a href="index.php" class="btn btn "><p class="h2"><i class="bi bi-house"></i></p></a></div>
+                              <?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h2"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
+                              <?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h2"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
+                              <div><a href="contabilidade.php" class="btn btn "><p class="h2"><i class="bi bi-journals"></i></p></a></div>
+                              <div><a href="login.php" class="btn btn "><p class="h2 text-danger"><i class="bi bi-door-open"></i></p></a></div>
                          </div>
                     </div>
+                    <div><a class="btn " data-bs-toggle="collapse" href="#menu_control" role="button" aria-expanded="false" aria-controls="menu_control" ><p class="h2"><i class='bi bi-list '></i></p></a></div>
                </div>
-		</div>
+          </div>
 
           <!-- ------------- fim do container ------------- -->
      </div>

@@ -88,53 +88,63 @@ switch ($_SESSION['data']) {
 
 $labels = json_encode($label);
 $fmt = new Formater($tempo);
-$keys = array();$k = 0;
 for ($i=0; isset($Balanca[$i]) ; $i++) { 
-     if(!in_array($Balanca[$i]["id_produto"],$keys)){
-          $keys[$Balanca[$i]["id_produto"]] = $k;
-          $k++;
-     }
-     $fmt->add_format($keys[$Balanca[$i]["id_produto"]],$Balanca[$i]["id_produto"],$Balanca[$i]["descricao"],$Balanca[$i]["VT"],$Balanca[$i]["quantidade"],$Balanca[$i]["dia"],$Balanca[$i]["tipo"]);
+     $fmt->add_format(
+     $Balanca[$i]["id_produto"],
+     $Balanca[$i]["descricao"],
+     $Balanca[$i]["VT"],
+     $Balanca[$i]["quantidade"],
+     $Balanca[$i]["dia"],
+     $Balanca[$i]["tipo"]);
 }
-
+$BTS = $fmt->get_date();
 $Balanca = $fmt->get_result();
 
-$ke = 0;$ks = 0; $c = 0;
 $balancaen =array('name' => array(),'lucro' => array(), 'data' => array() ); $balancasa =array('name' => array(),'lucro' => array(), 'data' => array() );
 $produtoen = array(); $produtosa = array();
-$coresp = array();
-for ($i=0; isset($Balanca[$i]); $i++) { 
-     $balancaen['data'][$i] = 0;
-     $balancasa['data'][$i] = 0;
-     $Bkeys = array_keys($Balanca[$i]);
-     for ($s=0; isset($Bkeys[$s]) ; $s++) { 
-          $Barray = $Balanca[$i][$Bkeys[$s]];
+$Bkeys =array_keys($Balanca);
+for ($i=0; isset($Bkeys[$i]); $i++) { 
+     $BTempo = $Balanca[$Bkeys[$i]];
+     $BTkeys = array_keys($BTempo);
+
+     for ($s=0; isset($BTkeys[$s]) ; $s++) { 
+          if (!isset($balancaen['data'][$BTkeys[$s]])) {
+                $balancaen['data'][$BTkeys[$s]] = 0;
+          
+          }
+          if (!isset($balancasa['data'][$BTkeys[$s]])) {
+                $balancasa['data'][$BTkeys[$s]] = 0;
+          
+          }
+          $Barray = $BTempo[$BTkeys[$s]];
 
           if (isset($Barray['ID'])) {
-               if (!(in_array($Barray['ID'],$coresp))) {$coresp[$Balanca[$i][$Bkeys[$s]]['ID']] = $cores[$c];}
-     
 
-               switch($Balanca[$i][$Bkeys[$s]]['TIPO']){
-               case 'entrada':
-                    
-                    $balancaen['data'][$i] += $Barray['VT'];
-                    $ke++;
+               switch($Barray['TIPO']){
+               case 'entrada':    
+
+                    $balancaen['data'][$BTkeys[$s]] += $Barray['VT'];
 
                     if (!isset($produtoen[$Barray['ID']])) {
-                         $produtoen[$Barray['ID']] = array('name' => '','VT' => 0,'QT' => 0);
+                         $produtoen[$Barray['ID']] = array('name' => $Barray['name'], 
+                         "VT" => array(),
+                         "QT" => array()
+                         );
                     }
-                    $produtoen[$Barray['ID']]['name'] = $Barray['name'];
-                    $produtoen[$Barray['ID']]['VT'] += $Barray['VT'];
-                    $produtoen[$Barray['ID']]['QT'] += $Barray['QT'];
+                    if (!isset($produtoen[$Barray['ID']]['VT'][$BTkeys[$s]])) {
+                         $produtoen[$Barray['ID']]['VT'][$BTkeys[$s]] = $Barray['VT'];
+                         $produtoen[$Barray['ID']]['QT'][$BTkeys[$s]] = $Barray['QT'];
+                    }else {
+                         $produtoen[$Barray['ID']]['VT'][$BTkeys[$s]] += $Barray['VT'];
+                         $produtoen[$Barray['ID']]['QT'][$BTkeys[$s]] += $Barray['QT'];
+                    }
                     break;
                case 'saida':
-                    $balancasa['data'][$i] += $Barray['VT'];
-                    $ks++;
+                    $balancasa['data'][$BTkeys[$s]] += $Barray['VT'];
                     
                     if (!isset($produtosa[$Barray['ID']])) {
-                         $produtosa[$Barray['ID']] = array('name' => '','VT' => 0,'QT' => 0);
+                         $produtosa[$Barray['ID']] = array('name' => $Barray['name'],'VT' => 0,'QT' => 0);
                     }
-                    $produtosa[$Barray['ID']]['name'] = $Barray['name'];
                     $produtosa[$Barray['ID']]['VT'] += $Barray['VT'];
                     $produtosa[$Barray['ID']]['QT'] += $Barray['QT'];
                     break;
@@ -146,7 +156,6 @@ for ($i=0; isset($Balanca[$i]); $i++) {
 }
 
 
-
 $funcionarioname = array('admin','funcionario');
 $funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
 $funcionariolucrovalor = array(15000,32100);
@@ -154,32 +163,59 @@ $funcionariolucrovalor = array(15000,32100);
 $chart_pie = new Chart_pie("Numero de vendas",$funcionarioname);
 $chart_bar = new Chart_bar($label);
 
+
+$BENkeys = array_keys($balancaen);
+$bendata['data'] = array(); 
+
+for ($i=0; isset($BENkeys[$i]); $i++) { 
+     for ($s=0; $BTS > $s ; $s++) { 
+          if(isset($balancaen['data'][$s])){
+               $bendata['data'][$s] = 
+               $balancaen['data'][$s];
+          }else{
+               $bendata['data'][$s] = 0;
+          }
+     }
+}
+
+$BSAkeys = array_keys($balancasa);
+$bsadata['data'] = array(); 
+
+for ($i=0; isset($BSAkeys[$i]); $i++) { 
+     for ($s=0; $BTS > $s ; $s++) { 
+          if(isset($balancasa['data'][$s])){
+               $bsadata['data'][$s] = 
+               $balancasa['data'][$s];
+          }else{
+               $bsadata['data'][$s] = 0;
+          }
+     }
+}
+
 // Cria o grafico em Barra de Balança Geral
 $chart_bar->add_head($label);
-$chart_bar->add_Data("Vendas",$balancaen['data'],'#007bff');
-$chart_bar->add_Data("Saida",json_encode($balancasa['data']),'#28a745');
+$chart_bar->add_Data("Vendas",$bendata['data'],'#007bff');
+$chart_bar->add_Data("Saida",json_encode($bsadata['data']),'#28a745');
 $databge = $chart_bar->getResult();
 $chart_bar->clear();
 
 
 // Cria o grafico em Barra de Balança Entrada
 $chart_bar->add_head($label);
-$chart_bar->add_Data("Vendas",$balancaen['data'],'#007bff');
+$chart_bar->add_Data("Vendas",$bendata['data'],'#007bff');
 $databen = $chart_bar->getResult();
 $chart_bar->clear();
 
 
 // Cria o grafico em Barra de Balança Saida
 $chart_bar->add_head($label);
-$chart_bar->add_Data("Vendas",$balancasa['data'],'#28a745');
+$chart_bar->add_Data("Vendas",$bsadata['data'],'#28a745');
 $databsa = $chart_bar->getResult();
 $chart_bar->clear();
 
 $funcionarioname = array('admin','funcionario');
 $funcionariovendasvalor = array(100, 200, 150, 300, 250, 400, 41, 50, 12 ,121, 48, 500);
 $funcionariolucrovalor = array(15000,32100);
-
-
 
 
 // Gerar os dataset do Grafito de Vendas dos Funcionarios
@@ -196,44 +232,26 @@ $funcionariolucro = $chart_pie->getResult();
 
 // Gerar os dataset do Grafito de Vendas dos Produtos
 $chart_bar->add_head($label);
-$produtovendas = array();
-$pro = array();
-for ($i=0; isset($Balanca[$i]) ; $i++) { 
-     $Bkeys = array_keys($Balanca[$i]);
-
-     for ($s=0; isset($Bkeys[$s]); $s++) { 
-          $Barray = $Balanca[$i][$Bkeys[$s]];
-               if (isset($Barray['TIPO']) && ($Barray['TIPO'] == 'entrada')) {
-                         if (!isset($produtovendas[$Barray["ID"]]['name'])) {
-                              $produtovendas[$Barray["ID"]] = 
-                              array("name" => $Barray["name"], "data" => array()); 
-                         }
-                         if (!isset($produtovendas[$Barray['ID']]['data'][$i])) {
-                              $produtovendas[$Barray['ID']]['data'][$i] = 0;
-                         }
-                         $produtovendas[$Barray["ID"]]["data"][$i] += $Barray["VT"];
-               }
-
-     }
-
-}
-
-
-$PVkeys = array_keys($produtovendas);
-for ($i=0; isset($Balanca[$i]); $i++) { 
-     
-     for ($s=0; isset($PVkeys[$s]); $s++) { 
-          if (!isset($produtovendas[$PVkeys[$s]]['data'][$i])) {
-               $produtovendas[$PVkeys[$s]]['data'][$i] = 0;
+$PVkeys = array_keys($produtoen);
+$data = array();
+for ($i=0; isset($PVkeys[$i]); $i++) { 
+     for ($s=0; $BTS > $s ; $s++) { 
+          if (!isset($data[$PVkeys[$i]])) {
+               $data[$PVkeys[$i]] = array(); 
+          }
+          if(isset($produtoen[$PVkeys[$i]]['VT'][$s])){
+               $data[$PVkeys[$i]][$s] = 
+               $produtoen[$PVkeys[$i]]['VT'][$s];
+          }else{
+               $data[$PVkeys[$i]][$s] = 0;
           }
      }
 }
-
 if (isset($PVkeys)) {
      for ($i=0; isset($PVkeys[$i]) ; $i++) {
-          ksort($produtovendas[$PVkeys[$i]]['data']);
-          $data = $produtovendas[$PVkeys[$i]]['data'];
-          $chart_bar->add_Data($produtovendas[$PVkeys[$i]]['name'],array_values($data),$cores[$i]);
+          $chart_bar->add_Data($produtoen[$PVkeys[$i]]['name'],
+          array_values($data[$PVkeys[$i]]),
+          $cores[$i]);
      }
 }
 

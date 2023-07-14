@@ -242,7 +242,7 @@ if ($totalp != false) {
 						<div class="d-inline d-flex">
 							<div><a href="index.php" class="btn btn "><p class="h5"><i class="bi bi-house"></i></p></a></div>
 							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="adm.php" class="btn btn "><p class="h5"><i class="bi bi-gear"></i></p></a> </div> ';} ?>
-							<?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h5"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?>
+							<!-- <?php if ($_SESSION['nivel'] == 'administrador') {echo ' <div> <a href="relatorio.php" class="btn btn "><p class="h5"><i class="bi bi-pie-chart"></i></p></a> </div> ';} ?> -->
 							<div><a href="contabilidade.php" class="btn btn "><p class="h5"><i class="bi bi-journals"></i></p></a></div>
 							<div><a href="login.php" class="btn btn "><p class="h5 text-danger"><i class="bi bi-door-open"></i></p></a></div>
 						</div>
