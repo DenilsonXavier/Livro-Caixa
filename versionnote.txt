@@ -1,9 +1,15 @@
 Nota de relação de atualizações:
 
+1.2.7{
+     -Administrador remodelado;
+     -Butões de navegação remodelados;
+     -Add tooltips no lugar de dropdown;
+}
+
 1.2.6{
      -Relatorio modelado;
-     -Relatorio Parcialmente Funcional
-     -Otimização do Relatorio
+     -Relatorio Parcialmente Funcional;
+     -Otimização do Relatorio;
 }
 
 1.2.1{

@@ -107,34 +107,22 @@ switch ($_POST['tipo_acao']) {
         exit;
         break;
 
-    case 'f_alterarnome':
-        $nick = $_POST['a_nick'];
+    case 'f_alterarfuncionario':
+        $adm = new adm();
         $id = $_POST['a_usuario'];
 
-        $adm = new adm();
-        $adm->alteraUsuarioNick($nick, $id);
+        if (!empty($_POST['a_nick'])) {
+            $adm->alteraUsuarioNick($_POST['a_nick'], $id);
+        }
+        if (!empty($_POST['a_senha'])) {
+            $adm->alteraUsuarioSenha($_POST['a_senha'], $id);
+        }
+        if (!empty($_POST['a_nivel'])) {
+            $adm->alteraUsuarioNivel($_POST['a_nivel'], $id);
+        }
         header('Location: ../adm.php');
         exit;
-        break;
 
-    case 'f_alterarsenha':
-        $senha = $_POST['a_senha'];
-        $id = $_POST['a_usuario'];
-
-        $adm = new adm();
-        $adm->alteraUsuarioSenha($senha, $id);
-        header('Location: ../adm.php');
-        exit;
-        break;
-
-    case 'f_alterarnivel':
-        $nivel = $_POST['a_nivel'];
-        $id = $_POST['a_usuario'];
-
-        $adm = new adm();
-        $adm->alteraUsuarioNivel($nivel, $id);
-        header('Location: ../adm.php');
-        exit;
         break;
 
     case 'p_adicionar':
@@ -163,21 +151,16 @@ switch ($_POST['tipo_acao']) {
         exit;
         break;
 
-    case 'p_alterardescricaor':
-        $descricao = $_POST['a_descricao'];
-        $id = $_POST['a_produto'];
+    case 'p_alterarproduto':
         $prod = new prod();
-        $prod->alterarDescricaoProduto($id, $descricao);
-        header('Location: ../adm.php');
-        exit;
-        break;
-
-    case 'p_alterarTipo':
-        $tipo = $_POST['a_tipo'];
         $id = $_POST['a_produto'];
-
-        $prod = new prod();
-        $prod->alterarTipoProduto($id, $tipo);
+        if (!empty($_POST['a_descricao'])) {
+            $prod->alterarDescricaoProduto($id, $_POST['a_descricao']);
+        }
+        if (!empty($_POST['a_tipo'])) {
+            $prod->alterarTipoProduto($id, $_POST['a_tipo']);
+        }
+        
         header('Location: ../adm.php');
         exit;
         break;
