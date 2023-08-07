@@ -19,8 +19,8 @@ class Relatorio extends Conexao{
           $this->conectar();
                $consulta = $this->conexao->prepare(
                "SELECT L.quantidade, l.VT, L.dia, P.id_produto,P.descricao, P.tipo 
-               FROM lancamento L 
-               JOIN produto P on L.id_produto = P.id_produto 
+               FROM {$this->gettablenameLancamentos()} L 
+               JOIN {$this->gettablenameProduto()} P on L.id_produto = P.id_produto 
                WHERE L.dia LIKE '{$this->data}%' OR L.dia > '{$this->data}'
                ORDER BY L.id_produto ASC"
                );
@@ -262,10 +262,10 @@ $chart_bar->clear();
 
 // Gerar os dataset do Grafito de Lucro dos Produtos
 $kproden = array_keys($produtoen);
-$datapen = array(); 
+$datapen = array();
 $labelproen = array();
 for ($i=0; isset($kproden[$i]); $i++) { 
-     $datapen[$i] = $produtoen[$kproden[$i]]['VT'];
+     $datapen[$i] = array_sum($produtoen[$kproden[$i]]['VT']);
      $labelproen[$i] = $produtoen[$kproden[$i]]['name'];
 
 }
