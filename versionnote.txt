@@ -1,5 +1,12 @@
 Nota de relação de atualizações:
 
+1.2.8{
+     -modificação nas paginas
+     -Documentação nas paginas
+     -Modularização de conect.php
+     -Modularização dos nomes das tabelas
+}
+
 1.2.7{
      -Administrador remodelado;
      -Butões de navegação remodelados;
