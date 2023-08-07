@@ -5,7 +5,7 @@ class Produto extends Conexao {
     public function adicionarProduto($descricao, $tipo) {
         $this->conectar();
     
-        $consulta = $this->conexao->prepare("INSERT INTO produto (descricao, tipo) VALUES (?, ?)");
+        $consulta = $this->conexao->prepare("INSERT INTO {$this->gettablenameProduto()} (descricao, tipo) VALUES (?, ?)");
         $consulta->bind_param("ss", $descricao, $tipo);
         $consulta->execute();
     
@@ -21,7 +21,7 @@ class Produto extends Conexao {
     public function deletarProduto($id_produto) {
         
         $this->conectar();
-        $selectProduto = $this->conexao->prepare("SELECT * FROM produto WHERE id_produto = ? ");
+        $selectProduto = $this->conexao->prepare("SELECT * FROM {$this->gettablenameProduto()} WHERE id_produto = ? ");
         $selectProduto->bind_param("i", $id_produto);
         $selectProduto->execute();
         $id_n = $selectProduto->get_result();
@@ -33,12 +33,12 @@ class Produto extends Conexao {
             $id_novo = 2;
         }
 
-        $updateProduto = $this->conexao->prepare("UPDATE `lancamento` SET `id_produto` = ? WHERE `lancamento`.`id_produto` = ?");
+        $updateProduto = $this->conexao->prepare("UPDATE `{$this->gettablenameLancamentos()}` SET `id_produto` = ? WHERE `{$this->gettablenameLancamentos()}`.`id_produto` = ?");
         $updateProduto->bind_param('ii', $id_novo , $id_produto);
         $updateProduto->execute();
     
     
-        $consultaProduto = $this->conexao->prepare("DELETE FROM produto WHERE id_produto = ?");
+        $consultaProduto = $this->conexao->prepare("DELETE FROM {$this->gettablenameProduto()} WHERE id_produto = ?");
         $consultaProduto->bind_param("i", $id_produto);
         $consultaProduto->execute();
     
@@ -52,7 +52,7 @@ class Produto extends Conexao {
     
     public function BuscarTodosProdutos(){
         $this->conectar();
-        $consulta = $this->conexao->prepare("SELECT * FROM produto ORDER BY descricao ASC");  
+        $consulta = $this->conexao->prepare("SELECT * FROM {$this->gettablenameProduto()} ORDER BY descricao ASC");  
         $consulta->execute();
         $rows[0] = null;
         $resultado = $consulta->get_result();

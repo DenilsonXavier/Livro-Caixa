@@ -1,15 +1,33 @@
 <?php
-class Conexao {
-    private $host = "localhost"; 
-    private $usuario = "root"; 
-    private $senha = ""; 
-    private $banco = "livro-Caixa"; 
+require $_SERVER['DOCUMENT_ROOT']."/Livro-Caixa/config/conection.php";
+class Conexao extends connetion_att{
 
     protected $conexao;
+    private $host = ""; 
+    private $usuario = ""; 
+    private $senha = ""; 
+    private $banco = ""; 
 
+    // Get the elements from /config/conection.php
+    public function __construct() {
+        $this->setvars();
+    }
+
+    function setvars() {
+        $this->host = $this->gethost();
+        $this->usuario = $this->getusuario();
+        $this->senha = $this->getsenha();
+        $this->banco = $this->getbanco();
+        
+    }
  
     public function conectar() {
-        $this->conexao = new mysqli($this->host, $this->usuario, $this->senha, $this->banco);
+        $this->setvars();
+        $this->conexao = new mysqli(
+        $this->host, 
+        $this->usuario,
+         $this->senha,
+          $this->banco);
 
         
         if ($this->conexao->connect_errno) {

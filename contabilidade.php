@@ -2,17 +2,22 @@
 <?php
 include_once 'Controller/ContabilidadeController.php';
 include_once 'class/Lancamento.php';
+
+// Verify if the user is Singned
 session_start();
 if (empty($_SESSION['nick']) || empty($_SESSION['nivel']) || empty($_SESSION['id_usuario']) ) {
      session_unset();
      session_abort();
      header('Location: ./login.php');
 }
+
+// Delete the launch by POST method
 if (isset($_POST['deletar'])) {
 	$l = new Lancamento;
 	$l->deletarLancamento($_POST['id_lancamento']);
 }
 
+// verify in the session if the search elements are empty or not, if are needed alteretion they are done
 if(isset($_POST['p_tipo'])){$_SESSION['pes_tipo'] = $_POST['p_tipo'];}
 if(isset($_POST['p_data'])){$_SESSION['pes_data'] = $_POST['p_data'];}
 if(isset($_POST['p_fpagamento'])){$_SESSION['pes_fpagamento'] = $_POST['p_fpagamento'];}
@@ -21,6 +26,7 @@ if(isset($_POST['p_codigo'])){$_SESSION['pes_id_produto'] = $_POST['p_codigo'];}
 if(isset($_POST['p_ordem'])){$_SESSION['pes_ordem'] = $_POST['p_ordem'];}
 if(isset($_POST['p_pag'])){$_SESSION['pes_pag'] = $_POST['p_pag'];}
 
+// Inicialize the search elements
 if(!isset($_SESSION['pes_pag']) || isset($_POST['limpar_pes'])){
 	$_SESSION['pes_tipo'] = 0;
 	$_SESSION['pes_data'] = 0;
@@ -31,10 +37,13 @@ if(!isset($_SESSION['pes_pag']) || isset($_POST['limpar_pes'])){
 	$_SESSION['pes_pag'] = 1;
 
 }
+
+// Inicialize the search
 $p = new Pesquisa;
 $p->PreparaBusca($_SESSION['pes_tipo'], $_SESSION['pes_data'], $_SESSION['pes_fpagamento'],$_SESSION['pes_descricao'], $_SESSION['pes_id_produto'], $_SESSION['pes_ordem']);;
 $pesquisa = $p->Busca($_SESSION['pes_pag']);
 $totalp = $p->Buscatodos();
+// verify if the search is not empty
 if ($totalp != false) {
 	$contarl = ceil(count($totalp)/13);
 }else {
@@ -83,6 +92,7 @@ if ($totalp != false) {
 					<form action="./contabilidade.php" method="post">
 						<input type="hidden" name="deletar" value="1">
 						<?php
+							// echo each launch in table elements
 							for ($i=0; isset($pesquisa[$i]) ; $i++) { 
 								switch($pesquisa[$i]['tipo']){
 									case 'entrada':
@@ -111,9 +121,8 @@ if ($totalp != false) {
 					</tbody>
 					<tfoot>
 						<?php 
-						
+						// echo the sum of launchs values
 						$tvalor = 0;
-
 						for ($i=0;isset($totalp[$i]); $i++) { 
 							switch ($totalp[$i]['tipo']) {
 								case 'entrada':
@@ -130,12 +139,13 @@ if ($totalp != false) {
 						}else {
 							$cor = ' text-danger';
 						}
+						$tvalor = number_format((float)$tvalor, 2, '.', '');
 						?>
 						<tr class="text-start table-active ">
 							<th colspan="7">
 								Total da pesquisa
 							</th>
-							<th colspan="3" class="text-center<?php echo $cor.'">'.number_format((float)$tvalor, 2, '.', ''); ?></th>
+							<th colspan="3" class="text-center <?php echo $cor;?>"><?php echo $tvalor;?></th>
 						</tr>
 					</tfoot>
 				</table>
@@ -146,7 +156,7 @@ if ($totalp != false) {
 
           <!-- Area Pesquisa -->
           <div class="col-xl-4 col-lg-3 shadow border-1 my-4 rounded-start-4">
-               
+               <!-- Every If varify the current option from the search -->
                <div class="my-3">
                     <form action="./contabilidade.php" method="POST">
 				 <div class="text-center mb-3"> <span class="h2 tw-bold">Pesquisa</span></div>
@@ -192,7 +202,7 @@ if ($totalp != false) {
 						<option value="ASC" <?php if($_SESSION['pes_ordem'] == 'ASC'){echo 'selected';} ?>>Mais Antigo</option>
 						</select>
 					</div>
-					<div class="text-center mb-1">Total da Pesquisa: <?php if($totalp != false){echo count($totalp);}else{echo 0;} ?></div>
+					<div class="text-center mb-1">Total da Pesquisa: <?php if($totalp != false && isset($totalp[0])){echo count($totalp);}else{echo 0;} ?></div>
 					<div class="row mx-2 text-center">
 						<button type="submit" class="btn btn-outline-success mb-1">Pesquisar</button>
 						<button type="submit" name="limpar_pes" value="1" class="btn btn-outline-primary ">Limpar</button>
@@ -209,7 +219,9 @@ if ($totalp != false) {
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 								</li>
-										<?php for ($i=0; $i < $contarl; $i++) { 
+										<?php 
+										// echo the sum of pagnation buttons 
+										for ($i=0; $i < $contarl; $i++) { 
 											if(($i+1) == $_SESSION['pes_pag']){ $linkstart ='<li class="page-item active"><button class="page-link" name="p_pag" value="';}else{$linkstart ='<li class="page-item"><button class="page-link" name="p_pag" value="';}
 											echo  $linkstart.($i+1).'">'.($i+1).'</button></li>
 										';

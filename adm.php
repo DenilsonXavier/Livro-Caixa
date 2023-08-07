@@ -2,16 +2,22 @@
 include_once 'class/Produto.php';
 include_once 'class/Usuario.php';
 
+// Verify if the user is singned
 session_start();
 if (empty($_SESSION['nick']) || empty($_SESSION['nivel']) || empty($_SESSION['id_usuario']) ) {
      session_unset();
      session_abort();
      header('Location: ./login.php');
 }
+// Verify if the user is an Admin
 if ($_SESSION['nivel'] <> 'administrador') {
      header("Location: index.php");
 }
+
+// Token of validation
 $_SESSION['validacao_hash'] = md5(rand());
+
+// Get the products and user from the DB
 $p = new Produto;
 $todosp = $p->BuscarTodosProdutos();
 $u = new Usuario;
@@ -66,17 +72,6 @@ $todosu = $u->BuscarTodosProdutos();
                                         </li>
                                    </div>
                          </ul>
-                         <!-- <ul class="list-group list-group-flush mt-1">     
-                              <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#backup_control" role="button" aria-expanded="false" aria-controls="backup_control" ><p class="h2">Backup</p></a></div></li>
-                                   <div class="collapse multi-collapse" id="backup_control">
-                                        <li class="list-group-item ">
-                                             <ul class="list-group list-group-flush ">
-                                                  <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#backup_c" role="button" aria-expanded="false" aria-controls="backup_c">Criar</a></div></li>
-                                                  <li class="list-group-item "><div class="d-grid"><a class="btn " data-bs-toggle="collapse" href="#backup_r" role="button" aria-expanded="false" aria-controls="backup_r">Restaurar</a></div></li>
-                                             </ul>
-                                        </li>
-                                   </div>
-                         </ul> -->
                </div>
              
                <div class="col-8 p-3 text-center">
@@ -117,6 +112,7 @@ $todosu = $u->BuscarTodosProdutos();
                          <div class="my-2"><span class="tw-bold h4 justify-content-center d-flex">Excluir Funcionario <b class="h6"><i data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="Ao excluir um Usuario, todos os lançamentos feitos por ele seram passados para sua conta." class="bi bi-info-circle"></i></b>
                          </span> </div>
                          <?php 
+                              // verify error in the delete user
                               if(isset($_SESSION['error_mu'])){
                                    echo '
                                    <div class="my-3 tw-bold h3 text-danger">O Usuário não pode ser excluido em sua sessão.</div>
@@ -129,6 +125,7 @@ $todosu = $u->BuscarTodosProdutos();
                                         <select name="deletar_f" id="" class="form-select" >
                                              <option selected>Escolha um usuario</option>
                                              <?php 
+                                                  // echo the users in the select form
                                                   for ($i=0; isset($todosu[$i]); $i++) { 
                                                        echo "<option value='{$todosu[$i]['id_usuario']}'>{$todosu[$i]['nick']}  -  {$todosu[$i]['Nivel']}</option>";
                                                   }
@@ -157,6 +154,7 @@ $todosu = $u->BuscarTodosProdutos();
                                    <select name="a_usuario" id="" class="form-select">
                                         <option selected>Selecione</option>
                                              <?php 
+                                                  // echo the users in the select form
                                                   for ($i=0; isset($todosu[$i]); $i++) { 
                                                        echo "<option value='{$todosu[$i]['id_usuario']}'>{$todosu[$i]['nick']}  -  {$todosu[$i]['Nivel']}</option>";
                                                   }
@@ -218,6 +216,7 @@ $todosu = $u->BuscarTodosProdutos();
                                    <b class="h6"><i data-bs-toggle="tooltip"  data-bs-custom-class="custom-tooltip" title="Excluir um Produto substituira ele automaticamente nos lançamentos pelo Produto/Serviço Padrão." class="bi bi-info-circle"></i></b> 
                               </span></div>
                                    <?php 
+                                        // verify error in the delete product
                                         if(isset($_SESSION['Error_mp'])){
                                              echo '
                                              <div class="my-3 tw-bold h4 text-danger">O Produto não pode ser excluido, é um produto padrão.</div>
@@ -230,6 +229,7 @@ $todosu = $u->BuscarTodosProdutos();
 									<select name="deletar_p" id="" class="form-select" >
 										<option selected>Escolha um produto</option>
                                              <?php 
+                                                  // echo the produtcs in the select form
                                                   for ($i=0; isset($todosp[$i]); $i++) { 
                                                        if($todosp[$i]['id_produto'] > 2) {
                                                              echo "<option value='{$todosp[$i]['id_produto']}'>{$todosp[$i]['descricao']}   -   {$todosp[$i]['tipo']}</option>";
@@ -263,6 +263,7 @@ $todosu = $u->BuscarTodosProdutos();
 								<select name="a_produto" id="" class="form-select">
 									<option selected>Selecione o Produto</option>
                                              <?php 
+                                                  // echo the produtcs in the select form
                                                   for ($i=0; isset($todosp[$i]); $i++) { 
                                                        echo "<option value='{$todosp[$i]['id_produto']}'>{$todosp[$i]['descricao']}   -   {$todosp[$i]['tipo']}</option>";
                                                   }
@@ -339,6 +340,7 @@ $todosu = $u->BuscarTodosProdutos();
     
     <script type="text/javascript" src="Js/bootstrap.bundle.min.js"></script>
     <script>
+     // Necessery for the tooltips works, DO NOT DELETE
      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
      </script>

@@ -7,9 +7,8 @@ class Lancamento extends Conexao {
     public function adicionarLancamento($id_produto,$id_usuario,$quantidade, $vt, $forma_pagamento) {
         $this->conectar();
         $data = date('Y-m-d H:i:s', time());
-
   
-        $consulta = $this->conexao->prepare("INSERT INTO `lancamento` (`id_lancamento`, `id_produto`, `id_usuario`, `quantidade`, `VT`, `dia`, `forma_pagamento`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+        $consulta = $this->conexao->prepare("INSERT INTO `{$this->gettablenameLancamentos()}` (`id_lancamento`, `id_produto`, `id_usuario`, `quantidade`, `VT`, `dia`, `forma_pagamento`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
         $consulta->bind_param('iiidss',$id_produto, $id_usuario, $quantidade, $vt, $data, $forma_pagamento);
         $consulta->execute();
         
@@ -26,7 +25,7 @@ class Lancamento extends Conexao {
         $this->conectar();
 
        
-        $consulta = $this->conexao->prepare("DELETE FROM lancamento WHERE id_lancamento = ?");
+        $consulta = $this->conexao->prepare("DELETE FROM {$this->gettablenameLancamentos()} WHERE id_lancamento = ?");
         $consulta->bind_param("i", $id_lancamento);
         $consulta->execute();
 
@@ -40,8 +39,8 @@ class Lancamento extends Conexao {
     }
     public function BuscarTodosLancamentos(){
         $this->conectar();
-        $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.VT, lancamento.forma_pagamento, produto.descricao, produto.tipo, usuario.nick FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto join usuario on lancamento.id_usuario = usuario.id_usuario 
-         ORDER BY lancamento.dia ASC");  
+        $consulta = $this->conexao->prepare("SELECT L.id_lancamento, L.id_produto, L.dia,L.quantidade, L.VT, L.forma_pagamento, P.descricao, P.tipo, U.nick FROM `{$this->gettablenameLancamentos()}` L join {$this->gettablenameProduto()} P on L.id_produto = P.id_produto join {$this->getusuario()} U on L.id_usuario = U.id_usuario 
+         ORDER BY L.dia ASC");  
         $consulta->execute();
 
         $rows[0] = null;
@@ -54,8 +53,8 @@ class Lancamento extends Conexao {
 public function BuscarLancamentosHoje(){
     $this->conectar();
     $dia = date('Y-m-d', time());
-    $consulta = $this->conexao->prepare("SELECT lancamento.id_lancamento, lancamento.id_produto, lancamento.dia,lancamento.quantidade, lancamento.VT, lancamento.forma_pagamento, produto.descricao, produto.tipo, usuario.nick FROM `lancamento` join produto on lancamento.id_produto = produto.id_produto join usuario on lancamento.id_usuario = usuario.id_usuario 
-     WHERE lancamento.dia LIKE '".$dia."%'ORDER BY lancamento.dia ASC"); 
+    $consulta = $this->conexao->prepare("SELECT L.id_lancamento, L.id_produto, L.dia,L.quantidade, L.VT, L.forma_pagamento, P.descricao, P.tipo, U.nick FROM `{$this->gettablenameLancamentos()}` L join {$this->gettablenameProduto()} P on L.id_produto = P.id_produto join {$this->gettablenameUsuario()} U on L.id_usuario = U.id_usuario 
+     WHERE L.dia LIKE '".$dia."%'ORDER BY L.dia ASC"); 
     $consulta->execute();
 
     $rows[0] = null;
