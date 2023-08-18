@@ -1,0 +1,11 @@
+{
+     "host":"localhost",
+     "usuario":"root",
+     "senha":"",
+     "banco":"livro-Caixa",
+
+     
+     "tabelalancamentos":"lancamento",
+     "tabelausuario":"Usuario",
+     "tabelaproduto":"produto"
+}
