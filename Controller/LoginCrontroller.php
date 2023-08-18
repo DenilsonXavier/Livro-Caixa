@@ -3,6 +3,12 @@
 require_once '../class/Conect.php';
 require_once '../class/Usuario.php';
 class Login extends Conexao {
+
+    
+    public function __construct() {
+        parent::__construct();
+   }
+   
     public function validarUsuario($nick, $senha) {
         
         $this->conectar();

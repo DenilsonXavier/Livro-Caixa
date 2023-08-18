@@ -10,6 +10,11 @@ if($_SESSION['validacao_hash'] <> $_POST['validacao_hash']){
 
 
 class adm extends Usuario {
+    
+    public function __construct() {
+        parent::__construct();
+   }
+
     public function alteraUsuarioNick($nick, $id) {
         $this->conectar();
         $AlteraNick = $this->conexao->prepare("UPDATE usuario SET nick = ? WHERE id_usuario = ?");
@@ -55,6 +60,11 @@ class adm extends Usuario {
 }
 
 class prod extends Produto {
+    
+    public function __construct() {
+        parent::__construct();
+   }
+   
     public function alterarDescricaoProduto($id_produto, $descricao) {
         $this->conectar();
 

@@ -4,6 +4,10 @@ date_default_timezone_set('America/Sao_Paulo');
 
 class Lancamento extends Conexao {
     
+    public function __construct() {
+        parent::__construct();
+   }
+    
     public function adicionarLancamento($id_produto,$id_usuario,$quantidade, $vt, $forma_pagamento) {
         $this->conectar();
         $data = date('Y-m-d H:i:s', time());
@@ -39,7 +43,7 @@ class Lancamento extends Conexao {
     }
     public function BuscarTodosLancamentos(){
         $this->conectar();
-        $consulta = $this->conexao->prepare("SELECT L.id_lancamento, L.id_produto, L.dia,L.quantidade, L.VT, L.forma_pagamento, P.descricao, P.tipo, U.nick FROM `{$this->gettablenameLancamentos()}` L join {$this->gettablenameProduto()} P on L.id_produto = P.id_produto join {$this->getusuario()} U on L.id_usuario = U.id_usuario 
+        $consulta = $this->conexao->prepare("SELECT L.id_lancamento, L.id_produto, L.dia,L.quantidade, L.VT, L.forma_pagamento, P.descricao, P.tipo, U.nick FROM `{$this->gettablenameLancamentos()}` L join {$this->gettablenameProduto()} P on L.id_produto = P.id_produto join {$this->gettablenameUsuario()} U on L.id_usuario = U.id_usuario 
          ORDER BY L.dia ASC");  
         $consulta->execute();
 

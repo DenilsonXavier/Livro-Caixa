@@ -2,6 +2,10 @@
 require_once 'Conect.php';
 
 class Usuario extends Conexao {
+    
+    public function __construct() {
+        parent::__construct();
+   }
 
     public function adicionarUsuario($nick, $senha, $Nivel) {
         $this->conectar();

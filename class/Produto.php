@@ -1,6 +1,10 @@
 <?php
 require_once 'Conect.php';
 class Produto extends Conexao {
+    
+    public function __construct() {
+         parent::__construct();
+    }
    
     public function adicionarProduto($descricao, $tipo) {
         $this->conectar();

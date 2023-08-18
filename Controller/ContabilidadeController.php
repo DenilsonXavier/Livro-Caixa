@@ -1,9 +1,13 @@
 <?php
 include_once './class/Lancamento.php';
 
-class Pesquisa extends Lancamento{
-     
+class Pesquisa extends Lancamento{     
      private $consulta;
+
+     
+     public function __construct() {
+          parent::__construct();
+     }
 
      public function PreparaBusca($tipo,$data,$id_fpagamento,$descricao,$id_produto,$ordem)
      {

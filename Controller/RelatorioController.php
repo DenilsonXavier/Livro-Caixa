@@ -9,6 +9,7 @@ class Relatorio extends Conexao{
      private $data;
 
      public function __construct() {
+          parent::__construct();
           $this->data = date('Y-m-d', time());
      }
 
